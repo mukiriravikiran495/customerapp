@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -166,6 +167,7 @@ const items: Record<CategoryKey, Item[]> = {
 
 export default function CategoryItemsScreen() {
     const router = useRouter();
+    const navigation = useNavigation();
     const [cart, setCart] = useState<Record<number, number>>({});
     const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('furniture');
     const [searchText, setSearchText] = useState('');
@@ -281,22 +283,6 @@ export default function CategoryItemsScreen() {
 
             {/* Footer */}
             <View style={styles.footer}>
-                {/* <TouchableOpacity
-                    style={[
-                        styles.footerButton,
-                        {
-                            backgroundColor: selectedItemsCount > 0 ? '#fff' : '#f5f5f5',
-                            borderWidth: 1,
-                            borderColor: '#d1001f',
-                            opacity: selectedItemsCount > 0 ? 1 : 0.5,
-                        },
-                    ]}
-                    disabled={selectedItemsCount === 0}
-                >
-                    <Text style={{ color: '#d1001f', fontWeight: 'bold' }}>
-                        {selectedItemsCount} Selected Items
-                    </Text>
-                </TouchableOpacity> */}
 
                 <TouchableOpacity
                     style={[
@@ -307,8 +293,10 @@ export default function CategoryItemsScreen() {
                         },
                     ]}
                     disabled={selectedItemsCount === 0}
-                >
-                    {/* <Text style={styles.findMoversText}>Find Movers {selectedItemsCount} Selected </Text> */}
+                    onPress={() => {
+                    console.log('Navigating to /vendors'); // 👈 Debug log
+                    router.push('/vendors');
+                }}>
                     <Text style={styles.findMoversText}>
                         <Text style={styles.findMoversMain}>Find Movers{'\n'}</Text>
                         <Text style={styles.findMoversSub}>
@@ -383,9 +371,11 @@ const styles = StyleSheet.create({
         borderColor: '#ba1c1c',
         borderWidth: 1.5,
         borderRadius: 6,
-        paddingVertical: 4,
+        paddingVertical: 8,
         paddingHorizontal: 12,
         marginTop: 8,
+        width: 80, // 👈 Set desired width (e.g., 100)
+        alignItems: 'center', // 👈 Center the text inside
     },
     addText: {
         color: '#ba1c1c',
@@ -454,14 +444,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
 
-    findMoversButton: {
-        paddingVertical: 12,
-        paddingHorizontal: 24,
-        borderRadius: 12,
-        borderWidth: 2,
-        // borderColor: '#007bff', // Optional: blue outline like your screenshot
-    },
-
     findMoversText: {
         textAlign: 'center',
     },
@@ -469,19 +451,26 @@ const styles = StyleSheet.create({
     findMoversMain: {
         color: '#fff',
         fontWeight: 'bold',
-        fontSize: 18,
+        fontSize: 16,
     },
 
     findMoversSub: {
         color: '#fff',
-        fontSize: 8,
+        fontSize: 10,
         fontWeight: '400',
         textTransform: 'lowercase',
     },
     footerButton: {
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderRadius: 10,
 
+        position: 'absolute',
+        bottom: 30, // 🔼 This adds space above the bottom edge (footer)
+
+        backgroundColor: 'red',
+        // padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
