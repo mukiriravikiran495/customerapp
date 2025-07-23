@@ -2,9 +2,9 @@ import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-
 import {
     Dimensions,
+
     ScrollView,
     StyleSheet,
     Text,
@@ -82,6 +82,7 @@ export default function HomeScreen() {
                         longitudeDelta: 0.1,
                     }}
                     customMapStyle={mapStyle}
+                    
                 />
                 {/* Floating Pickup Card */}
                 <View style={styles.card}>
