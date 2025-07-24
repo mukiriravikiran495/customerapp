@@ -3,7 +3,9 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
     Dimensions,
-    FlatList, Modal,
+    FlatList,
+    Image,
+    Modal,
     ScrollView,
     StyleSheet,
     Text,
@@ -12,6 +14,7 @@ import {
     View
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+
 const { width, height } = Dimensions.get('window');
 type DropdownKey = 'Rating' | 'Price' | 'Services' | 'Vehicle' | 'Sort';
 const filterOptions: Record<DropdownKey, string[]> = {
@@ -21,7 +24,6 @@ const filterOptions: Record<DropdownKey, string[]> = {
     Vehicle: ['Truck', 'Mini Truck', 'Tempo'],
     Sort: ['Recommended', 'Fastest', 'Cheapest'],
 };
-
 
 // Dummy vendor data
 const vendors = [
@@ -33,7 +35,7 @@ const vendors = [
         price: 12500,
         originalPrice: 15000,
         deliveryTime: "Same Day",
-        image: "/icons/movers1.jpg",
+        image: require('@/assets/images/movers1.jpg'),
         vehicleType: "Truck",
         services: [
             "Packing",
@@ -54,7 +56,7 @@ const vendors = [
         price: 11200,
         originalPrice: 14000,
         deliveryTime: "Next Day",
-        image: "/icons/movers2.jpg",
+        image: require('@/assets/images/movers2.jpg'),
         vehicleType: "Mini Truck",
         services: ["Packing", "Loading", "Transportation", "Insurance"],
         verified: true,
@@ -69,7 +71,7 @@ const vendors = [
         price: 13800,
         originalPrice: 16000,
         deliveryTime: "Same Day",
-        image: "/icons/movers3.jpg",
+        image: require('@/assets/images/movers3.jpg'),
         vehicleType: "Large Truck",
         services: [
             "Packing",
@@ -91,7 +93,7 @@ const vendors = [
         price: 10500,
         originalPrice: 12000,
         deliveryTime: "Next Day",
-        image: "/icons/movers4.jpg",
+        image: require('@/assets/images/movers4.jpg'),
         vehicleType: "Tempo",
         services: ["Packing", "Loading", "Transportation"],
         verified: false,
@@ -106,7 +108,7 @@ const vendors = [
         price: 15200,
         originalPrice: 18000,
         deliveryTime: "Same Day",
-        image: "/icons/movers1.jpg",
+        image: require('@/assets/images/movers1.jpg'),
         vehicleType: "Container",
         services: [
             "Packing",
@@ -123,10 +125,9 @@ const vendors = [
 ];
 
 
-
-
 const VendorsScreen = () => {
     const router = useRouter();
+    
     const [searchQuery, setSearchQuery] = useState('');
     const filterKeys: DropdownKey[] = ['Rating', 'Price', 'Services', 'Vehicle', 'Sort'];
     const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
@@ -142,39 +143,102 @@ const VendorsScreen = () => {
 
     return (
         <SafeAreaView style={styles.screen}>
-            <View style={styles.searchContainer}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.iconContainer}>
-                    <Ionicons name="arrow-back" size={22} color="#000" />
-                </TouchableOpacity>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search items"
-                    placeholderTextColor="#888"
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                />
-            </View>
+            <FlatList
+                data={vendors}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{ padding: 10 }}
+                ListHeaderComponent={
+                    <>
+                        {/* Search bar */}
+                        <View style={{ paddingHorizontal: 10, marginBottom: 5 }}>
+                            <View style={styles.searchContainer}>
+                                <TouchableOpacity onPress={() => router.back()} style={styles.iconContainer}>
+                                    <Ionicons name="arrow-back" size={22} color="#000" />
+                                </TouchableOpacity>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Search items"
+                                    placeholderTextColor="#888"
+                                    value={searchQuery}
+                                    onChangeText={setSearchQuery}
+                                />
+                            </View>
+                        </View>
 
-            <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                style={styles.dropdownRow}
-                contentContainerStyle={{ paddingHorizontal: 10 }}
-            >
-                {(Object.keys(filterOptions) as DropdownKey[]).map((key, index) => (
-                    <TouchableOpacity
-                        key={index}
-                        style={styles.dropdownButton}
-                        onPress={() => toggleDropdown(key)}
-                    >
-                        <Text style={styles.dropdownText}>
-                            {key}: {selectedFilters[key] || 'All'}
-                        </Text>
+                        {/* Filter dropdowns */}
+                        <ScrollView
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            style={styles.dropdownRow}
+                            contentContainerStyle={{ paddingHorizontal: 10 }}
+                        >
+                            {filterKeys.map((key, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={styles.dropdownButton}
+                                    onPress={() => toggleDropdown(key)}
+                                >
+                                    <Text style={styles.dropdownText}>
+                                        {key}: {selectedFilters[key] || 'All'}
+                                    </Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
+                    </>
+                }
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => router.push('/bookingdetails')}>
+                    <View style={styles.card}>
+                        <View style={styles.imageContainer}>
+                            <Image source={item.image} style={styles.image} resizeMode="cover" />
+                        </View>
+
+                        <View style={{ padding: 10 }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                <Text style={styles.vendorName}>{item.name}</Text>
+                                {item.verified && (
+                                    <View style={styles.verifiedTag}>
+                                        <Text style={{ color: 'white', fontSize: 10 }}>✔ Verified</Text>
+                                    </View>
+                                )}
+                            </View>
+
+                            <Text style={styles.ratingText}>
+                                ⭐ {item.rating}  |  ({item.reviews} reviews)
+                            </Text>
+
+                            <View style={styles.priceRow}>
+                                {item.discount > 0 && (
+                                    <Text style={styles.discountTag}>{item.discount}% OFF</Text>
+                                )}
+                                <Text style={styles.originalPrice}>₹{item.originalPrice.toLocaleString()}</Text>
+                                <Text style={styles.finalPrice}>₹{item.price.toLocaleString()}</Text>
+                            </View>
+
+                            <View style={styles.tagsContainer}>
+                                {item.services.slice(0, 3).map((service, i) => (
+                                    <Text key={i} style={styles.tag}>{service}</Text>
+                                ))}
+                                {item.services.length > 3 && (
+                                    <Text style={styles.moreTag}>+{item.services.length - 3} more</Text>
+                                )}
+                            </View>
+
+                            <View style={styles.greenTagsRow}>
+                                {item.features.slice(0, 2).map((feature, i) => (
+                                    <Text key={i} style={styles.greenTag}>✓ {feature}</Text>
+                                ))}
+                                {item.features.length > 2 && (
+                                    <Text style={styles.greenTag}>+{item.features.length - 2} more</Text>
+                                )}
+                            </View>
+                        </View>
+                    </View>
                     </TouchableOpacity>
-                ))}
-            </ScrollView>
+                )}
+            />
 
-            {/* Modal for dropdown */}
+            {/* Modal outside FlatList for dropdown filter */}
             <Modal
                 transparent
                 visible={!!activeDropdown}
@@ -198,17 +262,14 @@ const VendorsScreen = () => {
                                     >
                                         <Text style={styles.modalItemText}>{item}</Text>
                                     </TouchableOpacity>
+                                    
                                 )}
                             />
                         </View>
                     )}
                 </TouchableOpacity>
             </Modal>
-
         </SafeAreaView>
-
-
-
     );
 };
 
@@ -226,11 +287,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#f1f1f1',
         borderRadius: 8,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
         height: height * 0.06,
-        
         elevation: 3,
-        marginHorizontal: 10,
     },
     iconContainer: {
         marginRight: 8,
@@ -241,8 +300,8 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     dropdownRow: {
-        marginTop: 10,
-        marginBottom: 8,
+        marginTop: 15,
+        marginBottom: 15,
     },
     dropdownButton: {
         backgroundColor: '#eee',
@@ -250,7 +309,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 14,
         borderRadius: 20,
         marginRight: 10,
-        height:30,
+        height: 30,
     },
     dropdownText: {
         fontSize: 14,
@@ -277,4 +336,100 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#333',
     },
+
+    //added
+    card: {
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginBottom: 15,
+        overflow: 'hidden',
+        elevation: 3,
+
+    },
+    imageContainer: {
+        width: '100%',
+        height: 180,
+        backgroundColor: '#ccc',
+
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+    },
+    vendorName: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#222',
+        flex: 1,
+    },
+    verifiedTag: {
+        backgroundColor: '#28a745',
+        paddingHorizontal: 6,
+        paddingVertical: 2,
+        borderRadius: 4,
+        marginLeft: 5,
+    },
+    ratingText: {
+        marginTop: 5,
+        color: '#666',
+        fontSize: 13,
+    },
+    priceRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 5,
+    },
+    discountTag: {
+        backgroundColor: '#dc3545',
+        color: '#fff',
+        paddingHorizontal: 6,
+        fontSize: 12,
+        borderRadius: 3,
+        marginRight: 6,
+    },
+    originalPrice: {
+        textDecorationLine: 'line-through',
+        color: '#888',
+        marginRight: 6,
+    },
+    finalPrice: {
+        color: '#d32f2f',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    tagsContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 5,
+    },
+    tag: {
+        backgroundColor: '#eee',
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 15,
+        fontSize: 12,
+        marginRight: 6,
+        marginTop: 4,
+    },
+    moreTag: {
+        fontSize: 12,
+        color: '#555',
+        marginTop: 4,
+    },
+    greenTagsRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        marginTop: 6,
+    },
+    greenTag: {
+        backgroundColor: '#d4f4dd',
+        color: '#1e7e34',
+        paddingHorizontal: 8,
+        paddingVertical: 3,
+        borderRadius: 15,
+        fontSize: 12,
+        marginRight: 6,
+        marginTop: 4,
+    },
+
 });
