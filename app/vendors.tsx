@@ -6,6 +6,7 @@ import {
     FlatList,
     Image,
     Modal,
+    Pressable,
     ScrollView,
     StyleSheet,
     Text,
@@ -127,7 +128,7 @@ const vendors = [
 
 const VendorsScreen = () => {
     const router = useRouter();
-    
+
     const [searchQuery, setSearchQuery] = useState('');
     const filterKeys: DropdownKey[] = ['Rating', 'Price', 'Services', 'Vehicle', 'Sort'];
     const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
@@ -148,7 +149,7 @@ const VendorsScreen = () => {
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{ padding: 10 }}
                 ListHeaderComponent={
-                    <>
+                     <View>
                         {/* Search bar */}
                         <View style={{ paddingHorizontal: 10, marginBottom: 5 }}>
                             <View style={styles.searchContainer}>
@@ -184,57 +185,63 @@ const VendorsScreen = () => {
                                 </TouchableOpacity>
                             ))}
                         </ScrollView>
-                    </>
+                    </View>
                 }
                 renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => router.push('/bookingdetails')}>
-                    <View style={styles.card}>
-                        <View style={styles.imageContainer}>
-                            <Image source={item.image} style={styles.image} resizeMode="cover" />
+                    <Pressable
+                        onPress={() => router.push('/bookingdetails')}
+                        style={({ pressed }) => [
+                            styles.cardTouchable,
+                            pressed && styles.cardPressed,
+                        ]}
+                        >
+                        <View style={styles.card}>
+                            <View style={styles.imageContainer}>
+                                <Image source={item.image} style={styles.image} resizeMode="cover" />
+                            </View>
+
+                            <View style={{ padding: 10 }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Text style={styles.vendorName}>{item.name}</Text>
+                                    {item.verified && (
+                                        <View style={styles.verifiedTag}>
+                                            <Text style={{ color: 'white', fontSize: 10 }}>✔ Verified</Text>
+                                        </View>
+                                    )}
+                                </View>
+
+                                <Text style={styles.ratingText}>
+                                    ⭐ {item.rating}  |  ({item.reviews} reviews)
+                                </Text>
+
+                                <View style={styles.priceRow}>
+                                    {item.discount > 0 && (
+                                        <Text style={styles.discountTag}>{item.discount}% OFF</Text>
+                                    )}
+                                    <Text style={styles.originalPrice}>₹{item.originalPrice.toLocaleString()}</Text>
+                                    <Text style={styles.finalPrice}>₹{item.price.toLocaleString()}</Text>
+                                </View>
+
+                                <View style={styles.tagsContainer}>
+                                    {item.services.slice(0, 3).map((service, i) => (
+                                        <Text key={i} style={styles.tag}>{service}</Text>
+                                    ))}
+                                    {item.services.length > 3 && (
+                                        <Text style={styles.moreTag}>+{item.services.length - 3} more</Text>
+                                    )}
+                                </View>
+
+                                <View style={styles.greenTagsRow}>
+                                    {item.features.slice(0, 2).map((feature, i) => (
+                                        <Text key={i} style={styles.greenTag}>✓ {feature}</Text>
+                                    ))}
+                                    {item.features.length > 2 && (
+                                        <Text style={styles.greenTag}>+{item.features.length - 2} more</Text>
+                                    )}
+                                </View>
+                            </View>
                         </View>
-
-                        <View style={{ padding: 10 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={styles.vendorName}>{item.name}</Text>
-                                {item.verified && (
-                                    <View style={styles.verifiedTag}>
-                                        <Text style={{ color: 'white', fontSize: 10 }}>✔ Verified</Text>
-                                    </View>
-                                )}
-                            </View>
-
-                            <Text style={styles.ratingText}>
-                                ⭐ {item.rating}  |  ({item.reviews} reviews)
-                            </Text>
-
-                            <View style={styles.priceRow}>
-                                {item.discount > 0 && (
-                                    <Text style={styles.discountTag}>{item.discount}% OFF</Text>
-                                )}
-                                <Text style={styles.originalPrice}>₹{item.originalPrice.toLocaleString()}</Text>
-                                <Text style={styles.finalPrice}>₹{item.price.toLocaleString()}</Text>
-                            </View>
-
-                            <View style={styles.tagsContainer}>
-                                {item.services.slice(0, 3).map((service, i) => (
-                                    <Text key={i} style={styles.tag}>{service}</Text>
-                                ))}
-                                {item.services.length > 3 && (
-                                    <Text style={styles.moreTag}>+{item.services.length - 3} more</Text>
-                                )}
-                            </View>
-
-                            <View style={styles.greenTagsRow}>
-                                {item.features.slice(0, 2).map((feature, i) => (
-                                    <Text key={i} style={styles.greenTag}>✓ {feature}</Text>
-                                ))}
-                                {item.features.length > 2 && (
-                                    <Text style={styles.greenTag}>+{item.features.length - 2} more</Text>
-                                )}
-                            </View>
-                        </View>
-                    </View>
-                    </TouchableOpacity>
+                    </Pressable>
                 )}
             />
 
@@ -262,7 +269,7 @@ const VendorsScreen = () => {
                                     >
                                         <Text style={styles.modalItemText}>{item}</Text>
                                     </TouchableOpacity>
-                                    
+
                                 )}
                             />
                         </View>
@@ -280,7 +287,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
         flexDirection: 'column',
-        paddingTop: 20,
+        paddingTop: 10,
     },
     searchContainer: {
         flexDirection: 'row',
@@ -431,5 +438,11 @@ const styles = StyleSheet.create({
         marginRight: 6,
         marginTop: 4,
     },
+    cardTouchable: {
+        // Any base touchable style (if needed)
+    },
 
+    cardPressed: {
+        opacity: 0.8, // Optional: adjust for click feedback
+    },
 });
