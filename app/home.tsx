@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         marginHorizontal: width * 0.05,
         marginTop: height * 0.02,
         marginBottom: height * 0.01,
-        backgroundColor: '#E5E4E2',
+        backgroundColor: '#FFFFFF',
         borderRadius: 5,
         borderWidth: 1,
         borderColor: '#ccc',
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     fullWidthRow: {
         // paddingHorizontal: width * 0.01,
 
-        backgroundColor: '#E5E4E2',
+        backgroundColor: '#FFFFFF',
         padding: width * 0.04,
         borderBottomWidth: 1,
         borderColor: '#ccc',
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     },
     whiteBackground: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#E5E4E2',
         
     },
     shiftDateContainer: {

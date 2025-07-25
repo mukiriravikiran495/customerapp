@@ -1,8 +1,11 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
     Dimensions,
+    FlatList,
     Image,
+    Modal,
     Platform,
     SafeAreaView,
     ScrollView,
@@ -11,13 +14,79 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
+const electronics = [
+    {
+        id: 7,
+        name: "Television",
+        image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=200&fit=crop",
+    },
+    {
+        id: 8,
+        name: "Refrigerator",
+        image: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=200&h=200&fit=crop",
+    },
+    {
+        id: 9,
+        name: "Washing Machine",
+        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=200&h=200&fit=crop",
+    },
+    {
+        id: 10,
+        name: "Laptop",
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=200&fit=crop",
+    },
+    {
+        id: 11,
+        name: "Microwave",
+        image: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8aa3?w=200&h=200&fit=crop",
+    },
+    {
+        id: 12,
+        name: "Air Conditioner",
+        image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=200&h=200&fit=crop",
+    },
+    {
+        id: 1,
+        name: "Television",
+        image: "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=200&fit=crop",
+    },
+    {
+        id: 2,
+        name: "Refrigerator",
+        image: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?w=200&h=200&fit=crop",
+    },
+    {
+        id: 3,
+        name: "Washing Machine",
+        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=200&h=200&fit=crop",
+    },
+    {
+        id: 4,
+        name: "Laptop",
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200&h=200&fit=crop",
+    },
+    {
+        id: 5,
+        name: "Microwave",
+        image: "https://images.unsplash.com/photo-1574269909862-7e1d70bb8aa3?w=200&h=200&fit=crop",
+    },
+    {
+        id: 6,
+        name: "Air Conditioner",
+        image: "https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=200&h=200&fit=crop",
+    },
+];
 
 export default function BookingDetails() {
     const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
+    const [customerName, setCustomerName] = useState('');
+    const [email, setEmail] = useState('');
+    const [confirmPopupVisible, setConfirmPopupVisible] = useState(false);
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -62,14 +131,14 @@ export default function BookingDetails() {
 
                     {/* Address Rows */}
                     <View style={styles.addressRow}>
-                        <Ionicons name="radio-button-on" size={16} color="blue" style={{ marginRight: 8 }} />
+                        <Ionicons name="radio-button-on" size={16} color="green" style={{ marginRight: 8 }} />
                         <Text style={styles.addressText} numberOfLines={2}>
                             Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
                         </Text>
                     </View>
 
                     <View style={styles.addressRow}>
-                        <Ionicons name="location" size={16} color="green" style={{ marginRight: 8 }} />
+                        <Ionicons name="location" size={16} color="red" style={{ marginRight: 8 }} />
                         <Text style={styles.addressText} numberOfLines={2}>
                             Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
                         </Text>
@@ -78,20 +147,122 @@ export default function BookingDetails() {
                     {/* House type + Button */}
                     <View style={styles.houseRow}>
                         <Text style={styles.houseType}>House One BHK</Text>
-                        <TouchableOpacity style={styles.viewBtn}>
-                            <Text style={styles.viewBtnText}>VIEW ITEMS</Text>
-                        </TouchableOpacity>
+
+
+                        <>
+                            {/* Button to open modal */}
+                            <TouchableOpacity onPress={() => setShowModal(true)} style={styles.viewBtn}>
+                                <Text style={styles.viewBtnText}>VIEW ITEMS</Text>
+                            </TouchableOpacity>
+
+                            {/* MODAL */}
+                            <Modal visible={showModal} animationType="slide" transparent={true}>
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000aa' }}>
+                                    <View style={{ width: '90%', height: '80%', backgroundColor: '#fff', borderRadius: 10, padding: 10 }}>
+
+                                        <TouchableOpacity
+                                            onPress={() => {
+                                                setShowModal(false);
+                                                router.push('/items');
+                                            }}
+                                            style={{ marginTop: 10, marginBottom: 10 }}
+                                        >
+                                            <Text style={{ color: '#ba1c1c', textAlign: 'right', textDecorationLine: 'underline', fontWeight: '500' }}>
+                                                + Add items
+                                            </Text>
+                                        </TouchableOpacity>
+
+                                        {/* Constrain FlatList height to avoid overflow */}
+                                        <View style={{ flex: 1 }}>
+                                            <FlatList
+                                                data={electronics}
+                                                keyExtractor={(item) => item.id.toString()}
+                                                numColumns={2}
+                                                showsVerticalScrollIndicator={false}
+                                                contentContainerStyle={{
+                                                    paddingHorizontal: 5,
+                                                    paddingBottom: 20,
+                                                }}
+                                                columnWrapperStyle={{
+                                                    justifyContent: 'center',
+                                                    marginBottom: 15,
+                                                }}
+                                                renderItem={({ item }) => (
+                                                    <View
+                                                        style={{
+                                                            width: width / 3.8, // slightly reduced to fit inside modal
+                                                            backgroundColor: '#fff',
+                                                            borderRadius: 10,
+                                                            alignItems: 'center',
+                                                            elevation: 2,
+                                                            padding: 5,
+                                                            margin: 5, // use margin instead of marginHorizontal
+                                                        }}
+                                                    >
+                                                        <Image
+                                                            source={{ uri: item.image }}
+                                                            style={{ width: 80, height: 80, borderRadius: 5 }}
+                                                        />
+                                                        <Text style={{ fontSize: 12, marginVertical: 4 }}>{item.name}</Text>
+                                                        <TouchableOpacity
+                                                            style={{
+                                                                backgroundColor: '#ba1c1c',
+                                                                paddingVertical: 5,
+                                                                paddingHorizontal: 10,
+                                                                borderRadius: 5,
+                                                            }}
+                                                        >
+                                                            <Text style={{ color: '#fff', fontSize: 12 }}>ADD</Text>
+                                                        </TouchableOpacity>
+                                                    </View>
+                                                )}
+                                            />
+
+                                        </View>
+
+                                        {/* Buttons */}
+                                        <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+                                            <TouchableOpacity
+                                                style={{
+                                                    width: 120,
+                                                    backgroundColor: '#ba1c1c',
+                                                    padding: 12,
+                                                    borderRadius: 5,
+                                                    marginHorizontal: 8,
+                                                }}
+                                                onPress={() => setShowModal(false)}
+                                            >
+                                                <Text style={{ textAlign: 'center', color: '#fff' }}>Done</Text>
+                                            </TouchableOpacity>
+
+                                            <TouchableOpacity
+                                                style={{
+                                                    width: 120,
+                                                    backgroundColor: '#BA1C1C',
+                                                    padding: 12,
+                                                    borderRadius: 5,
+                                                    marginHorizontal: 8,
+                                                }}
+                                                onPress={() => setShowModal(false)}
+                                            >
+                                                <Text style={{ textAlign: 'center', color: '#fff' }}>Cancel</Text>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                            </Modal>
+                        </>
                     </View>
                 </View>
 
                 {/* View All Coupons Button */}
-                <TouchableOpacity style={styles.couponButton} onPress={() => { }}>
+                <TouchableOpacity style={styles.couponButton} onPress={() => { router.push('/coupons'); }}>
                     <View style={styles.couponLeft}>
                         <Image
                             source={{ uri: 'https://img.icons8.com/color/48/discount--v1.png' }}
                             style={styles.couponIcon}
                         />
-                        <Text style={styles.couponText}>View all  Coupons</Text>
+                        <Text style={styles.couponText}>View all Coupons</Text>
                     </View>
                     <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" />
                 </TouchableOpacity>
@@ -109,11 +280,11 @@ export default function BookingDetails() {
                 <View style={styles.priceCard}>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabel}>Base Price</Text>
-                        <Text style={styles.priceValue}>₹10,000</Text>
+                        <Text style={styles.priceValue}>10,000</Text>
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabel}>Install Uninstall</Text>
-                        <Text style={styles.priceValue}>₹10,000</Text>
+                        <Text style={styles.priceValue}>10,000</Text>
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabel}>Wrapping Charges</Text>
@@ -125,7 +296,7 @@ export default function BookingDetails() {
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabel}>GST (18%)</Text>
-                        <Text style={styles.priceValue}>₹1,800</Text>
+                        <Text style={styles.priceValue}>1,800</Text>
                     </View>
                     <View style={styles.priceRow}>
                         <Text style={styles.priceLabel}>Discount</Text>
@@ -147,19 +318,80 @@ export default function BookingDetails() {
                         placeholder="Enter Full Name"
                         placeholderTextColor="#888"
                         style={styles.customerInput}
+                        value={customerName}
+                        onChangeText={setCustomerName}
                     />
 
                     <TextInput
                         placeholder="Enter Email Id"
                         placeholderTextColor="#888"
                         style={styles.customerInput}
+                        value={email}
+                        onChangeText={setEmail}
                     />
                 </View>
 
                 {/* Confirm Button */}
-                <TouchableOpacity style={styles.confirmButton}>
+                <TouchableOpacity
+                    style={styles.confirmButton}
+                    onPress={() => {
+                        if (customerName.trim() === '' || email.trim() === '') {
+                            alert('Please enter both Name and Email');
+                        } else {
+                            setConfirmPopupVisible(true);
+                        }
+                    }}
+                >
                     <Text style={styles.confirmButtonText}>Confirm</Text>
                 </TouchableOpacity>
+                <Modal
+                    visible={confirmPopupVisible}
+                    animationType="fade"
+                    transparent={true}
+                >
+                    <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
+                                Are you sure you want to confirm the booking?
+                            </Text>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: '#BA1C1C',
+                                        padding: 10,
+                                        borderRadius: 5,
+                                        flex: 1,
+                                        marginRight: 10,
+                                    }}
+                                    // onPress={() => {
+                                    //     setConfirmPopupVisible(false);
+                                    //     alert('Booking Confirmed!'); // Replace this with actual logic
+                                    // }}
+                                    onPress={() => {
+                                        setConfirmPopupVisible(false);
+                                        router.push('/bookingsummary'); // ✅ navigate to summary page
+                                    }}
+                                >
+                                    <Text style={{ color: '#fff', textAlign: 'center' }}>Confirm</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={{
+                                        backgroundColor: '#ccc',
+                                        padding: 10,
+                                        borderRadius: 5,
+                                        flex: 1,
+                                        marginLeft: 10,
+                                    }}
+                                    onPress={() => setConfirmPopupVisible(false)}
+                                >
+                                    <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </Modal>
 
             </SafeAreaView>
         </ScrollView>
@@ -192,23 +424,23 @@ const styles = StyleSheet.create({
     //     marginLeft: width * 0.03,
     // },
     companyName: {
-        fontSize: width * 0.05,
+        fontSize: width * 0.055,
         fontWeight: 'bold',
         marginTop: height * 0.01,
-        marginLeft: width * 0.01,
+        marginLeft: width * 0.02,
     },
     address: {
         fontSize: width * 0.035,
         color: '#555',
         marginTop: 2,
-        marginLeft: width * 0.01,
+        marginLeft: width * 0.02,
     },
     rating: {
         fontSize: width * 0.035,
         fontWeight: '500',
         color: '#111',
         marginTop: 4,
-        marginLeft: width * 0.01,
+        marginLeft: width * 0.02,
     },
     // imageBox: {
     //     alignItems: 'center',
@@ -226,19 +458,21 @@ const styles = StyleSheet.create({
         margin: width * 0.00,
         // borderRadius: 12,
         padding: width * 0.04,
-        marginTop: 10,
-        marginRight: width * 0.01,
-        marginLeft: width * 0.01,
+        marginTop: 7,
+
     },
     sectionTitle: {
-        fontSize: width * 0.045,
+        fontSize: width * 0.05,
         fontWeight: '600',
         marginBottom: height * 0.015,
+
+        marginLeft: width * 0.02,
     },
     bookingRow: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: height * 0.015,
+        marginLeft: width * 0.02,
     },
     icon: {
         width: 22,
@@ -254,17 +488,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         marginBottom: height * 0.012,
+        marginLeft: width * 0.02,
+        marginTop: height * 0.01,
     },
     addressText: {
         fontSize: width * 0.035,
         color: '#333',
         flex: 1,
+
     },
     houseRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop: height * 0.015,
+        marginTop: height * 0.01,
+        marginLeft: width * 0.02,
     },
     houseType: {
         fontSize: width * 0.04,
@@ -306,12 +544,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingVertical: height * 0.018,
         height: height * 0.06,
-        marginTop: 10,
+        marginTop: 7,
         margin: width * 0.00,
     },
     couponLeft: {
         flexDirection: 'row',
         alignItems: 'center',
+
     },
     couponIcon: {
         width: 22,
@@ -342,7 +581,7 @@ const styles = StyleSheet.create({
     priceCard: {
         backgroundColor: '#fff',
         padding: width * 0.04,
-        marginTop: 10,
+        marginTop: 7,
         marginHorizontal: 0,
 
     },
@@ -352,10 +591,13 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.01,
         marginLeft: width * 0.02,
         marginRight: width * 0.02,
+        marginTop: height * 0.01,
+
     },
     priceLabel: {
         fontSize: width * 0.038,
         color: '#333',
+
     },
     priceValue: {
         fontSize: width * 0.038,
@@ -376,11 +618,13 @@ const styles = StyleSheet.create({
         fontSize: width * 0.045,
         fontWeight: '700',
         color: '#000',
+
     },
     totalValue: {
         fontSize: width * 0.045,
         fontWeight: '700',
         color: '#000',
+
     },
 
     header: {
@@ -410,10 +654,10 @@ const styles = StyleSheet.create({
 
     customerBox: {
         backgroundColor: '#fff',
-        
-        
+
+
         padding: width * 0.04,
-        
+
         marginTop: height * 0.01,
     },
 
