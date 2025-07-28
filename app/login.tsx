@@ -2,7 +2,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import {
-    Image,
     KeyboardAvoidingView,
     Platform,
     ScrollView,
@@ -12,6 +11,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
+
 export default function Login() {
     const router = useRouter();
     return (
@@ -23,141 +23,146 @@ export default function Login() {
                 contentContainerStyle={styles.container}
                 keyboardShouldPersistTaps="handled"
             >
-                <Image source={require('@/assets/images/hero.jpg')} style={styles.banner} resizeMode="cover" />
+                <Text style={styles.logo}>Shiftyng</Text>
+                <Text style={styles.heading}>Choose your Favourite Packers & Movers</Text>
 
-                <Text style={styles.heading}>3-Steps away to your favourite Packers & Movers</Text>
-                <Text style={styles.subHeading}>Log in or sign up</Text>
+                <TextInput
+                    placeholder="Enter phone number or email"
+                    style={styles.input}
+                    keyboardType="default"
+                />
 
-                <View style={styles.phoneInputContainer}>
-                    <Text style={styles.countryCode}>+91</Text>
-                    <TextInput
-                        placeholder="Enter Phone Number"
-                        keyboardType="number-pad"
-                        style={styles.phoneInput}
-                    />
-                </View>
-
-                <TouchableOpacity style={styles.continueButton} onPress={() => {
-                    console.log('Navigating to /verifyotp'); // 👈 Debug log
-                    router.push('/verifyotp');
-                }}>
+                <TouchableOpacity
+                    style={styles.continueButton}
+                    onPress={() => router.push('/verifyotp')}
+                >
                     <Text style={styles.continueText}>Continue</Text>
                 </TouchableOpacity>
 
-                <Text style={styles.or}>or</Text>
-
-                <View style={styles.authButtons}>
-                    <TouchableOpacity style={styles.authButton}>
-                        <Ionicons name="logo-google" size={24} color="#BA1c1c" />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.authButton}>
-                        <Ionicons name="mail" size={24} color="#000000" />
-                    </TouchableOpacity>
+                <View style={styles.dividerContainer}>
+                    <View style={styles.line} />
+                    <Text style={styles.or}>or</Text>
+                    <View style={styles.line} />
                 </View>
 
+                <TouchableOpacity style={styles.altLoginButton}>
+                    <Ionicons name="logo-google" size={20} color="#BA1C1C" />
+                    <Text style={styles.altLoginText}>Continue with Google</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.altLoginButton}>
+                    <Ionicons name="logo-apple" size={20} color="#000" />
+                    <Text style={styles.altLoginText}>Continue with Apple</Text>
+                </TouchableOpacity>
+
+
+
+
+
                 <Text style={styles.terms}>
-                    By continuing, you agree to our <Text style={styles.link}>Terms of Service</Text>{' '}
-                    <Text style={styles.link}>Privacy Policy</Text> <Text style={styles.link}>Content Policy</Text>
+                    By proceeding, you consent to get calls, WhatsApp or SMS/RCS messages, including by automated means, from Shiftyng and its affiliates to the number provided.
                 </Text>
             </ScrollView>
         </KeyboardAvoidingView>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
-        paddingBottom: 40,
-    },
-    banner: {
-        width: '100%',
-        height: 350,
-    },
-    heading: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 16,
+        justifyContent: 'center',
+        paddingVertical: 40,
         paddingHorizontal: 20,
     },
-    subHeading: {
-        marginTop: 8,
-        color: '#555',
-        fontSize: 14,
+    logo: {
+        fontSize: 40,
+        fontWeight: 'bold',
+        color: '#BA1C1C', // Deep red brand color
+        marginBottom: 30,
+        textAlign: 'center',
+        
     },
-    phoneInputContainer: {
-        marginTop: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderColor: '#ccc',
+
+    heading: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    input: {
         borderWidth: 1,
+        borderColor: '#ccc',
         borderRadius: 10,
-        width: '90%',
-        paddingHorizontal: 10,
+        padding: 14,
+        width: '100%',
+        fontSize: 16,
         backgroundColor: '#fafafa',
-        height: 50,
-    },
-    flag: {
-        width: 24,
-        height: 16,
-        marginRight: 8,
-    },
-    countryCode: {
-        fontSize: 16,
-        marginRight: 8,
-    },
-    phoneInput: {
-        flex: 1,
-        fontSize: 16,
-        paddingVertical: Platform.OS === 'ios' ? 12 : 8,
+        marginBottom: 20,
     },
     continueButton: {
-        marginTop: 20,
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#BA1C1C', // Light blue from screenshot
         paddingVertical: 14,
-        paddingHorizontal: 32,
         borderRadius: 10,
-        width: '90%',
+        width: '100%',
         alignItems: 'center',
-        justifyContent: 'center',
-        height: 50,
+        marginBottom: 16,
     },
     continueText: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
-    or: {
-        marginVertical: 15,
-        fontSize: 14,
-        color: '#888',
-    },
-    authButtons: {
+    dividerContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '40%',
-    },
-    authButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25, // half of width/height to make it a circle
-        backgroundColor: '#f0f0f0',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 8,
+        width: '100%',
+        marginVertical: 12,
+    },
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#ddd',
+    },
+    or: {
+        marginHorizontal: 10,
+        color: '#888',
+        fontSize: 14,
+    },
+    altLoginButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f8f8f8',
         borderWidth: 1,
         borderColor: '#ddd',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        width: '100%',
+        marginBottom: 12,
+    },
+    altLoginText: {
+        marginLeft: 10,
+        fontSize: 15,
+        color: '#000',
+    },
+    qrButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ddd',
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+        width: '100%',
+        marginBottom: 20,
     },
     terms: {
-        marginTop: 20,
-        textAlign: 'center',
         fontSize: 12,
         color: '#999',
-        paddingHorizontal: 24,
+        textAlign: 'center',
+        paddingHorizontal: 10,
     },
-    link: {
-        textDecorationLine: 'underline',
-        color: '#444',
-    },
-}); 
+});

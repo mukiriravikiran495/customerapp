@@ -16,7 +16,6 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const { width, height } = Dimensions.get('window');
-
 const categories = [
     { id: "furniture", name: "Furniture", icon: "🪑" },
     { id: "electronics", name: "Electronics", icon: "📺" },
@@ -164,6 +163,52 @@ const items: Record<CategoryKey, Item[]> = {
         },
     ],
 };
+const offers = [
+    {
+      id: 1,
+      image: require('@/assets/images/offer4.jpg'),
+      title: "50% Off First Move",
+    },
+    {
+      id: 2,
+      image: require('@/assets/images/offer1.jpg'),
+      title: "Free Packaging",
+    },
+    {
+      id: 3,
+      image: require('@/assets/images/offer3.jpg'),
+      title: "Insurance Cover",
+    },
+    {
+      id: 4,
+      image: require('@/assets/images/offer4.jpg'),
+      title: "Same Day Delivery",
+    },
+    {
+      id: 5,
+      image:
+        require('@/assets/images/offer4.jpg'),
+      title: "Premium Movers",
+    },
+    {
+      id: 6,
+      image:
+        require('@/assets/images/offer4.jpg'),
+      title: "24/7 Support",
+    },
+    {
+      id: 7,
+      image:
+        require('@/assets/images/offer4.jpg'),
+      title: "Expert Packing",
+    },
+    {
+      id: 8,
+      image:
+        require('@/assets/images/offer4.jpg'),
+      title: "Secure Transit",
+    },
+  ];
 
 export default function CategoryItemsScreen() {
     const router = useRouter();
@@ -268,7 +313,7 @@ export default function CategoryItemsScreen() {
                     </ScrollView>
                 </View>
 
-                <View style={styles.itemsGrid}>
+                {/* Remove this to show offers Grid of Items */}
                     <FlatList
                         data={filteredItems}
                         keyExtractor={(item) => item.id.toString()}
@@ -278,7 +323,9 @@ export default function CategoryItemsScreen() {
                         contentContainerStyle={{ paddingBottom: 100 }}
                         showsVerticalScrollIndicator={false}
                     />
-                </View>
+
+                
+
             </View>
 
             {/* Footer */}
@@ -294,9 +341,9 @@ export default function CategoryItemsScreen() {
                     ]}
                     disabled={selectedItemsCount === 0}
                     onPress={() => {
-                    console.log('Navigating to /vendors'); // 👈 Debug log
-                    router.push('/vendors');
-                }}>
+                        console.log('Navigating to /vendors'); // 👈 Debug log
+                        router.push('/vendors');
+                    }}>
                     <Text style={styles.findMoversText}>
                         <Text style={styles.findMoversMain}>Find Movers{'\n'}</Text>
                         <Text style={styles.findMoversSub}>
@@ -347,9 +394,11 @@ const styles = StyleSheet.create({
     },
     itemsGrid: {
         flex: 1,
-        padding: 10,
+        padding: 5,
+        
     },
     itemCard: {
+        top: 5,
         backgroundColor: '#fff',
         borderRadius: 10,
         marginBottom: 12,
@@ -358,7 +407,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.05,
         shadowOffset: { width: 0, height: 2 },
         elevation: 2,
-        padding: 8,
+        padding: 10,
         alignItems: 'center',
     },
     itemImage: {
@@ -473,4 +522,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    offersContainer: {
+        marginBottom: 10,
+    },
+
+    offerCard: {
+        width: 150,
+        marginRight: 12,
+        borderRadius: 10,
+        overflow: 'hidden',
+        backgroundColor: '#fff',
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+    },
+
+    offerImage: {
+        width: '100%',
+        height: 80,
+        resizeMode: 'cover',
+    },
+
+    offerTitle: {
+        padding: 6,
+        fontSize: 12,
+        fontWeight: '600',
+        textAlign: 'center',
+    },
+
 });

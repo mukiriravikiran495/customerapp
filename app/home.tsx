@@ -1,7 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import {
     Dimensions,
 
@@ -12,9 +14,8 @@ import {
     TouchableOpacity,
     View
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
 const { width, height } = Dimensions.get('window');
-
 export default function HomeScreen() {
     const [pickup, setPickup] = useState('');
     const [drop, setDrop] = useState('');
@@ -25,6 +26,32 @@ export default function HomeScreen() {
     const router = useRouter();
 
     const mapHeight = Dimensions.get('window').height * 0.7;
+
+    useEffect(() => {
+        (async () => {
+            const { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                console.log('Permission to access location was denied');
+                return;
+            }
+
+            const location = await Location.getCurrentPositionAsync({});
+            const { latitude, longitude } = location.coords;
+
+            // Reverse geocode
+            const [place] = await Location.reverseGeocodeAsync({ latitude, longitude });
+            const formattedAddress = `${place.name}, ${place.street}, ${place.city}`;
+            setPickup(formattedAddress);
+
+            // Set region for map
+            setRegion({
+                latitude,
+                longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+            });
+        })();
+    }, []);
 
     const mapStyle = [
         {
@@ -69,25 +96,43 @@ export default function HomeScreen() {
             stylers: [{ color: "off" }],
         },
     ];
+
+    const [region, setRegion] = useState<{
+        latitude: number;
+        longitude: number;
+        latitudeDelta: number;
+        longitudeDelta: number;
+    } | null>(null);
     return (
         <View style={styles.container}>
             {/* Map Section */}
             <View style={{ height: mapHeight }}>
                 <MapView
                     style={StyleSheet.absoluteFillObject}
-                    initialRegion={{
+                    region={region || {
                         latitude: 17.385044,
                         longitude: 78.486671,
                         latitudeDelta: 0.1,
                         longitudeDelta: 0.1,
                     }}
                     customMapStyle={mapStyle}
-                    
-                />
+                    showsUserLocation={true}
+                >
+                    {region && (
+                        <Marker
+                            coordinate={{ latitude: region.latitude, longitude: region.longitude }}
+                            title="Your Location"
+                        />
+                    )}
+                </MapView>
                 {/* Floating Pickup Card */}
                 <View style={styles.card}>
                     <View style={styles.row}>
-                        <Ionicons name="menu" size={24} color="#000" style={styles.leftIcon} />
+                        <TouchableOpacity>
+                            <Ionicons name="menu" size={24} color="#000" style={styles.leftIcon} onPress={() => {
+                            router.push('/menu');
+                        }}/>
+                        </TouchableOpacity>
                         <TextInput
                             style={styles.input}
                             placeholder="Pick up Location"
@@ -110,6 +155,9 @@ export default function HomeScreen() {
                             style={styles.destinationInput}
                             placeholder="Select Destination"
                             placeholderTextColor="#aaa"
+                            onPress={() => {
+                                router.push('/bookingcard');
+                            }}
                             value={drop}
                             onChangeText={setDrop}
                         />
@@ -202,7 +250,7 @@ const styles = StyleSheet.create({
     },
     card: {
         position: 'absolute',
-        top: height * 0.08,
+        top: height * 0.06,
         left: width * 0.03,
         right: width * 0.03,
         borderRadius: 10,
@@ -211,7 +259,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
-        elevation: 3,
+        elevation: 4,
         overflow: 'hidden',
         zIndex: 10,
     },
@@ -244,6 +292,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         overflow: 'hidden',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        elevation: 4,
     },
     fullWidthRow: {
         // paddingHorizontal: width * 0.01,
@@ -291,6 +344,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        elevation: 4,
     },
     continueText: {
         color: '#fff',
@@ -301,7 +355,7 @@ const styles = StyleSheet.create({
     whiteBackground: {
         flex: 1,
         backgroundColor: '#E5E4E2',
-        
+
     },
     shiftDateContainer: {
         width: '50%',
@@ -341,5 +395,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#000',
     },
-    
+
 });
