@@ -1,8 +1,8 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
-    Dimensions,
+    Animated, Dimensions,
     FlatList,
     Image,
     Modal,
@@ -12,9 +12,8 @@ import {
     StatusBar,
     StyleSheet,
     Text,
-    TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -87,6 +86,7 @@ export default function BookingDetails() {
     const [customerName, setCustomerName] = useState('');
     const [email, setEmail] = useState('');
     const [confirmPopupVisible, setConfirmPopupVisible] = useState(false);
+    const [showCancelPopup, setShowCancelPopup] = useState(false);
 
     return (
         <ScrollView contentContainerStyle={styles.scrollContent}>
@@ -99,26 +99,35 @@ export default function BookingDetails() {
                     <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                         <Ionicons name="arrow-back" size={26} color="#000" />
                     </TouchableOpacity>
+                    {/* <MaterialCommunityIcons name="check-decagram" size={60} color="#16a34a" />
+                    <FontAwesome5 name="shield-alt" size={50} color="#10b981" />
+                    <Ionicons name="checkmark-done-circle-sharp" size={60} color="#059669" /> */}
 
-                    <View style={styles.companyRow}>
-                        <View style={styles.headerInfo}>
-                            <Text style={styles.companyName}>Leo Packers and Movers</Text>
-                            <Text style={styles.address}>Hyderabad, Telangana</Text>
-                            <Text style={styles.rating}>Rating 4+</Text>
-                        </View>
-
-                        <View style={styles.imageBox}>
-                            <View style={styles.placeholderImage} />
-                        </View>
+                    <View style={{
+                        backgroundColor: '#d1fae5',
+                        padding: 20,
+                        // borderRadius: 100,
+                        shadowColor: '#16a34a',
+                        shadowOffset: { width: 0, height: 4 },
+                        shadowOpacity: 0.4,
+                        shadowRadius: 10,
+                        elevation: 10,
+                        alignItems: 'center',
+                        width: '100%',
+                    }}>
+                        <MaterialCommunityIcons name="check-decagram" size={60} color="#16a34a" />
+                        <Text style={styles.sectionTitle}>Booking Confirmed!</Text>
+                        <Text style={styles.messageTitle}>Your move has been successfully scheduled</Text>
                     </View>
+
                 </View>
 
 
 
                 {/* Booking Details */}
                 <View style={styles.bookingCard}>
-                    <Text style={styles.sectionTitle}>Booking Details</Text>
 
+                    <Text style={styles.bookingTitle}>Booking Id : SH0076124534</Text>
                     <View style={styles.bookingRow}>
                         <Image
                             source={{ uri: 'https://img.icons8.com/emoji/48/house-emoji.png' }}
@@ -138,7 +147,7 @@ export default function BookingDetails() {
                     </View>
 
                     <View style={styles.addressRow}>
-                        <Ionicons name="location" size={16} color="red" style={{ marginRight: 8 }} />
+                        <Ionicons name="radio-button-on" size={16} color="red" style={{ marginRight: 8 }} />
                         <Text style={styles.addressText} numberOfLines={2}>
                             Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
                         </Text>
@@ -255,16 +264,74 @@ export default function BookingDetails() {
                     </View>
                 </View>
 
+                {/* Booking Progress Timeline */}
+                <View style={styles.timelineContainer}>
+                    {[
+                        { label: 'Booking placed on', date: 'Jan 21, 09:26 PM', completed: true },
+                        { label: 'Pickup Completed', date: 'Jan 21, 09:26 PM', completed: true },
+                        { label: 'Drop Completed', date: 'Jan 21, 09:26 PM', completed: false },
+                    ].map((item, index, array) => {
+                        const animatedHeight = useRef(new Animated.Value(0)).current;
+
+                        useEffect(() => {
+                            if (index !== 0 && array[index - 1].completed) {
+                                Animated.timing(animatedHeight, {
+                                    toValue: 30,
+                                    duration: 600,
+                                    useNativeDriver: false,
+                                }).start();
+                            }
+                        }, []);
+
+                        return (
+                            <View key={index} style={styles.timelineItem}>
+                                {/* Animated vertical line */}
+                                {index !== 0 && (
+                                    <Animated.View
+                                        style={[
+                                            styles.timelineLine,
+                                            {
+                                                height: animatedHeight,
+                                                backgroundColor: array[index - 1].completed ? '#28a745' : '#ccc',
+                                            },
+                                        ]}
+                                    />
+                                )}
+
+                                {/* Dot */}
+                                <View
+                                    style={[
+                                        styles.timelineDot,
+                                        {
+                                            backgroundColor: item.completed ? '#28a745' : '#ccc',
+                                            borderColor: item.completed ? '#28a745' : '#ccc',
+                                        },
+                                    ]}
+                                />
+
+                                {/* Text */}
+                                <View style={styles.timelineContent}>
+                                    <Text style={styles.timelineLabel}>{item.label}</Text>
+                                    <Text style={styles.timelineDate}>{item.date}</Text>
+                                </View>
+                            </View>
+                        );
+                    })}
+                </View>
+
+
+
                 {/* View All Coupons Button */}
-                <TouchableOpacity style={styles.couponButton} onPress={() => { router.push('/coupons'); }}>
+                <TouchableOpacity style={styles.couponButton} >
                     <View style={styles.couponLeft}>
                         <Image
                             source={{ uri: 'https://img.icons8.com/color/48/discount--v1.png' }}
                             style={styles.couponIcon}
                         />
-                        <Text style={styles.couponText}>View all Coupons</Text>
+                        <Text style={styles.couponText}>Used Coupon</Text>
                     </View>
-                    <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" />
+                    {/* <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" /> */}
+                    <Text style={styles.couponArrow}>WELCOME</Text>
                 </TouchableOpacity>
 
                 {/* Saving */}
@@ -309,9 +376,39 @@ export default function BookingDetails() {
                     </View>
                 </View>
 
+                {/* Vendor details  */}
+                <View style={styles.customerBox}>
+                    <Text style={styles.sectionTitle}>Packers & Movers Details</Text>
+                    <View style={styles.companyRow}>
+
+                        <View style={styles.headerInfo}>
+                            <Text style={styles.companyName}>Leo Packers and Movers</Text>
+                            <Text style={styles.address}>Hyderabad, Telangana</Text>
+                            <Text style={styles.rating}>Rating 4+</Text>
+                        </View>
+
+                        <View style={styles.imageBox}>
+                            <View style={styles.placeholderImage} />
+                        </View>
+                    </View>
+                </View>
 
                 {/* Customer Details */}
                 <View style={styles.customerBox}>
+                    <Text style={styles.sectionTitle}>Customer Details</Text>
+                    <View style={styles.companyRow}>
+                        <View style={styles.headerInfo}>
+                            <Text style={styles.companyName}>Mukiri Ravi kiran</Text>
+                            <Text style={styles.address}>Hyderabad, Telangana</Text>
+                            <Text style={styles.rating}>7816035340</Text>
+                        </View>
+
+                        <View style={styles.imageBox}>
+                            <View style={styles.placeholderImage} />
+                        </View>
+                    </View>
+                </View>
+                {/* <View style={styles.customerBox}>
                     <Text style={styles.customerTitle}>Customer Details</Text>
 
                     <TextInput
@@ -329,30 +426,42 @@ export default function BookingDetails() {
                         value={email}
                         onChangeText={setEmail}
                     />
+                </View> */}
+
+                <View style={styles.actionButtonsContainer}>
+                    {/* <TouchableOpacity
+                        style={[styles.actionButton, styles.cancelButton]}
+                        onPress={() => {
+                            // Handle cancellation
+                            alert('Booking Cancelled');
+                        }}>
+                        <Text style={styles.cancelButtonText}>Cancel</Text>
+                    </TouchableOpacity> */}
+
+                    <TouchableOpacity style={[styles.actionButton, styles.cancelButton]} onPress={() => setShowCancelPopup(true)}>
+                        <Text style={styles.cancelButtonText}>Cancel</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={[styles.actionButton, styles.payButton]}
+                        onPress={() => {
+                            // Navigate to payment or handle logic
+                            router.push('/payment');
+                        }}
+                    >
+                        <Text style={styles.payButtonText}>Make Payment</Text>
+                    </TouchableOpacity>
                 </View>
 
-                {/* Confirm Button */}
-                <TouchableOpacity
-                    style={styles.confirmButton}
-                    onPress={() => {
-                        if (customerName.trim() === '' || email.trim() === '') {
-                            alert('Please enter both Name and Email');
-                        } else {
-                            setConfirmPopupVisible(true);
-                        }
-                    }}
-                >
-                    <Text style={styles.confirmButtonText}>Confirm</Text>
-                </TouchableOpacity>
                 <Modal
-                    visible={confirmPopupVisible}
+                    visible={showCancelPopup}
                     animationType="fade"
                     transparent={true}
                 >
                     <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
                             <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
-                                Are you sure you want to confirm the booking?
+                                Are you sure you want to Cancel the booking?
                             </Text>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -370,10 +479,10 @@ export default function BookingDetails() {
                                     // }}
                                     onPress={() => {
                                         setConfirmPopupVisible(false);
-                                        router.push('/bookingsuccess'); // ✅ navigate to summary page
+                                        router.push('/bookings'); // ✅ navigate to summary page
                                     }}
                                 >
-                                    <Text style={{ color: '#fff', textAlign: 'center' }}>Confirm</Text>
+                                    <Text style={{ color: '#fff', textAlign: 'center' }}>OK</Text>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity
@@ -384,7 +493,7 @@ export default function BookingDetails() {
                                         flex: 1,
                                         marginLeft: 10,
                                     }}
-                                    onPress={() => setConfirmPopupVisible(false)}
+                                    onPress={() => {setConfirmPopupVisible(false); router.push('/bookingsuccess');}}
                                 >
                                     <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
                                 </TouchableOpacity>
@@ -424,7 +533,7 @@ const styles = StyleSheet.create({
     //     marginLeft: width * 0.03,
     // },
     companyName: {
-        fontSize: width * 0.055,
+        fontSize: width * 0.04,
         fontWeight: 'bold',
         marginTop: height * 0.01,
         marginLeft: width * 0.02,
@@ -453,6 +562,27 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
+    bookingTitle: {
+        fontSize: width * 0.05,
+        fontWeight: '600',
+        marginBottom: height * 0.017,
+
+        marginLeft: width * 0.02,
+    },
+    sectionTitle: {
+        fontSize: width * 0.05,
+        fontWeight: '600',
+        marginBottom: height * 0.017,
+
+        marginLeft: width * 0.02,
+    },
+    messageTitle: {
+        fontSize: width * 0.038,
+        fontWeight: '600',
+        marginBottom: height * 0.017,
+
+        marginLeft: width * 0.02,
+    },
     bookingCard: {
         backgroundColor: '#fff',
         margin: width * 0.00,
@@ -460,13 +590,6 @@ const styles = StyleSheet.create({
         padding: width * 0.04,
         marginTop: 7,
 
-    },
-    sectionTitle: {
-        fontSize: width * 0.05,
-        fontWeight: '600',
-        marginBottom: height * 0.015,
-
-        marginLeft: width * 0.02,
     },
     bookingRow: {
         flexDirection: 'row',
@@ -538,7 +661,7 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.012,
     },
     couponButton: {
-        backgroundColor: '#d6dff8ff',
+        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -567,6 +690,9 @@ const styles = StyleSheet.create({
     },
     couponArrow: {
         marginRight: width * 0.05,
+        fontSize: width * 0.04,
+        fontWeight: '900',
+        color: '#058103ff',
     },
     totalSaving: {
         marginLeft: 25,
@@ -694,6 +820,89 @@ const styles = StyleSheet.create({
         color: '#fff',
         fontWeight: 'bold',
         fontSize: width * 0.045,
+    },
+
+    timelineContainer: {
+        paddingHorizontal: 48,
+
+        paddingVertical: 16,
+        marginTop: 7,
+        backgroundColor: '#dae0f1ff',
+    },
+
+    timelineItem: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        position: 'relative',
+        marginBottom: 16,
+    },
+
+    timelineLine: {
+        position: 'absolute',
+        width: 2,
+        left: 8,
+        top: 18,
+        zIndex: -1,
+    },
+
+
+    timelineDot: {
+        width: 14,
+        height: 14,
+        borderRadius: 7,
+        borderWidth: 2,
+        marginRight: 12,
+        marginTop: 2,
+    },
+
+    timelineContent: {
+        flex: 1,
+    },
+
+    timelineLabel: {
+        fontSize: width * 0.04,
+        fontWeight: '600',
+        color: '#000',
+    },
+
+    timelineDate: {
+        fontSize: width * 0.035,
+        color: '#555',
+        marginTop: 2,
+    },
+    actionButtonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 16,
+        marginTop: 20,
+    },
+
+    actionButton: {
+        flex: 1,
+        paddingVertical: 14,
+        borderRadius: 6,
+        alignItems: 'center',
+        marginHorizontal: 5,
+    },
+
+    cancelButton: {
+        backgroundColor: '#BA1C1C', // red-500
+    },
+
+    payButton: {
+        backgroundColor: '#16a34a', // green-600
+    },
+
+    cancelButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+
+    payButtonText: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 
 });

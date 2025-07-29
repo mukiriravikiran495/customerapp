@@ -30,7 +30,7 @@ export default function Menu() {
             <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
                 {/* Header with Back and Bell Icon */}
                 <View style={styles.header}>
-                    <TouchableOpacity onPress={() => router.back()}>
+                    <TouchableOpacity onPress={() => router.push('/home')}>
                         <Ionicons name="arrow-back" size={24} color="#000000" />
                     </TouchableOpacity>
 

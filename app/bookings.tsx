@@ -1,5 +1,6 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'; // For back icon
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useRouter } from 'expo-router';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type RootStackParamList = {
@@ -15,6 +16,7 @@ interface BookingsProps {
 
 
 const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
+    const router = useRouter();
     const booking = {
         pickupdate: 'Jan 21, 2025',
         dropdate: 'Jan 21, 2025',
@@ -32,7 +34,8 @@ const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
         <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()}>
+                <TouchableOpacity onPress={() => router.push('/menu')} >
+                    
                     <Ionicons name="arrow-back" size={24} color="black" />
                 </TouchableOpacity>
                 <Text style={styles.headerTitle}>My Bookings</Text>
