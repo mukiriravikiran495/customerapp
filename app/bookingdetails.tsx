@@ -453,6 +453,14 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
+    
+    sectionTitle: {
+        fontSize: width * 0.05,
+        fontWeight: '600',
+        marginBottom: height * 0.015,
+
+        marginLeft: width * 0.02,
+    },
     bookingCard: {
         backgroundColor: '#fff',
         margin: width * 0.00,
@@ -460,13 +468,6 @@ const styles = StyleSheet.create({
         padding: width * 0.04,
         marginTop: 7,
 
-    },
-    sectionTitle: {
-        fontSize: width * 0.05,
-        fontWeight: '600',
-        marginBottom: height * 0.015,
-
-        marginLeft: width * 0.02,
     },
     bookingRow: {
         flexDirection: 'row',
