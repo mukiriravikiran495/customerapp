@@ -22,46 +22,6 @@ type Props = {
     navigation: StackNavigationProp<RootStackParamList, 'LocationSelector'>;
 };
 
-const mapStyle = [
-    {
-        elementType: 'geometry',
-        stylers: [{ color: '#E5E4E2' }],
-    },
-    {
-        elementType: 'labels.text.fill',
-        stylers: [{ color: '#000000' }],
-    },
-    {
-        featureType: 'administrative',
-        elementType: 'geometry',
-        stylers: [{ visibility: 'off' }],
-    },
-    {
-        featureType: 'poi',
-        elementType: 'labels',
-        stylers: [{ visibility: 'off' }],
-    },
-    {
-        featureType: 'road',
-        elementType: 'geometry',
-        stylers: [{ color: '#ffffff' }],
-    },
-    {
-        featureType: 'road',
-        elementType: 'labels.icon',
-        stylers: [{ visibility: 'off' }],
-    },
-    {
-        featureType: 'transit',
-        stylers: [{ visibility: 'off' }],
-    },
-    {
-        featureType: 'water',
-        elementType: 'geometry',
-        stylers: [{ visibility: 'off' }],
-    },
-];
-
 const LocationSelector: React.FC<Props> = ({ navigation }) => {
     const pickupRef = useRef<TextInput>(null);
     const router = useRouter();
@@ -80,12 +40,12 @@ const LocationSelector: React.FC<Props> = ({ navigation }) => {
             {/* Background Map */}
             <MapView
                 style={StyleSheet.absoluteFillObject}
-                customMapStyle={mapStyle}
+                // customMapStyle={mapStyle}
                 initialRegion={{
                     latitude: 17.385044,
                     longitude: 78.486671,
-                    latitudeDelta: 0.1,
-                    longitudeDelta: 0.1,
+                    latitudeDelta: 0.019,
+                    longitudeDelta: 0.019,
                 }}
             />
 

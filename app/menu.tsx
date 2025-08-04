@@ -1,15 +1,15 @@
 import { Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import {
-    Dimensions,
-    Platform,
-    SafeAreaView,
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View
+  Dimensions,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -26,7 +26,7 @@ export default function Menu() {
     // { label: 'Profile', icon: <Feather name="user" size={20} color="#2e3a59" />, route: '/profile' },
     { label: 'Bank Account', icon: <FontAwesome name="bank" size={20} color="#2e3a59" />, route: '/bank' },
     { label: 'FAQ', icon: <Feather name="help-circle" size={20} color="#2e3a59" />, route: '/faq' },
-    { label: 'Contact Us', icon: <Feather name="phone" size={20} color="#2e3a59" />, route: '/contact' },
+    { label: 'Help & Support', icon: <Feather name="phone" size={20} color="#2e3a59" />, route: '/contact' },
   ];
 
   return (
@@ -35,13 +35,13 @@ export default function Menu() {
         {/* Header with Back, Toggle, Notification */}
         <View style={styles.header}>
           {/* Back */}
-          <TouchableOpacity onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <Ionicons name="arrow-back" size={26} color="#000" />
+            <Text style={styles.headerTitle}>Menu</Text>
           </TouchableOpacity>
-
-          {/* Notification */}
-          <TouchableOpacity onPress={() => { }} style={styles.notificationIcon}>
-            <Ionicons name="notifications-outline" size={24} color="#000" />
+          <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
+            <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+            <Text style={styles.supportText}>Support</Text>
           </TouchableOpacity>
         </View>
 
@@ -280,4 +280,17 @@ const styles = StyleSheet.create({
   notificationIcon: {
     paddingLeft: 10,
   },
+  supportButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        backgroundColor: '#f1f1f1',
+        borderRadius: 8,
+    },
+    supportText: {
+        fontSize: 15,
+        color: '#000',
+        fontWeight: '500',
+    },
 });

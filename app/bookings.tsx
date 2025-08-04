@@ -1,7 +1,7 @@
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'; // For back icon
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useRouter } from 'expo-router';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Platform, SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 type RootStackParamList = {
     Home: undefined;
@@ -31,18 +31,21 @@ const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            {/* Header */}
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => router.push('/menu')} >
-                    
-                    <Ionicons name="arrow-back" size={24} color="black" />
-                </TouchableOpacity>
-                <Text style={styles.headerTitle}>My Bookings</Text>
-            </View>
+        <SafeAreaView style={styles.safeArea}>
+            <ScrollView contentContainerStyle={[styles.container, { flexGrow: 1 }]} showsVerticalScrollIndicator={false}>
+                {/* Header */}
+                <View style={styles.header}>
+                    <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+                        <Ionicons name="arrow-back" size={26} color="#000" />
+                        <Text style={styles.headerTitle}>My Bookings</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
+                        <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                        <Text style={styles.supportText}>Support</Text>
+                    </TouchableOpacity>
+                </View>
 
-            {/* Booking Card */}
-            <ScrollView contentContainerStyle={{ padding: 16 }}>
+                {/* Booking Card */}
                 <View style={styles.card}>
                     {/* Dates Row */}
                     <View style={styles.dateRow}>
@@ -57,11 +60,11 @@ const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
                     {/* Locations */}
                     <View style={styles.locationSection}>
                         <View style={styles.locationRow}>
-                            <MaterialCommunityIcons style={{marginLeft:10}} name="circle-slice-8" size={14} color='green' />
+                            <MaterialCommunityIcons style={{ marginLeft: 10 }} name="circle-slice-8" size={14} color='green' />
                             <Text style={styles.locationText}>{booking.pickup}</Text>
                         </View>
                         <View style={styles.locationRow}>
-                            <MaterialCommunityIcons style={{marginLeft:10}} name="circle-slice-8" size={14} color="#ba1c1c" />
+                            <MaterialCommunityIcons style={{ marginLeft: 10 }} name="circle-slice-8" size={14} color="#ba1c1c" />
                             <Text style={styles.locationText}>{booking.drop}</Text>
                         </View>
                     </View>
@@ -90,9 +93,10 @@ const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
+
             </ScrollView>
 
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -103,11 +107,16 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 16,
-        marginTop: 30,
+        justifyContent: 'space-between',
+        marginTop: 10,
+        marginBottom: 20,
     },
-
-
+    safeArea: {
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+        paddingHorizontal: 20,
+    },
     row: {
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -211,7 +220,7 @@ const styles = StyleSheet.create({
         color: '#333',
         marginLeft: 10,
         flex: 1,
-        
+
     },
 
     vendorContact: {
@@ -254,6 +263,21 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
     },
-
-
+    supportButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        backgroundColor: '#f1f1f1',
+        borderRadius: 8,
+    },
+    supportText: {
+        fontSize: 15,
+        color: '#000',
+        fontWeight: '500',
+    },
+    backButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
 });

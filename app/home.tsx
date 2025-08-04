@@ -53,50 +53,6 @@ export default function HomeScreen() {
         })();
     }, []);
 
-    const mapStyle = [
-        {
-            elementType: "geometry",
-            stylers: [{ color: "#E5E4E2" }],
-        },
-        {
-            elementType: "labels.text.fill",
-            stylers: [{ color: "#000000" }],
-        },
-        // {
-        //     elementType: "labels.text.stroke",
-        //     stylers: [{ color: "#E5E4E2" }],
-        // },
-        {
-            featureType: "administrative",
-            elementType: "geometry",
-            stylers: [{ visibility: "off" }],
-        },
-        {
-            featureType: "poi",
-            elementType: 'labels',
-            stylers: [{ visibility: "off" }],
-        },
-        {
-            featureType: "road",
-            elementType: "geometry",
-            stylers: [{ color: "#ffffff" }],
-        },
-        {
-            featureType: "road",
-            elementType: "labels.icon",
-            stylers: [{ visibility: "off" }],
-        },
-        {
-            featureType: "transit",
-            stylers: [{ visibility: "off" }],
-        },
-        {
-            featureType: "water",
-            elementType: "geometry",
-            stylers: [{ color: "off" }],
-        },
-    ];
-
     const [region, setRegion] = useState<{
         latitude: number;
         longitude: number;
@@ -112,10 +68,10 @@ export default function HomeScreen() {
                     region={region || {
                         latitude: 17.385044,
                         longitude: 78.486671,
-                        latitudeDelta: 0.1,
-                        longitudeDelta: 0.1,
+                        latitudeDelta: 0.019,
+                        longitudeDelta: 0.019,
                     }}
-                    customMapStyle={mapStyle}
+                    // customMapStyle={mapStyle}
                     showsUserLocation={true}
                 >
                     {region && (
@@ -129,7 +85,7 @@ export default function HomeScreen() {
                 <View style={styles.card}>
                     <View style={styles.row}>
                         <TouchableOpacity>
-                            <Ionicons name="menu" size={24} color="#000" style={styles.leftIcon} onPress={() => {
+                            <Ionicons name="menu" size={28} color="#000" style={styles.leftIcon} onPress={() => {
                             router.push('/menu');
                         }}/>
                         </TouchableOpacity>
@@ -274,6 +230,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderColor: '#ccc',
         backgroundColor: '#fff',
+        height: 50,
     },
     input: {
         flex: 1,
@@ -354,7 +311,7 @@ const styles = StyleSheet.create({
     },
     whiteBackground: {
         flex: 1,
-        backgroundColor: '#E5E4E2',
+        backgroundColor: '#ececec',
 
     },
     shiftDateContainer: {

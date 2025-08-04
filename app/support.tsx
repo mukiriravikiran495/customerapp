@@ -2,20 +2,22 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-  Dimensions,
-  Platform,
-  SafeAreaView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View
+    Dimensions,
+    Platform,
+    SafeAreaView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
 
-export default function faq() {
+export default function support() {
     const router = useRouter();
+
+  
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     const faqList = [
@@ -51,7 +53,7 @@ export default function faq() {
                 {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
                     <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>FAQ</Text>
+                    <Text style={styles.headerTitle}>Support</Text>
                 </TouchableOpacity>
             </View>
             {/* FAQ List */}
