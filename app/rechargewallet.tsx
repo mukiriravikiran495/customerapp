@@ -2,18 +2,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-  Dimensions,
-  Image,
-  Modal,
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View
+    Dimensions,
+    Image,
+    Modal,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -58,7 +58,7 @@ export default function rechargewallet() {
                 {/* Refer and Earn Card */}
                 <TouchableOpacity style={styles.referCard} onPress={() => router.push('/refer')}>
                     <View style={styles.referRow}>
-                        <Image source={require('../assets/images/refer.png')} style={styles.referIcon} resizeMode="contain" />
+                        <Image source={require('../assets/images/refer.jpg')} style={styles.referIcon} resizeMode="contain" />
                         <View>
                             <Text style={styles.referTitle}>Refer and Earn</Text>
                             <Text style={styles.referSubTitle}>upto ₹1400</Text>
@@ -138,7 +138,7 @@ export default function rechargewallet() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#fff',
+      
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         paddingVertical: 20, // Only vertical padding
         marginBottom: 16,
-        elevation: 3,
+        elevation: 1,
     },
     referCard: {
         flexDirection: 'row',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
         // Shadow for Android
-        elevation: 3,
+        elevation: 1,
 
         // Shadow for iOS
         shadowColor: '#000',

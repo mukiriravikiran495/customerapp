@@ -6,8 +6,10 @@ import {
     FlatList,
     Image,
     Modal,
+    Platform,
     Pressable,
     ScrollView,
+    StatusBar,
     StyleSheet,
     Text,
     TextInput,
@@ -133,6 +135,8 @@ const VendorsScreen = () => {
     const filterKeys: DropdownKey[] = ['Rating', 'Price', 'Services', 'Vehicle', 'Sort'];
     const [selectedFilters, setSelectedFilters] = useState<Record<string, string>>({});
     const [activeDropdown, setActiveDropdown] = useState<DropdownKey | null>(null);
+    const [isSearching, setIsSearching] = useState(false);
+    const [searchText, setSearchText] = useState('');
     const toggleDropdown = (key: DropdownKey) => {
         setActiveDropdown(activeDropdown === key ? null : key);
     };
@@ -144,27 +148,57 @@ const VendorsScreen = () => {
 
     return (
         <SafeAreaView style={styles.screen}>
+            {/* HEADER */}
+            <View style={styles.headerWrapper}>
+                <View style={styles.statusBarSpacer} />
+                <View style={styles.header}>
+                    {/* LEFT: Back Button */}
+                    <View style={styles.sideContainer}>
+                        <TouchableOpacity onPress={() => router.back()} style={styles.iconHitBox}>
+                            <Ionicons name="chevron-back" size={24} color="#212121" />
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* CENTER: Title or Search */}
+                    <View style={styles.centerContainer}>
+                        {isSearching ? (
+                            <TextInput
+                                value={searchText}
+                                onChangeText={setSearchText}
+                                placeholder="Search..."
+                                placeholderTextColor="#999"
+                                style={styles.searchInput}
+                                autoFocus
+                            />
+                        ) : (
+                            <Text style={styles.title} numberOfLines={1}>
+                                Search Vendors
+                            </Text>
+                        )}
+                    </View>
+
+                    {/* RIGHT: Search / Close Button */}
+                    <View style={styles.sideContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsSearching(!isSearching);
+                                if (isSearching) setSearchText('');
+                            }}
+                            style={styles.iconHitBox}
+                        >
+                            <Ionicons name={isSearching ? 'close' : 'search'} size={22} color="#212121" />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
+
             <FlatList
                 data={vendors}
                 keyExtractor={(item) => item.id.toString()}
                 contentContainerStyle={{ padding: 10 }}
                 ListHeaderComponent={
-                     <View>
-                        {/* Search bar */}
-                        <View style={{ paddingHorizontal: 10, marginBottom: 5 }}>
-                            <View style={styles.searchContainer}>
-                                <TouchableOpacity onPress={() => router.back()} style={styles.iconContainer}>
-                                    <Ionicons name="arrow-back" size={22} color="#000" />
-                                </TouchableOpacity>
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Search items"
-                                    placeholderTextColor="#888"
-                                    value={searchQuery}
-                                    onChangeText={setSearchQuery}
-                                />
-                            </View>
-                        </View>
+                    <View>
+
 
                         {/* Filter dropdowns */}
                         <ScrollView
@@ -194,7 +228,7 @@ const VendorsScreen = () => {
                             styles.cardTouchable,
                             pressed && styles.cardPressed,
                         ]}
-                        >
+                    >
                         <View style={styles.card}>
                             <View style={styles.imageContainer}>
                                 <Image source={item.image} style={styles.image} resizeMode="cover" />
@@ -285,27 +319,84 @@ export default VendorsScreen;
 const styles = StyleSheet.create({
     screen: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         flexDirection: 'column',
-        paddingTop: 10,
+        
     },
-    searchContainer: {
+    headerWrapper: {
+        backgroundColor: '#FFF',
+        ...Platform.select({
+            android: {
+                elevation: 4,
+            },
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+            },
+        }),
+        zIndex: 10,
+    },
+    statusBarSpacer: {
+        height: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
+    counterContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        height: height * 0.06,
-        elevation: 3,
+        
+        justifyContent: 'center',
     },
-    iconContainer: {
-        marginRight: 8,
+    header: {
+        height: 10,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 12,
     },
-    input: {
+    categoryEmoji: {
+        fontSize: 30,
+        marginBottom: 6,
+    },
+    sideContainer: {
+        width: 48,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    centerContainer: {
         flex: 1,
-        fontSize: 16,
-        color: '#000',
+        justifyContent: 'center',
     },
+    title: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#212121',
+        textAlign: 'center',
+    },
+    searchInput: {
+        fontSize: 16,
+        paddingVertical: 1,
+        paddingHorizontal: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#AAA',
+        color: '#212121',
+    },
+    headerTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#212121',
+    },
+    iconHitBox: {
+        padding: 8,
+    },
+    contentWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+
+    },
+
     dropdownRow: {
         marginTop: 15,
         marginBottom: 15,

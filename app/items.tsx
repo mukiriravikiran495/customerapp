@@ -1,41 +1,24 @@
 import { Ionicons } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
-import {
-    Dimensions,
-    FlatList,
-    Image,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-const { width, height } = Dimensions.get('window');
-const categories = [
-    { id: "furniture", name: "Furniture", icon: "🪑" },
-    { id: "electronics", name: "Electronics", icon: "📺" },
-    { id: "kitchen", name: "Kitchen Items", icon: "🍽️" },
-    { id: "clothes", name: "Clothes", icon: "👕" },
-    { id: "books", name: "Books", icon: "📚" },
-    { id: "appliances", name: "Appliances", icon: "🔌" },
-    { id: "decorative", name: "Decorative", icon: "🎨" },
-    { id: "sports", name: "Sports", icon: "⚽" },
-];
-
-type CategoryKey = 'furniture' | 'electronics' | 'kitchen';
-
-interface Item {
+import { Dimensions, FlatList, Image, Platform, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+type Item = {
     id: number;
     name: string;
     image: string;
-    category: CategoryKey;
-}
-
+    category: string;
+};
+const categories = [
+    { id: '1', name: 'All', icon: '🪑' },
+    { id: '2', name: "Electronics", icon: "📺" },
+    { id: '3', name: "Kitchen Items", icon: "🍽️" },
+    { id: '4', name: "Clothes", icon: "👕" },
+    { id: '5', name: "Books", icon: "📚" },
+    { id: '6', name: "Appliances", icon: "🔌" },
+    { id: '7', name: "Decorative", icon: "🎨" },
+    { id: '8', name: "Sports", icon: "⚽" },
+];
+type CategoryKey = 'furniture' | 'electronics' | 'kitchen' | 'clothes' | 'books' | 'appliances' | 'decorative' | 'sports';
 const items: Record<CategoryKey, Item[]> = {
     furniture: [
         {
@@ -81,7 +64,7 @@ const items: Record<CategoryKey, Item[]> = {
             category: "furniture",
         },
         {
-            id: 17,
+            id: 22,
             name: "Television",
             image:
                 "https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200&h=200&fit=crop",
@@ -161,394 +144,470 @@ const items: Record<CategoryKey, Item[]> = {
                 "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
             category: "kitchen",
         },
+
+    ],
+    clothes: [{
+        id: 17,
+        name: "clothes",
+        image:
+            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+        category: "Clothes",
+    },
+    ],
+    appliances: [
+        {
+        id: 18,
+        name: "Appliances",
+        image:
+            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+        category: "Appliances",
+    },
+    ],
+    decorative: [
+        {
+        id: 19,
+        name: "Decorative",
+        image:
+            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+        category: "Decorative",
+    },
+    ],
+    sports: [
+        {
+        id: 20,
+        name: "sports",
+        image:
+            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+        category: "Sports",
+    },
+    ],
+    books: [
+        {
+        id: 21,
+        name: "Kitchen Cabinet",
+        image:
+            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+        category: "Books",
+    },
     ],
 };
-const offers = [
-    {
-      id: 1,
-      image: require('@/assets/images/offer4.jpg'),
-      title: "50% Off First Move",
-    },
-    {
-      id: 2,
-      image: require('@/assets/images/offer1.jpg'),
-      title: "Free Packaging",
-    },
-    {
-      id: 3,
-      image: require('@/assets/images/offer3.jpg'),
-      title: "Insurance Cover",
-    },
-    {
-      id: 4,
-      image: require('@/assets/images/offer4.jpg'),
-      title: "Same Day Delivery",
-    },
-    {
-      id: 5,
-      image:
-        require('@/assets/images/offer4.jpg'),
-      title: "Premium Movers",
-    },
-    {
-      id: 6,
-      image:
-        require('@/assets/images/offer4.jpg'),
-      title: "24/7 Support",
-    },
-    {
-      id: 7,
-      image:
-        require('@/assets/images/offer4.jpg'),
-      title: "Expert Packing",
-    },
-    {
-      id: 8,
-      image:
-        require('@/assets/images/offer4.jpg'),
-      title: "Secure Transit",
-    },
-  ];
+const allItems = Object.values(items).flat();
+const categoryNameToKey: Record<string, CategoryKey> = {
+  'Electronics': 'electronics',
+  'Kitchen Items': 'kitchen',
+  'Clothes': 'clothes',
+  'Books': 'books',
+  'Appliances': 'appliances',
+  'Decorative': 'decorative',
+  'Sports': 'sports',
+  
+};
 
-export default function CategoryItemsScreen() {
+const getFilteredItems = (categoryId: string) => {
+  const categoryName = categories.find(c => c.id === categoryId)?.name;
+  if (!categoryName) return [];
+
+  if (categoryName === 'All') return allItems;
+
+  const key = categoryNameToKey[categoryName];
+  return items[key as CategoryKey] || [];
+};
+
+
+
+export default function App() {
     const router = useRouter();
-    const navigation = useNavigation();
-    const [cart, setCart] = useState<Record<number, number>>({});
-    const [selectedCategory, setSelectedCategory] = useState<CategoryKey>('furniture');
+    const [selectedCategory, setSelectedCategory] = useState('1');
+    const [isSearching, setIsSearching] = useState(false);
     const [searchText, setSearchText] = useState('');
-    const [searchQuery, setSearchQuery] = useState('');
-
-    const isValidCategory = (value: string): value is CategoryKey => {
-        return ['furniture', 'electronics', 'kitchen'].includes(value);
+    const [itemCounts, setItemCounts] = useState<{ [key: number]: number }>({});
+    const hasSelectedItems = Object.values(itemCounts).some(count => count > 0);
+    const handleFindMovers = () => {
+        console.log('Finding movers for:', itemCounts);
+        router.push('/vendors');
+    };
+    const handleAdd = (itemId: number) => {
+        setItemCounts(prev => ({ ...prev, [itemId]: 1 }));
     };
 
-    const renderCategory = (cat: { id: string; name: string; icon: string }) => (
-        <TouchableOpacity
-            key={cat.id}
-            style={[
-                styles.categoryItem,
-                selectedCategory === cat.id && styles.activeCategory,
-            ]}
-            onPress={() => {
-                if (isValidCategory(cat.id)) {
-                    setSelectedCategory(cat.id);
-                }
-            }}
-        >
-            <Text style={styles.categoryIcon}>{cat.icon}</Text>
-            <Text style={styles.categoryLabel}>{cat.name}</Text>
-        </TouchableOpacity>
-    );
-
-    const renderItem = ({ item }: { item: Item }) => {
-        const quantity = cart[item.id] || 0;
-
-        const increase = () => {
-            setCart((prev) => ({
-                ...prev,
-                [item.id]: quantity + 1,
-            }));
-        };
-
-        const decrease = () => {
-            setCart((prev) => {
-                const currentQty = prev[item.id] || 0;
-                if (currentQty <= 1) {
-                    const updated = { ...prev };
-                    delete updated[item.id];
-                    return updated;
-                }
-                return { ...prev, [item.id]: currentQty - 1 };
-            });
-        };
-
-        return (
-            <View style={styles.itemCard}>
-                <Image source={{ uri: item.image }} style={styles.itemImage} />
-                <Text style={styles.itemName}>{item.name}</Text>
-                {quantity === 0 ? (
-                    <TouchableOpacity style={styles.addButton} onPress={increase}>
-                        <Text style={styles.addText}>ADD</Text>
-                    </TouchableOpacity>
-                ) : (
-                    <View style={styles.counterContainer}>
-                        <TouchableOpacity onPress={decrease} style={styles.counterButton}>
-                            <Text style={styles.counterText}>-</Text>
-                        </TouchableOpacity>
-                        <Text style={styles.quantityText}>{quantity}</Text>
-                        <TouchableOpacity onPress={increase} style={styles.counterButton}>
-                            <Text style={styles.counterText}>+</Text>
-                        </TouchableOpacity>
-                    </View>
-                )}
-            </View>
-        );
+    const increaseCount = (itemId: number) => {
+        setItemCounts(prev => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
     };
 
-    const selectedItemsCount = Object.keys(cart).length;
-
-    const filteredItems = items[selectedCategory].filter((item) =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const decreaseCount = (itemId: number) => {
+        setItemCounts(prev => {
+            const newCount = (prev[itemId] || 0) - 1;
+            if (newCount <= 0) {
+                const updated = { ...prev };
+                delete updated[itemId];
+                return updated;
+            }
+            return { ...prev, [itemId]: newCount };
+        });
+    };
 
     return (
-        <SafeAreaView style={styles.screen}>
-            <View style={styles.searchContainer}>
-                <TouchableOpacity onPress={() => router.back()} style={styles.iconContainer}>
-                    <Ionicons name="arrow-back" size={22} color="#000" />
-                </TouchableOpacity>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Search items"
-                    placeholderTextColor="#888"
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                />
-            </View>
+        <View style={styles.container}>
+            {/* HEADER */}
+            <View style={styles.headerWrapper}>
+                <View style={styles.statusBarSpacer} />
+                <View style={styles.header}>
+                    {/* LEFT: Back Button */}
+                    <View style={styles.sideContainer}>
+                        <TouchableOpacity onPress={() => router.push('/home')} style={styles.iconHitBox}>
+                            <Ionicons name="chevron-back" size={24} color="#212121" />
+                        </TouchableOpacity>
+                    </View>
 
-            <View style={styles.container}>
-                <View style={styles.categoryList}>
-                    <ScrollView showsVerticalScrollIndicator={false}>
-                        {categories.map(renderCategory)}
-                    </ScrollView>
+                    {/* CENTER: Title or Search */}
+                    <View style={styles.centerContainer}>
+                        {isSearching ? (
+                            <TextInput
+                                value={searchText}
+                                onChangeText={setSearchText}
+                                placeholder="Search..."
+                                placeholderTextColor="#999"
+                                style={styles.searchInput}
+                                autoFocus
+                            />
+                        ) : (
+                            <Text style={styles.title} numberOfLines={1}>
+                                Select Items
+                            </Text>
+                        )}
+                    </View>
+
+                    {/* RIGHT: Search / Close Button */}
+                    <View style={styles.sideContainer}>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setIsSearching(!isSearching);
+                                if (isSearching) setSearchText('');
+                            }}
+                            style={styles.iconHitBox}
+                        >
+                            <Ionicons name={isSearching ? 'close' : 'search'} size={22} color="#212121" />
+                        </TouchableOpacity>
+                    </View>
                 </View>
-
-                {/* Remove this to show offers Grid of Items */}
-                    <FlatList
-                        data={filteredItems}
-                        keyExtractor={(item) => item.id.toString()}
-                        numColumns={2}
-                        renderItem={renderItem}
-                        columnWrapperStyle={{ justifyContent: 'space-between' }}
-                        contentContainerStyle={{ paddingBottom: 100 }}
-                        showsVerticalScrollIndicator={false}
-                    />
-
-                
-
             </View>
 
-            {/* Footer */}
-            <View style={styles.footer}>
+            <View style={styles.contentWrapper}>
+                {/* LEFT CATEGORIES */}
+                <ScrollView style={styles.leftPanel} contentContainerStyle={{ paddingVertical: 10 }}>
+                    {categories.map(cat => (
+                        <TouchableOpacity
+                            key={cat.id}
+                            style={[
+                                styles.categoryItem,
+                                selectedCategory === cat.id && styles.activeCategory
+                            ]}
+                            onPress={() => setSelectedCategory(cat.id)}
+                        >
+                            {typeof cat.icon === 'string' ? (
+                                <Text style={styles.categoryEmoji}>{cat.icon}</Text>
+                            ) : (
+                                <Image source={cat.icon} style={styles.categoryIcon} />
+                            )}
+                            <Text
+                                style={[
+                                    styles.categoryText,
+                                    selectedCategory === cat.id && styles.activeCategoryText
+                                ]}
+                            >
+                                {cat.name}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </ScrollView>
 
-                <TouchableOpacity
-                    style={[
-                        styles.footerButton,
-                        {
-                            backgroundColor: selectedItemsCount > 0 ? '#ba1c1c' : '#ccc',
-                            opacity: selectedItemsCount > 0 ? 1 : 0.5,
-                        },
-                    ]}
-                    disabled={selectedItemsCount === 0}
-                    onPress={() => {
-                        console.log('Navigating to /vendors'); // 👈 Debug log
-                        router.push('/vendors');
-                    }}>
-                    <Text style={styles.findMoversText}>
-                        <Text style={styles.findMoversMain}>Find Movers{'\n'}</Text>
-                        <Text style={styles.findMoversSub}>
-                            {selectedItemsCount} item{selectedItemsCount > 1 ? 's' : ''} selected
-                        </Text>
-                    </Text>
-                </TouchableOpacity>
+                {/* RIGHT ITEMS */}
+                <FlatList
+                    data={getFilteredItems(selectedCategory)}
+                    keyExtractor={item => item.id.toString()}
+                    renderItem={({ item }) => {
+                        const count = itemCounts[item.id] || 0;
+
+                        return (
+                            <View style={styles.itemCard}>
+                                <Image source={{ uri: item.image }} style={styles.itemImage} />
+
+                                {count === 0 ? (
+                                    <TouchableOpacity
+                                        style={styles.addButton}
+                                        onPress={() => handleAdd(item.id)}
+                                    >
+                                        <Text style={styles.addButtonText}>ADD</Text>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <View style={styles.counterContainer}>
+                                        <TouchableOpacity onPress={() => decreaseCount(item.id)}>
+                                            <Text style={styles.counterButton}>-</Text>
+                                        </TouchableOpacity>
+                                        <Text style={styles.countText}>{count}</Text>
+                                        <TouchableOpacity onPress={() => increaseCount(item.id)}>
+                                            <Text style={styles.counterButton}>+</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
+
+                                <View style={styles.itemDetails}>
+                                    <Text style={styles.description}>{item.name}</Text>
+                                </View>
+                            </View>
+                        );
+                    }}
+
+                    numColumns={2}
+                    contentContainerStyle={styles.rightPanel}
+                    showsVerticalScrollIndicator={false}
+                />
+                {hasSelectedItems && (
+                    <TouchableOpacity style={styles.findMoversButton} onPress={handleFindMovers}>
+                        <Text style={styles.findMoversText}>Find Movers</Text>
+                    </TouchableOpacity>
+                )}
             </View>
-        </SafeAreaView>
+        </View>
     );
 }
 
+const screenWidth = Dimensions.get('window').width;
+const cardWidth = (screenWidth - 120) / 2;
+
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        backgroundColor: '#fff',
-        flexDirection: 'column',
-        paddingTop: 20,
-    },
     container: {
         flex: 1,
-        flexDirection: 'row',
         backgroundColor: '#fff',
     },
-    categoryList: {
-        width: width * 0.25,
-        backgroundColor: '#f9f9f9',
-        paddingVertical: 15,
-        paddingLeft: 10,
+    headerWrapper: {
+        backgroundColor: '#FFF',
+        ...Platform.select({
+            android: {
+                elevation: 8,
+            },
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 4 },
+                shadowOpacity: 0.1,
+                shadowRadius: 2,
+            },
+        }),
+        zIndex: 10,
+    },
+    statusBarSpacer: {
+        height: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+    },
+    counterContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop: 10,
+        justifyContent: 'center',
+    },
+    counterButton: {
+        fontSize: 18,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
+        backgroundColor: '#ba1c1c',
+        color: '#fff',
+        borderRadius: 6,
+        textAlign: 'center',
+        
+    },
+    countText: {
+        marginHorizontal: 12,
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    findMoversButton: {
+        position: 'absolute',
+        bottom: 50,
+        left: '50%',
+        transform: [{ translateX: -75 }], // Half of the button width
+        width: 150, // Fixed width for centering
+        paddingVertical: 16,
+
+        backgroundColor: 'red',
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        elevation: 20,
+        shadowColor: '#000',
+        shadowOpacity: 0.2,
+        shadowOffset: { width: 0, height: 2 },
+        shadowRadius: 4,
+    },
+
+
+    findMoversText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    header: {
+        height: 56,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal: 12,
+    },
+    categoryEmoji: {
+        fontSize: 30,
+        marginBottom: 6,
+    },
+    sideContainer: {
+        width: 48,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    centerContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    title: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#212121',
+        textAlign: 'center',
+    },
+    searchInput: {
+        fontSize: 16,
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderBottomWidth: 1,
+        borderBottomColor: '#AAA',
+        color: '#212121',
+    },
+    headerTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#212121',
+    },
+    iconHitBox: {
+        padding: 8,
+    },
+    contentWrapper: {
+        flex: 1,
+        flexDirection: 'row',
+        
+    },
+    leftPanel: {
+        width: 80,
+        backgroundColor: '#fff',
+        elevation: 8,
+       
     },
     categoryItem: {
         alignItems: 'center',
-        paddingVertical: 16,
-        paddingHorizontal: 4,
-        borderRadius: 10,
-        marginBottom: 8,
+        paddingVertical: 8,
+        paddingHorizontal: 8,
+        borderRadius: 12,
+        marginBottom: 10,
+        marginHorizontal: 2,
     },
     activeCategory: {
-        backgroundColor: '#f1d1d1',
+        backgroundColor: '#f3d0d0',
     },
     categoryIcon: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain',
+
         fontSize: 26,
         marginBottom: 4,
     },
-    categoryLabel: {
+    categoryText: {
         fontSize: 12,
+        color: '#555',
         textAlign: 'center',
     },
-    itemsGrid: {
-        flex: 1,
-        padding: 5,
+    activeCategoryText: {
+        fontWeight: 'bold',
+        color: '#C2185B',
+    },
+    rightPanel: {
+        padding: 10,
         
     },
     itemCard: {
-        top: 5,
         backgroundColor: '#fff',
-        borderRadius: 10,
-        marginBottom: 12,
-        width: (width * 0.7) / 2,
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowOffset: { width: 0, height: 2 },
-        elevation: 2,
+        borderRadius: 12,
         padding: 10,
-        alignItems: 'center',
+        margin: 6,
+        width: cardWidth,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+        elevation: 2,
+        
     },
     itemImage: {
         width: '100%',
         height: 100,
         borderRadius: 8,
-        resizeMode: 'cover',
+        resizeMode: 'contain',
+        marginBottom: 6,
     },
     addButton: {
-        borderColor: '#ba1c1c',
-        borderWidth: 1.5,
-        borderRadius: 6,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        marginTop: 8,
-        width: 80, // 👈 Set desired width (e.g., 100)
-        alignItems: 'center', // 👈 Center the text inside
-    },
-    addText: {
-        color: '#ba1c1c',
-        fontWeight: 'bold',
-        fontSize: 12,
-    },
-    itemName: {
-        fontSize: 14,
-        textAlign: 'center',
-        marginTop: 6,
-        color: '#333',
-    },
-    searchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
-        paddingHorizontal: 15,
-        height: height * 0.06,
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowOffset: { width: 0, height: 2 },
-        elevation: 3,
-        marginHorizontal: 10,
-    },
-    iconContainer: {
-        marginRight: 8,
-    },
-    input: {
-        flex: 1,
-        fontSize: 16,
-        color: '#000',
-    },
-    counterContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginTop: 8,
-        borderWidth: 1.5,
-        borderColor: '#ba1c1c',
-        borderRadius: 6,
-        overflow: 'hidden',
-    },
-    counterButton: {
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-        backgroundColor: '#ba1c1c',
-    },
-    counterText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-    quantityText: {
-        paddingHorizontal: 10,
-        fontWeight: 'bold',
-        fontSize: 14,
-    },
-    footer: {
         position: 'absolute',
-        bottom: 40,
-        left: 0,
-        right: 0,
-        alignItems: 'center',
-        justifyContent: 'center',
-        zIndex: 1000,
-        backgroundColor: 'transparent',
-    },
-
-    findMoversText: {
-        textAlign: 'center',
-    },
-
-    findMoversMain: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-
-    findMoversSub: {
-        color: '#fff',
-        fontSize: 10,
-        fontWeight: '400',
-        textTransform: 'lowercase',
-    },
-    footerButton: {
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-
-        position: 'absolute',
-        bottom: 30, // 🔼 This adds space above the bottom edge (footer)
-
-        backgroundColor: 'red',
-        // padding: 10,
-        borderRadius: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    offersContainer: {
-        marginBottom: 10,
-    },
-
-    offerCard: {
-        width: 150,
-        marginRight: 12,
-        borderRadius: 10,
-        overflow: 'hidden',
+        right: 10,
+        top: 90,
         backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#ba1c1c',
+        paddingHorizontal: 20,
+        paddingVertical: 8,
+        borderRadius: 6,
     },
-
-    offerImage: {
-        width: '100%',
-        height: 80,
-        resizeMode: 'cover',
-    },
-
-    offerTitle: {
-        padding: 6,
-        fontSize: 12,
+    addButtonText: {
+        color: '#ba1c1c',
         fontWeight: '600',
-        textAlign: 'center',
+        fontSize: 12,
     },
 
+    itemDetails: {
+        marginTop: 10,
+    },
+    itemPriceRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    price: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#212121',
+    },
+    strike: {
+        fontSize: 12,
+        color: '#999',
+        textDecorationLine: 'line-through',
+        marginLeft: 4,
+    },
+    weight: {
+        fontSize: 12,
+        color: '#555',
+    },
+    discount: {
+        fontSize: 12,
+        color: 'green',
+        marginVertical: 2,
+    },
+    description: {
+        fontSize: 13,
+        fontWeight: '500',
+        color: '#212121',
+    },
+    sourced: {
+        fontSize: 10,
+        color: '#00BFA5',
+        marginVertical: 2,
+    },
+    rating: {
+        fontSize: 10,
+        color: '#555',
+    },
 });

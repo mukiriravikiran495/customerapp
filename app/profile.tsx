@@ -2,11 +2,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-  Dimensions, Image, Platform,
-  SafeAreaView, ScrollView, StatusBar,
-  StyleSheet,
-  Text, TextInput, TouchableOpacity,
-  View
+    Dimensions, Image, Platform,
+    SafeAreaView, ScrollView, StatusBar,
+    StyleSheet,
+    Text, TextInput, TouchableOpacity,
+    View
 } from 'react-native';
 
 const { width } = Dimensions.get('window');
@@ -121,7 +121,7 @@ export default function profileInfo() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#fff',
+     
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },

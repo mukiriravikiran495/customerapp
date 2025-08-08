@@ -513,7 +513,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#f2f1f1ff',
+        
     },
     // header: {
     //     flexDirection: 'row',

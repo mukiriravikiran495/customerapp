@@ -12,7 +12,6 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
-import MapView from 'react-native-maps';
 
 type RootStackParamList = {
     LocationSelector: undefined;
@@ -36,18 +35,8 @@ const LocationSelector: React.FC<Props> = ({ navigation }) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            {/* Background Map */}
-            <MapView
-                style={StyleSheet.absoluteFillObject}
-                // customMapStyle={mapStyle}
-                initialRegion={{
-                    latitude: 17.385044,
-                    longitude: 78.486671,
-                    latitudeDelta: 0.019,
-                    longitudeDelta: 0.019,
-                }}
-            />
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+
 
             {/* Foreground UI */}
             <KeyboardAvoidingView
@@ -58,8 +47,8 @@ const LocationSelector: React.FC<Props> = ({ navigation }) => {
                     {/* Header */}
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => router.back()} >
-                                            <Ionicons name="arrow-back" size={28} color="#000" />
-                                        </TouchableOpacity>
+                            <Ionicons name="arrow-back" size={28} color="#000" />
+                        </TouchableOpacity>
                     </View>
 
                     {/* Input Card */}
@@ -87,7 +76,7 @@ const LocationSelector: React.FC<Props> = ({ navigation }) => {
                         </View>
                     </View>
                 </View>
-                
+
             </KeyboardAvoidingView>
         </SafeAreaView>
     );
@@ -101,24 +90,25 @@ const styles = StyleSheet.create({
         marginTop: 50,
     },
     header: {
-        marginBottom: 30,
+        marginBottom: 20,
     },
     card: {
         // backgroundColor: 'rgba(255, 255, 255, 0.95)', // translucent background
         borderRadius: 5,
-        elevation: 4,
-        shadowColor: '#000',
+        // elevation: 4,
+        // shadowColor: '#000',
         shadowOpacity: 0.1,
-        shadowRadius: 6,
-        shadowOffset: { width: 0, height: 2 },
+        // shadowRadius: 6,
+        // shadowOffset: { width: 0, height: 2 },
         overflow: 'hidden',
         marginBottom: 12,
-        backgroundColor: '#fff',
+        backgroundColor: '#F5F6FA',
+        borderWidth: 0.2,
     },
     input: {
         padding: 16,
         fontSize: 16,
-        color: '#333',
+        color: '#ede2e2',
     },
     divider: {
         height: 1,
@@ -142,7 +132,7 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: 16,
-        color: '#444',
+        color: '#999',
     },
     bottomCard: {
         backgroundColor: 'rgba(255, 255, 255, 0.95)',

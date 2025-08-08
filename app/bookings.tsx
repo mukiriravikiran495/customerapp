@@ -103,7 +103,7 @@ const Bookings: React.FC<BookingsProps> = ({ navigation }) => {
 export default Bookings;
 
 const styles = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#fff' },
+    container: { flex: 1, },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     },
     safeArea: {
         flex: 1,
-        backgroundColor: '#fff',
+        
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         borderRadius: 16,
         padding: 16,
-        elevation: 4,
+        elevation: 2,
         shadowColor: '#000',
         shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 2 },

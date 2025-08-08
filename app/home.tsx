@@ -1,356 +1,432 @@
 import { Ionicons } from '@expo/vector-icons';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Location from 'expo-location';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
-
 import {
     Dimensions,
-
+    Image,
+    Modal,
+    Platform,
+    SafeAreaView,
     ScrollView,
+    StatusBar,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View
 } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
+import Icon from 'react-native-vector-icons/Ionicons';
+let hasPopupBeenShown = false;
 const { width, height } = Dimensions.get('window');
 export default function HomeScreen() {
-    const [pickup, setPickup] = useState('');
-    const [drop, setDrop] = useState('');
-    const [shiftDate, setShiftDate] = useState('');
-    const [shiftType, setShiftType] = useState('');
-    const [showDatePicker, setShowDatePicker] = useState(false);
-    const [showShiftTypeDropdown, setShowShiftTypeDropdown] = useState(false);
     const router = useRouter();
-
-    const mapHeight = Dimensions.get('window').height * 0.7;
+    const [showPopup, setShowPopup] = useState(false);
+    const [locationText, setLocationText] = useState('');
+    const [showDrawer, setShowDrawer] = useState(false);
+    const [address, setAddress] = useState('');
+    const [mobile, setMobile] = useState('');
 
     useEffect(() => {
         (async () => {
-            const { status } = await Location.requestForegroundPermissionsAsync();
+            let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
-                console.log('Permission to access location was denied');
+                setLocationText('Permission denied');
                 return;
             }
 
-            const location = await Location.getCurrentPositionAsync({});
+            // let location = await Location.getCurrentPositionAsync({});
+            let location = await Location.getLastKnownPositionAsync();
+            if (!location) {
+                location = await Location.getCurrentPositionAsync({
+                    accuracy: Location.Accuracy.Balanced,
+                });
+            }
             const { latitude, longitude } = location.coords;
 
-            // Reverse geocode
-            const [place] = await Location.reverseGeocodeAsync({ latitude, longitude });
-            const formattedAddress = `${place.name}, ${place.street}, ${place.city}`;
-            setPickup(formattedAddress);
-
-            // Set region for map
-            setRegion({
+            // Reverse geocode to get human-readable address
+            let [address] = await Location.reverseGeocodeAsync({
                 latitude,
                 longitude,
-                latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
             });
+
+            if (address) {
+                const fullAddress = `${address.name}, ${address.street}, ${address.city}`;
+                setLocationText(fullAddress);
+            } else {
+                setLocationText(`Lat: ${latitude}, Lng: ${longitude}`);
+            }
         })();
     }, []);
 
-    const [region, setRegion] = useState<{
-        latitude: number;
-        longitude: number;
-        latitudeDelta: number;
-        longitudeDelta: number;
-    } | null>(null);
+    useEffect(() => {
+        if (!hasPopupBeenShown) {
+            setShowPopup(true);
+            hasPopupBeenShown = true;
+        }
+    }, []);
     return (
-        <View style={styles.container}>
-            {/* Map Section */}
-            <View style={{ height: mapHeight }}>
-                <MapView
-                    style={StyleSheet.absoluteFillObject}
-                    region={region || {
-                        latitude: 17.385044,
-                        longitude: 78.486671,
-                        latitudeDelta: 0.019,
-                        longitudeDelta: 0.019,
-                    }}
-                    // customMapStyle={mapStyle}
-                    showsUserLocation={true}
-                >
-                    {region && (
-                        <Marker
-                            coordinate={{ latitude: region.latitude, longitude: region.longitude }}
-                            title="Your Location"
-                        />
-                    )}
-                </MapView>
-                {/* Floating Pickup Card */}
-                <View style={styles.card}>
-                    <View style={styles.row}>
-                        <TouchableOpacity>
-                            <Ionicons name="menu" size={28} color="#000" style={styles.leftIcon} onPress={() => {
-                            router.push('/menu');
-                        }}/>
-                        </TouchableOpacity>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Pick up Location"
-                            placeholderTextColor="#aaa"
-                            value={pickup}
-                            onChangeText={setPickup}
-                        />
+        <SafeAreaView style={styles.container}>
+            <View style={styles.topBar}>
+                <TouchableOpacity onPress={() => router.back()} activeOpacity={0.9}>
+                    <View style={styles.menuButton}>
+                        <Icon name="menu" size={28} color="black" />
                     </View>
+                </TouchableOpacity>
+
+                {/* Input with map icon inside */}
+                <View style={{ paddingHorizontal: 12 }}>
+                    <TouchableOpacity onPress={() => router.push('/pickupaddress')} activeOpacity={0.8}>
+                        <View style={styles.searchBar}>
+                            <Ionicons
+                                name="location-sharp"
+                                size={20}
+                                color="green"
+                                style={styles.inputIcon}
+                            />
+                            {/* <TextInput
+                                placeholder="Pick up location"
+                                placeholderTextColor="#888"
+                                value={locationText}
+                                editable={false}
+                                style={styles.searchInput}
+                            /> */}
+                            <TextInput
+                                placeholder="Pick up location"
+                                placeholderTextColor="#888"
+                                value={locationText}
+                                onChangeText={setLocationText}
+                                editable={false}
+                                style={{
+                                    width: '75%', // or any %/px value
+                                    fontSize: 16,
+                                }}
+                            />
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </View>
 
-            {/* Bottom Section with White Background */}
-            {/* Bottom Section with White Background */}
-            <ScrollView style={styles.whiteBackground} keyboardShouldPersistTaps="handled">
-                {/* Drop + Shift info card */}
-                <View style={styles.comboCard}>
-                    {/* Drop Location */}
-                    <View style={styles.fullWidthRow}>
-                        <TextInput
-                            style={styles.destinationInput}
-                            placeholder="Select Destination"
-                            placeholderTextColor="#aaa"
-                            onPress={() => {
-                                router.push('/bookingcard');
-                            }}
-                            value={drop}
-                            onChangeText={setDrop}
-                        />
-                    </View>
 
-                    {/* Shift Date + Type */}
-                    <View style={styles.splitRow}>
-                        {/* Shift Date Field */}
-                        <TouchableOpacity
-                            style={styles.shiftDateContainer}
-                            onPress={() => setShowDatePicker(true)}
-                            activeOpacity={0.8}
-                        >
-                            <Ionicons name="calendar" size={18} color="#000" style={{ marginRight: 8 }} />
-                            <Text style={{ color: shiftDate ? '#000' : '#aaa', fontSize: 16 }}>
-                                {shiftDate || 'Shift date'}
-                            </Text>
+            {/* Select a service */}
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                contentContainerStyle={styles.scrollContent}
+            >
+                <View style={{ paddingHorizontal: 16 }}>
+                    <Text style={styles.sectionTitle}>Service</Text>
+                    <View style={styles.serviceRow}>
+                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/items')}>
+                            <Image source={require('../assets/images/packers5.png')} style={styles.serviceImage} />
                         </TouchableOpacity>
 
-                        {/* Shift Type Dropdown */}
-                        <TouchableOpacity
-                            style={styles.shiftTypeContainer}
-                            activeOpacity={0.8}
-                            onPress={() => setShowShiftTypeDropdown(!showShiftTypeDropdown)}
-                        >
-                            <Text style={{ color: shiftType ? '#000' : '#aaa', fontSize: 16 }}>
-                                {shiftType || 'Shift type'}
-                            </Text>
-                            <Ionicons name="chevron-down" size={18} color="#000" />
+                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/selectdropaddress')}>
+                            <Image source={require('../assets/images/truck5.png')} style={styles.serviceImage} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7}>
+                            <Image source={require('../assets/images/bike5.png')} style={styles.serviceImage} />
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7}>
+                            <Image source={require('../assets/images/parcel5.png')} style={styles.serviceImage} />
                         </TouchableOpacity>
                     </View>
 
-                    {/* Shift Type Dropdown Options */}
-                    {showShiftTypeDropdown && (
-                        <View style={styles.dropdown}>
-                            {['ONE BHK', 'TWO BHK', 'THREE BHK'].map((type) => (
-                                <TouchableOpacity
-                                    key={type}
-                                    onPress={() => {
-                                        setShiftType(type);
-                                        setShowShiftTypeDropdown(false);
-                                    }}
-                                    style={styles.dropdownItem}
-                                >
-                                    <Text style={styles.dropdownText}>{type}</Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    )}
 
-                    {showDatePicker && (
-                        <DateTimePicker
-                            value={new Date()}
-                            mode="date"
-                            display="default"
-                            onChange={(event, selectedDate) => {
-                                setShowDatePicker(false);
-                                if (selectedDate) {
-                                    const formattedDate = selectedDate.toISOString().split('T')[0];
-                                    setShiftDate(formattedDate);
-                                }
-                            }}
-                        />
-                    )}
-                </View>
-
-                {/* Continue Button */}
-                <View style={styles.bottomOverlay}>
-                    <TouchableOpacity
-                        style={styles.continueButton}
-                        onPress={() => {
-                            console.log({ pickup, drop, shiftDate, shiftType });
-                            router.push('/items');
-                        }}
-                    >
-                        <Text style={styles.continueText}>Continue</Text>
+                    {/* Refer banner */}
+                    {/* <Text style={styles.serviceSectionTitle}>Refer and Earn</Text> */}
+                    <TouchableOpacity style={styles.referCard} activeOpacity={0.5}>
+                        <Image source={require('../assets/images/refer.jpg')} style={styles.referImage} />
                     </TouchableOpacity>
+
+                    {/* Service Provided */}
+                    <Text style={styles.serviceSectionTitle}>Service provided while Shiftyng</Text>
+
+                    <ScrollView
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        contentContainerStyle={styles.inlineImages}
+                    >
+                        <View style={styles.serviceItem}>
+                            <Image source={require('../assets/images/ac.png')} style={styles.smallServiceImage} />
+                            <Text style={styles.serviceText}>AC Service</Text>
+                        </View>
+
+                        <View style={styles.serviceItem}>
+                            <Image source={require('../assets/images/truckservice.jpg')} style={styles.smallServiceImage} />
+                            <Text style={styles.serviceText}>Truck Service</Text>
+                        </View>
+
+                        <View style={styles.serviceItem}>
+                            <Image source={require('../assets/images/wrapping.jpg')} style={styles.smallServiceImage} />
+                            <Text style={styles.serviceText}>Wrapping</Text>
+                        </View>
+
+                        <View style={styles.serviceItem}>
+                            <Image source={require('../assets/images/wrapping.jpg')} style={styles.smallServiceImage} />
+                            <Text style={styles.serviceText}>Wrapping</Text>
+                        </View>
+                    </ScrollView>
+
+                    {/* Footer */}
+                    <View style={styles.footerImageWrap}>
+                        <Image source={require('../assets/images/footer.jpg')} style={styles.footerImage} />
+                    </View>
+
+
                 </View>
             </ScrollView>
+            <Modal
+                transparent
+                visible={showPopup}
+                animationType="fade"
+                onRequestClose={() => setShowPopup(false)}
+            >
+                <View style={styles.modalOverlay}>
+                    <View style={styles.popupContainer}>
+                        <TouchableOpacity
+                            style={styles.closeButton}
+                            onPress={() => setShowPopup(false)}
+                        >
+                            <Ionicons name="close" size={24} color="#333" />
+                        </TouchableOpacity>
+                        <Image
+                            source={require('../assets/images/add.jpg')}
+                            style={styles.popupImage}
+                            resizeMode="contain"
+                        />
+                    </View>
+                </View>
+            </Modal>
 
-        </View>
+
+
+        </SafeAreaView>
     );
 }
 
 
-
 const styles = StyleSheet.create({
+    scrollContent: {
+        // paddingHorizontal: 16,
+        paddingTop: 84,
+        paddingBottom: 20,
+        flexGrow: 1,
+        marginTop: 20,
+
+    },
     container: {
         flex: 1,
+        backgroundColor: '#FFFFFF',
+        // paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
     },
-    card: {
+    icon: {
+        marginRight: 10,
+    },
+    topBar: {
         position: 'absolute',
-        top: height * 0.06,
-        left: width * 0.03,
-        right: width * 0.03,
-        borderRadius: 10,
-        backgroundColor: '#fff',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 4,
-        overflow: 'hidden',
-        zIndex: 10,
-    },
-    leftIcon: {
-        paddingLeft: width * 0.04,
-        paddingRight: width * 0.02,
-        alignSelf: 'center',
-    },
-    row: {
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         flexDirection: 'row',
         alignItems: 'center',
-        borderBottomWidth: 0.5,
-        borderColor: '#ccc',
+        justifyContent: 'space-between',
+        padding: 12,
         backgroundColor: '#fff',
-        height: 50,
-    },
-    input: {
-        flex: 1,
-        height: height * 0.06,
-        fontSize: width * 0.04,
-        color: '#000',
-        backgroundColor: '#fff',
-    },
-    comboCard: {
 
-        marginHorizontal: width * 0.05,
-        marginTop: height * 0.02,
-        marginBottom: height * 0.01,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 5,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        overflow: 'hidden',
-        shadowColor: '#000',
+        elevation: 4, // Android
+        shadowColor: '#000', // iOS
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 4,
-    },
-    fullWidthRow: {
-        // paddingHorizontal: width * 0.01,
-
-        backgroundColor: '#FFFFFF',
-        padding: width * 0.04,
-        borderBottomWidth: 1,
-        borderColor: '#ccc',
-        height: height * 0.06,
-    },
-    destinationInput: {
-
-        flex: 1, // makes the TextInput expand to full row
-        fontSize: width * 0.045,
-        color: '#000',
-        padding: 0, // optional to remove internal padding
-        fontWeight: 'regular',
-
-        textAlignVertical: 'center',
-        // marginBottom: 2,
-        alignItems: 'center',
-        height: height * 0.06,
-    },
-    label: {
-        fontWeight: 'regular',
-        fontSize: width * 0.045,
-        color: '#000',
-        marginBottom: 4,
-        alignItems: 'center',
-        height: height * 0.06,
-    },
-    splitRow: {
-        flexDirection: 'row',
-
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
     },
 
-    bottomOverlay: {
-        marginTop: height * 0.01,
-        paddingHorizontal: width * 0.05,
-        marginBottom: height * 0.025,
-    },
-    continueButton: {
-        backgroundColor: '#ba1c1c', //F1BC0F
-        height: height * 0.065,
-        borderRadius: 5,
+    menuButton: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 4,
-    },
-    continueText: {
-        color: '#fff',
-        fontSize: width * 0.045,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    whiteBackground: {
-        flex: 1,
-        backgroundColor: '#ececec',
-
-    },
-    shiftDateContainer: {
-        width: '50%',
-        padding: 12,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-
-    shiftTypeContainer: {
-        width: '50%',
-        padding: 12,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        borderLeftWidth: 1,
-        borderColor: '#ccc',
-    },
-
-    dropdown: {
-        marginHorizontal: 20,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        backgroundColor: '#fff',
-        marginTop: 4,
-        overflow: 'hidden',
-    },
-
-    dropdownItem: {
-        paddingVertical: 12,
-        paddingHorizontal: 16,
-        borderBottomWidth: 1,
         borderColor: '#eee',
     },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 12,
+        height: 45,
+    },
 
-    dropdownText: {
+    inputIcon: {
+        marginLeft: 8,
+    },
+    searchBar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#fff',
+        justifyContent: 'flex-start',
+        paddingHorizontal: 6,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        fontFamily: 'Roboto_500Medium',
+        // fontSize: 18,
+        textAlign: 'left',
+        includeFontPadding: false,
+    },
+
+    searchInput: {
+        // flex: 1,
         fontSize: 16,
-        color: '#000',
+
+        color: '#333',
+    },
+    sectionTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        marginTop: 16,
+        marginBottom: 12,
+        paddingLeft: 4,
+        fontFamily: 'Roboto_500Medium',
+    },
+    serviceSectionTitle: {
+        flex: 1,
+        fontSize: 16,
+        fontWeight: '400',
+        marginTop: 20,
+        paddingLeft: 4,
+        color: '#2e2d2d',
+        fontFamily: 'Roboto_500Medium',
+    },
+    serviceRow: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+    },
+
+    serviceCard: {
+        width: '48%',
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        marginBottom: 16,
+        height: 140,
+        // padding: 12, // added padding to contain image neatly
+        alignItems: 'center',
+        justifyContent: 'center',
+        overflow: 'hidden',
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+    },
+    serviceImage: {
+        width: '100%',
+        height: 140,
+        // resizeMode: 'contain', // ensures full image fits without cropping
+        borderRadius: 8, // optional
+    },
+
+
+    serviceText: {
+        fontSize: 14,
+        fontWeight: '500',
+        textAlign: 'center',
+    },
+
+    referCard: {
+        marginTop: 16,
+        height: 100,
+        width: '100%',
+        borderRadius: 12,
+        overflow: 'hidden',
+        marginBottom: 15,
+    },
+    referImage: {
+        height: '100%',
+        width: '100%',
+        resizeMode: 'cover',
+
+    },
+    inlineImages: {
+        flexDirection: 'row',
+        gap: 16,
+        marginTop: 12,
+    },
+    smallServiceImage: {
+        width: '100%',
+        height: 100,
+        borderRadius: 10,
+        elevation: 2,
+    },
+    serviceItem: {
+        width: 160,
+        alignItems: 'center',
+    },
+
+    // serviceText: {
+    //   marginTop: 6,
+    //   fontSize: 12,
+    //   color: '#333',
+    //   textAlign: 'center',
+    // },
+    footerImageWrap: {
+        alignItems: 'center',
+        marginTop: 24,
+        // borderWidth: 2,
+    },
+    footerImage: {
+        width: '100%',
+        height: 140,
+        resizeMode: 'contain',
+        elevation: 2,
+    },
+    footerText: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#BA1C1C',
+        position: 'absolute',
+        bottom: 8,
+        left: 16,
+        fontFamily: 'Roboto_700Bold',
+    },
+    modalOverlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    popupContainer: {
+        width: width * 0.85,
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        overflow: 'hidden',
+        alignItems: 'flex-end',
+    },
+    closeButton: {
+        padding: 10,
+        position: 'absolute',
+        top: 5,
+        right: 5,
+        zIndex: 10,
+    },
+    popupImage: {
+        width: '100%',
+        height: height * 0.6,
+        borderRadius: 12,
     },
 
 });
