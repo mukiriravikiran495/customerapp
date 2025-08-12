@@ -20,7 +20,7 @@ import {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 
-export default function PickupAddress() {
+export default function MoversDropAddress() {
     const router = useRouter();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const [address, setAddress] = useState('Fetching location...');
@@ -150,10 +150,10 @@ export default function PickupAddress() {
 
                     {/* Header */}
                     <View style={styles.header}>
-                        <TouchableOpacity onPress={() => router.push('/home')}>
+                        <TouchableOpacity onPress={() => router.push('/moversselectdropaddress')}>
                             <Ionicons style={styles.backArrow} name="arrow-back" size={24} color="black" />
                         </TouchableOpacity>
-                        <Text style={styles.headerText}>Enter Pickup Address</Text>
+                        <Text style={styles.headerText}>Enter Drop Address</Text>
                     </View>
 
                     {/* Bottom Drawer */}
@@ -168,6 +168,7 @@ export default function PickupAddress() {
                                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                                 style={styles.sheetContent}
                             >
+                                {/* Location Row */}
                                 {/* Location Row */}
                                 <View style={styles.inputContainer}>
                                     <Ionicons
@@ -184,14 +185,13 @@ export default function PickupAddress() {
                                         onChangeText={setAddress}
                                     />
                                 </View>
-
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Apartment / Flat / Building (optional)"
                                     placeholderTextColor="#999"
                                 />
                                 <View style={styles.inputWrapper}>
-                                    <Text style={styles.inputLabel}>Sender's Name</Text>
+                                    <Text style={styles.inputLabel}>Receiver's Name</Text>
                                     <View style={styles.inputWithIcon}>
                                         <TextInput
                                             style={styles.inputField}
@@ -205,12 +205,6 @@ export default function PickupAddress() {
                                         />
                                     </View>
                                 </View>
-                                {/* <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Mobile Number"
-                                    keyboardType="phone-pad"
-                                    placeholderTextColor="#999"
-                                /> */}
                                 <View style={styles.inputWrapper}>
                                     <Text style={styles.inputLabel}>Mobile Number</Text>
                                     <View style={styles.inputWithIcon}>
@@ -246,8 +240,8 @@ export default function PickupAddress() {
                                         </TouchableOpacity>
                                     ))}
                                 </View>
-                                <TouchableOpacity style={styles.submitButton} onPress={() => router.push('/selectdropaddress')}>
-                                    <Text style={styles.submitButtonText}>Submit Pickup Location</Text>
+                                <TouchableOpacity style={styles.submitButton} onPress={() => router.push('/items')} >
+                                    <Text style={styles.submitButtonText}>Submit Drop Location</Text>
                                 </TouchableOpacity>
                             </KeyboardAvoidingView>
                         </BottomSheetView>
@@ -257,8 +251,6 @@ export default function PickupAddress() {
         </GestureHandlerRootView>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

@@ -138,7 +138,7 @@ export default function rechargewallet() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-      
+        backgroundColor: '#F2F2F2',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         paddingVertical: 20, // Only vertical padding
         marginBottom: 16,
-        elevation: 1,
+        elevation: 2,
     },
     referCard: {
         flexDirection: 'row',
@@ -193,7 +193,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
         // Shadow for Android
-        elevation: 1,
+        elevation: 2,
 
         // Shadow for iOS
         shadowColor: '#000',

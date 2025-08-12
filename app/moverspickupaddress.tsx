@@ -20,7 +20,7 @@ import {
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import MapView from 'react-native-maps';
 
-export default function PickupAddress() {
+export default function MoversPickupAddress() {
     const router = useRouter();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const [address, setAddress] = useState('Fetching location...');
@@ -184,7 +184,6 @@ export default function PickupAddress() {
                                         onChangeText={setAddress}
                                     />
                                 </View>
-
                                 <TextInput
                                     style={styles.input}
                                     placeholder="Apartment / Flat / Building (optional)"
@@ -205,12 +204,6 @@ export default function PickupAddress() {
                                         />
                                     </View>
                                 </View>
-                                {/* <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Mobile Number"
-                                    keyboardType="phone-pad"
-                                    placeholderTextColor="#999"
-                                /> */}
                                 <View style={styles.inputWrapper}>
                                     <Text style={styles.inputLabel}>Mobile Number</Text>
                                     <View style={styles.inputWithIcon}>
@@ -246,7 +239,7 @@ export default function PickupAddress() {
                                         </TouchableOpacity>
                                     ))}
                                 </View>
-                                <TouchableOpacity style={styles.submitButton} onPress={() => router.push('/selectdropaddress')}>
+                                <TouchableOpacity style={styles.submitButton} onPress={() => router.push('/moversselectdropaddress')}>
                                     <Text style={styles.submitButtonText}>Submit Pickup Location</Text>
                                 </TouchableOpacity>
                             </KeyboardAvoidingView>
@@ -257,8 +250,6 @@ export default function PickupAddress() {
         </GestureHandlerRootView>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {

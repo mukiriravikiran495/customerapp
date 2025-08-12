@@ -90,53 +90,6 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
     },
-    toggleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#4bc373',
-        paddingHorizontal: 12,
-        paddingVertical: 2,
-        borderRadius: 24,
-        height: 38,
-
-    },
-    statusText: {
-        marginRight: 8,
-        fontSize: width * 0.045,
-        color: '#555',
-    },
-    notificationIcon: {
-        paddingLeft: 10,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#0B4ED3',
-        marginBottom: 10,
-    },
-    subtext: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
-    supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
-    },
-    supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
-    },
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',

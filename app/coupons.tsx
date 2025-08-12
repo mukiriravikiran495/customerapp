@@ -76,13 +76,7 @@ export default function Coupons() {
                                 style={styles.selectButton}
                                 onPress={() => {
                                     // Navigate back and pass selected coupon as query
-                                    router.push({
-                                        pathname: '/bookingdetails',
-                                        params: {
-                                            selectedCouponCode: coupon.code,
-                                            discount: coupon.title, // optional
-                                        }
-                                    });
+                                    router.back();
                                 }}
                             >
                                 {/* <Ionicons name="checkmark" color="#fff" size={16} /> */}
@@ -102,11 +96,11 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#f2f1f1ff',
+        backgroundColor: '#F2F2F2',
     },
     header: {
         padding: width * 0.04,
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
     },
     backButton: {
         marginBottom: 10,

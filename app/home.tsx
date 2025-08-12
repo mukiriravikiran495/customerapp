@@ -68,7 +68,7 @@ export default function HomeScreen() {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.topBar}>
-                <TouchableOpacity onPress={() => router.back()} activeOpacity={0.9}>
+                <TouchableOpacity onPress={() => router.push('/menu')} activeOpacity={0.9}>
                     <View style={styles.menuButton}>
                         <Icon name="menu" size={28} color="black" />
                     </View>
@@ -76,7 +76,7 @@ export default function HomeScreen() {
 
                 {/* Input with map icon inside */}
                 <View style={{ paddingHorizontal: 12 }}>
-                    <TouchableOpacity onPress={() => router.push('/pickupaddress')} activeOpacity={0.8}>
+                    <TouchableOpacity onPress={() => router.push('/manualselectpickupaddress')} activeOpacity={0.8}>
                         <View style={styles.searchBar}>
                             <Ionicons
                                 name="location-sharp"
@@ -84,13 +84,6 @@ export default function HomeScreen() {
                                 color="green"
                                 style={styles.inputIcon}
                             />
-                            {/* <TextInput
-                                placeholder="Pick up location"
-                                placeholderTextColor="#888"
-                                value={locationText}
-                                editable={false}
-                                style={styles.searchInput}
-                            /> */}
                             <TextInput
                                 placeholder="Pick up location"
                                 placeholderTextColor="#888"
@@ -113,35 +106,37 @@ export default function HomeScreen() {
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}
             >
-                <View style={{ paddingHorizontal: 16 }}>
-                    <Text style={styles.sectionTitle}>Service</Text>
-                    <View style={styles.serviceRow}>
-                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/items')}>
-                            <Image source={require('../assets/images/packers5.png')} style={styles.serviceImage} />
-                        </TouchableOpacity>
+                <View >
 
-                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/selectdropaddress')}>
-                            <Image source={require('../assets/images/truck5.png')} style={styles.serviceImage} />
-                        </TouchableOpacity>
+                    <View style={styles.serviceCardContainer}>
+                        <View style={styles.serviceRow}>
+                            <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/moverspickupaddress')}>
+                                <Image source={require('../assets/images/packers5.png')} style={styles.serviceImage} />
+                            </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7}>
-                            <Image source={require('../assets/images/bike5.png')} style={styles.serviceImage} />
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/pickupaddress')}>
+                                <Image source={require('../assets/images/truck5.png')} style={styles.serviceImage} />
+                            </TouchableOpacity>
 
-                        <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7}>
-                            <Image source={require('../assets/images/parcel5.png')} style={styles.serviceImage} />
-                        </TouchableOpacity>
+                            <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7} onPress={() => router.push('/pickupaddress')}>
+                                <Image source={require('../assets/images/bike5.png')} style={styles.serviceImage} />
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={styles.serviceCard} activeOpacity={0.7}>
+                                <Image source={require('../assets/images/parcel5.png')} style={styles.serviceImage} />
+                            </TouchableOpacity>
+                        </View>
                     </View>
 
-
                     {/* Refer banner */}
-                    {/* <Text style={styles.serviceSectionTitle}>Refer and Earn</Text> */}
-                    <TouchableOpacity style={styles.referCard} activeOpacity={0.5}>
-                        <Image source={require('../assets/images/refer.jpg')} style={styles.referImage} />
-                    </TouchableOpacity>
-
+                    <View style={{ paddingHorizontal: 16 }}>
+                        <Text style={styles.sectionTitle}>Refer and Earn</Text>
+                        <TouchableOpacity style={styles.referCard} activeOpacity={0.5}>
+                            <Image source={require('../assets/images/refer.jpg')} style={styles.referImage} />
+                        </TouchableOpacity>
+                    </View>
                     {/* Service Provided */}
-                    <Text style={styles.serviceSectionTitle}>Service provided while Shiftyng</Text>
+                    {/* <Text style={styles.serviceSectionTitle}>Service provided while Shiftyng</Text>
 
                     <ScrollView
                         horizontal
@@ -167,12 +162,13 @@ export default function HomeScreen() {
                             <Image source={require('../assets/images/wrapping.jpg')} style={styles.smallServiceImage} />
                             <Text style={styles.serviceText}>Wrapping</Text>
                         </View>
-                    </ScrollView>
+                    </ScrollView> */}
 
                     {/* Footer */}
                     <View style={styles.footerImageWrap}>
-                        <Image source={require('../assets/images/footer.jpg')} style={styles.footerImage} />
+                        <Image source={require('../assets/images/footer.png')} style={styles.footerImage} />
                     </View>
+
 
 
                 </View>
@@ -211,9 +207,8 @@ const styles = StyleSheet.create({
     scrollContent: {
         // paddingHorizontal: 16,
         paddingTop: 84,
-        paddingBottom: 20,
         flexGrow: 1,
-        marginTop: 20,
+       
 
     },
     container: {
@@ -236,12 +231,13 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         padding: 12,
         backgroundColor: '#fff',
-
+        marginBottom: 0,
         elevation: 4, // Android
         shadowColor: '#000', // iOS
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
+        
     },
 
     menuButton: {
@@ -296,11 +292,13 @@ const styles = StyleSheet.create({
     },
     sectionTitle: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '100',
         marginTop: 16,
         marginBottom: 12,
         paddingLeft: 4,
+        color: '1A1A1A',
         fontFamily: 'Roboto_500Medium',
+        paddingHorizontal: 16,
     },
     serviceSectionTitle: {
         flex: 1,
@@ -315,6 +313,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
+        paddingHorizontal: 8,
+        marginTop: 12,
     },
 
     serviceCard: {
@@ -327,11 +327,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden',
-        elevation: 2,
+        elevation: 4,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
+        shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.1,
-        shadowRadius: 2,
+        shadowRadius: 4,
     },
     serviceImage: {
         width: '100%',
@@ -348,12 +348,13 @@ const styles = StyleSheet.create({
     },
 
     referCard: {
-        marginTop: 16,
+        // marginTop: 8,
         height: 100,
         width: '100%',
         borderRadius: 12,
         overflow: 'hidden',
         marginBottom: 15,
+
     },
     referImage: {
         height: '100%',
@@ -376,32 +377,14 @@ const styles = StyleSheet.create({
         width: 160,
         alignItems: 'center',
     },
-
-    // serviceText: {
-    //   marginTop: 6,
-    //   fontSize: 12,
-    //   color: '#333',
-    //   textAlign: 'center',
-    // },
     footerImageWrap: {
-        alignItems: 'center',
         marginTop: 24,
-        // borderWidth: 2,
+        width: '100%', // make wrapper full width
     },
     footerImage: {
         width: '100%',
-        height: 140,
-        resizeMode: 'contain',
-        elevation: 2,
-    },
-    footerText: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#BA1C1C',
-        position: 'absolute',
-        bottom: 8,
-        left: 16,
-        fontFamily: 'Roboto_700Bold',
+        height: 240,
+        resizeMode: 'cover', // fills width
     },
     modalOverlay: {
         flex: 1,
@@ -428,5 +411,16 @@ const styles = StyleSheet.create({
         height: height * 0.6,
         borderRadius: 12,
     },
-
+    serviceCardContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: '#F2F2F2',
+        marginTop: 10,
+        padding: 10,
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        shadowOffset: { width: 0, height: 2 },
+        width: '100%',
+        marginHorizontal: 0, // no margin
+    },
 });

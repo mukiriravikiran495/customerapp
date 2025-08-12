@@ -20,7 +20,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 
 
-export default function SelectTruck() {
+export default function MoversSelectDropAddress() {
     const router = useRouter();
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const [address, setAddress] = useState('Fetching location...');
@@ -113,7 +113,7 @@ export default function SelectTruck() {
 
                                 {/* Separator */}
                                 <View style={styles.separator} />
-                                <TouchableOpacity onPress={() => router.push('/dropaddress')} activeOpacity={0.8}>
+                                <TouchableOpacity onPress={() => router.push('/moversdropaddress')} activeOpacity={0.8}>
                                     <View style={styles.searchBar}>
                                         <Ionicons
                                             name="location-sharp"
@@ -134,7 +134,7 @@ export default function SelectTruck() {
                             </View>
                         </View>
                         {/* Select on Map Button */}
-                        <TouchableOpacity style={styles.mapButton} onPress={() => router.push('/pickupaddress')}>
+                        <TouchableOpacity style={styles.mapButton} onPress={() => router.push('/moverspickupaddress')}>
                             <Ionicons name="location-sharp" size={20} color="#Ba1C1C" style={styles.mapIcon} />
                             <Text style={styles.mapButtonText}>Select on Map</Text>
                         </TouchableOpacity>
@@ -142,7 +142,7 @@ export default function SelectTruck() {
                         <View style={styles.separator} />
                         <TouchableOpacity
                             style={styles.addressCard}
-                            activeOpacity={0.7} onPress={() => router.push('/dropaddress')}
+                            activeOpacity={0.7} onPress={() => router.push('/moversdropaddress')}
                         >
                             <Ionicons name="time-outline" size={22} color="#555" />
 
@@ -162,7 +162,7 @@ export default function SelectTruck() {
                         <TouchableOpacity
                             style={styles.addressCard}
                             activeOpacity={0.7}
-                            onPress={() => router.push('/dropaddress')}
+                            onPress={() => router.push('/moversdropaddress')}
                         >
                             <Ionicons name="time-outline" size={22} color="#555" />
                             <View style={{ flex: 1, marginLeft: 8 }}>
@@ -180,7 +180,7 @@ export default function SelectTruck() {
                         <TouchableOpacity
                             style={styles.addressCard}
                             activeOpacity={0.7}
-                            onPress={() => router.push('/dropaddress')}
+                            onPress={() => router.push('/moversdropaddress')}
                         >
                             <Ionicons name="time-outline" size={22} color="#555" />
                             <View style={{ flex: 1, marginLeft: 8 }}>

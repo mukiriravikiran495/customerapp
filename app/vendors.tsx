@@ -9,7 +9,6 @@ import {
     Platform,
     Pressable,
     ScrollView,
-    StatusBar,
     StyleSheet,
     Text,
     TextInput,
@@ -147,7 +146,7 @@ const VendorsScreen = () => {
     };
 
     return (
-        <SafeAreaView style={styles.screen}>
+        <SafeAreaView style={styles.container}>
             {/* HEADER */}
             <View style={styles.headerWrapper}>
                 <View style={styles.statusBarSpacer} />
@@ -317,80 +316,120 @@ const VendorsScreen = () => {
 export default VendorsScreen;
 
 const styles = StyleSheet.create({
-    screen: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        flexDirection: 'column',
-        
-    },
-    headerWrapper: {
-        backgroundColor: '#FFF',
-        ...Platform.select({
-            android: {
-                elevation: 4,
-            },
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.1,
-                shadowRadius: 2,
-            },
-        }),
-        zIndex: 10,
-    },
-    statusBarSpacer: {
-        height: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-    },
-    counterContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        
-        justifyContent: 'center',
-    },
-    header: {
-        height: 10,
-        backgroundColor: '#FFFFFF',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal: 12,
-    },
-    categoryEmoji: {
-        fontSize: 30,
-        marginBottom: 6,
-    },
-    sideContainer: {
-        width: 48,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    centerContainer: {
-        flex: 1,
-        justifyContent: 'center',
-    },
-    title: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: '#212121',
-        textAlign: 'center',
-    },
-    searchInput: {
-        fontSize: 16,
-        paddingVertical: 1,
-        paddingHorizontal: 8,
-        borderBottomWidth: 1,
-        borderBottomColor: '#AAA',
-        color: '#212121',
-    },
-    headerTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#212121',
-    },
-    iconHitBox: {
-        padding: 8,
-    },
+    container: {
+            flex: 1,
+            backgroundColor: '#fff',
+        },
+        headerWrapper: {
+            backgroundColor: '#FFF',
+            ...Platform.select({
+                android: {
+                    elevation: 8,
+                },
+                ios: {
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 4 },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 2,
+                },
+            }),
+            zIndex: 10,
+        },
+        statusBarSpacer: {
+            height: 0,
+
+        },
+        counterContainer: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: 10,
+            justifyContent: 'center',
+        },
+        counterButton: {
+            fontSize: 18,
+            paddingHorizontal: 12,
+            paddingVertical: 6,
+            backgroundColor: '#ba1c1c',
+            color: '#fff',
+            borderRadius: 6,
+            textAlign: 'center',
+            
+        },
+        countText: {
+            marginHorizontal: 12,
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        findMoversButton: {
+            position: 'absolute',
+            bottom: 50,
+            left: '50%',
+            transform: [{ translateX: -75 }], // Half of the button width
+            width: 150, // Fixed width for centering
+            paddingVertical: 16,
+    
+            backgroundColor: 'red',
+            borderRadius: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+    
+            elevation: 20,
+            shadowColor: '#000',
+            shadowOpacity: 0.2,
+            shadowOffset: { width: 0, height: 2 },
+            shadowRadius: 4,
+        },
+    
+    
+        findMoversText: {
+            color: '#fff',
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+    
+        header: {
+            height: 56,
+            backgroundColor: '#FFFFFF',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingHorizontal: 12,
+        },
+        categoryEmoji: {
+            fontSize: 30,
+            marginBottom: 6,
+        },
+        sideContainer: {
+            width: 48,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        centerContainer: {
+            flex: 1,
+            justifyContent: 'center',
+        },
+        title: {
+            fontSize: 18,
+            fontWeight: '600',
+            color: '#212121',
+            textAlign: 'center',
+        },
+        searchInput: {
+            fontSize: 16,
+            paddingVertical: 4,
+            paddingHorizontal: 8,
+            borderBottomWidth: 1,
+            borderBottomColor: '#AAA',
+            color: '#212121',
+        },
+        headerTitle: {
+            fontSize: 16,
+            fontWeight: '600',
+            color: '#212121',
+        },
+        iconHitBox: {
+            padding: 8,
+        },
     contentWrapper: {
         flex: 1,
         flexDirection: 'row',

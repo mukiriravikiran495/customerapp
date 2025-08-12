@@ -254,7 +254,7 @@ export default function App() {
                 <View style={styles.header}>
                     {/* LEFT: Back Button */}
                     <View style={styles.sideContainer}>
-                        <TouchableOpacity onPress={() => router.push('/home')} style={styles.iconHitBox}>
+                        <TouchableOpacity onPress={() => router.push('/moversselectdropaddress')} style={styles.iconHitBox}>
                             <Ionicons name="chevron-back" size={24} color="#212121" />
                         </TouchableOpacity>
                     </View>

@@ -1,7 +1,9 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import LottieView from "lottie-react-native";
+import { useRef, useState } from 'react';
 import {
+    Animated,
     Dimensions,
     FlatList,
     Image,
@@ -14,7 +16,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -87,74 +89,112 @@ export default function BookingDetails() {
     const [customerName, setCustomerName] = useState('');
     const [email, setEmail] = useState('');
     const [confirmPopupVisible, setConfirmPopupVisible] = useState(false);
+    const scaleAnim = useRef(new Animated.Value(0)).current;
+    const [showTick, setShowTick] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    const handleConfirm = () => {
+        // close the confirmation popup first
+        setConfirmPopupVisible(false);
+
+        // small timeout to let the confirm modal close cleanly, then show the fullscreen animation modal
+        setTimeout(() => {
+            setShowTick(true);
+        }, 50);
+    };
 
     return (
-        <ScrollView contentContainerStyle={styles.scrollContent}>
-            <SafeAreaView style={styles.container}>
-                {/* Space for status bar */}
-                <View style={{ height: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }} />
+        <View style={styles.container}>
+            <ScrollView contentContainerStyle={styles.scrollContent}>
+                <SafeAreaView style={styles.container}>
+                    {/* Space for status bar */}
+                    <View style={{ height: Platform.OS === 'android' ? StatusBar.currentHeight : 0 }} />
 
-                {/* Header */}
-                <View style={styles.header}>
-                    <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                        <Ionicons name="arrow-back" size={26} color="#000" />
-                    </TouchableOpacity>
-
+                    {/* Header */}
+                    <View style={styles.header}>
+                        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+                            <Ionicons name="arrow-back" size={26} color="#000" />
+                        </TouchableOpacity>
+                    </View>
                     <View style={styles.companyRow}>
                         <View style={styles.headerInfo}>
                             <Text style={styles.companyName}>Leo Packers and Movers</Text>
                             <Text style={styles.address}>Hyderabad, Telangana</Text>
-                            <Text style={styles.rating}>Rating 4+</Text>
+                            <Text style={styles.rating}>Rating 4<Ionicons name="star" size={10} color="green" /></Text>
+
                         </View>
 
                         <View style={styles.imageBox}>
                             <View style={styles.placeholderImage} />
                         </View>
                     </View>
-                </View>
 
 
 
-                {/* Booking Details */}
-                <View style={styles.bookingCard}>
+
+                    {/* Booking Details */}
+
                     <Text style={styles.sectionTitle}>Booking Details</Text>
 
-                    <View style={styles.bookingRow}>
-                        <Image
-                            source={{ uri: 'https://img.icons8.com/emoji/48/house-emoji.png' }}
-                            style={styles.icon}
-                        />
-                        <Text style={styles.dateText}>Jan 21, 09:26 PM</Text>
-                        <Ionicons name="ellipsis-horizontal" size={20} color="#000" style={{ marginHorizontal: 5 }} />
-                        <Text style={styles.dateText}>Jan 22, 09:26 PM</Text>
-                    </View>
-
                     {/* Address Rows */}
-                    <View style={styles.addressRow}>
-                        <Ionicons name="radio-button-on" size={16} color="green" style={{ marginRight: 8 }} />
-                        <Text style={styles.addressText} numberOfLines={2}>
-                            Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
-                        </Text>
+                    <View style={styles.locationCard}>
+                        {/* From Location */}
+                        <View style={styles.addressRow}>
+                            <Ionicons name="location-sharp" size={16} color="green" style={{ marginRight: 8 }} />
+                            <Text style={styles.addressText} numberOfLines={2}>
+                                Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
+                            </Text>
+                        </View>
+
+                        {/* Divider */}
+                        <View style={styles.divider} />
+
+                        {/* To Location */}
+                        <View style={styles.addressRow}>
+                            <Ionicons name="location-sharp" size={16} color="#BA1C1C" style={{ marginRight: 8 }} />
+                            <Text style={styles.addressText} numberOfLines={2}>
+                                Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
+                            </Text>
+                        </View>
+
+                        {/* Divider */}
+                        <View style={styles.divider} />
+
+                        {/* ONE BHK and View Items Row */}
+                        <View style={styles.infoRow}>
+                            <Text style={styles.bhkText}>ONE BHK</Text>
+                            {/* Vertical Divider */}
+                            <View style={styles.verticalDivider} />
+                            <View style={styles.viewItemsRow}>
+                                <Ionicons name="eye-outline" size={16} color="#BA1C1C" style={{ marginRight: 4 }} />
+                                <TouchableOpacity onPress={() => setShowModal(true)} >
+                                    <Text style={styles.viewItemsText}>VIEW ITEMS</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
                     </View>
 
-                    <View style={styles.addressRow}>
-                        <Ionicons name="location" size={16} color="red" style={{ marginRight: 8 }} />
-                        <Text style={styles.addressText} numberOfLines={2}>
-                            Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
-                        </Text>
+                    <View style={styles.companyRow}>
+                        {/* Shift Date section */}
+                        <View style={styles.dateSection}>
+                            <Text style={styles.dateLabel}>Shift Date</Text>
+                            <Text style={styles.dateValue}>12 Aug 2025</Text>
+                        </View>
+
+                        {/* Vertical Divider */}
+                        <View style={styles.verticalDivider} />
+
+                        {/* Drop Date section */}
+                        <View style={styles.dateSection}>
+                            <Text style={styles.dateLabel}>Drop Date</Text>
+                            <Text style={styles.dateValue}>13 Aug 2025</Text>
+                        </View>
                     </View>
+
 
                     {/* House type + Button */}
                     <View style={styles.houseRow}>
-                        <Text style={styles.houseType}>House One BHK</Text>
-
-
                         <>
-                            {/* Button to open modal */}
-                            <TouchableOpacity onPress={() => setShowModal(true)} style={styles.viewBtn}>
-                                <Text style={styles.viewBtnText}>VIEW ITEMS</Text>
-                            </TouchableOpacity>
-
                             {/* MODAL */}
                             <Modal visible={showModal} animationType="slide" transparent={true}>
                                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000aa' }}>
@@ -253,148 +293,189 @@ export default function BookingDetails() {
                             </Modal>
                         </>
                     </View>
-                </View>
 
-                {/* View All Coupons Button */}
-                <TouchableOpacity style={styles.couponButton} onPress={() => { router.push('/coupons'); }}>
-                    <View style={styles.couponLeft}>
-                        <Image
-                            source={{ uri: 'https://img.icons8.com/color/48/discount--v1.png' }}
-                            style={styles.couponIcon}
+
+                    {/* View All Coupons Button */}
+                    <TouchableOpacity style={styles.couponButton} onPress={() => { router.push('/coupons'); }}>
+                        <View style={styles.couponLeft}>
+                            <Image
+                                source={{ uri: 'https://img.icons8.com/color/48/discount--v1.png' }}
+                                style={styles.couponIcon}
+                            />
+                            <Text style={styles.couponText}>View all Coupons</Text>
+                        </View>
+                        <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" />
+                    </TouchableOpacity>
+
+                    {/* Saving */}
+                    <TouchableOpacity style={styles.couponButton} onPress={() => { }}>
+                        <View style={styles.couponLeft}>
+
+                            <Text style={styles.totalSaving}>Your Total Saving</Text>
+                        </View>
+                        <Text style={styles.savedAmount}>1200</Text>
+                    </TouchableOpacity>
+
+                    {/* Price Breakdown Section */}
+                    {/* <Text style={styles.sectionTitle}>Price Details</Text> */}
+                    <View style={styles.priceCard}>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>Base Price</Text>
+                            <Text style={styles.priceValue}>10,000</Text>
+                        </View>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>Install Uninstall</Text>
+                            <Text style={styles.priceValue}>10,000</Text>
+                        </View>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>Wrapping Charges</Text>
+                            <Text style={styles.priceValue}>FREE</Text>
+                        </View>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>labour Charges</Text>
+                            <Text style={styles.priceValue}>FREE</Text>
+                        </View>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>GST (18%)</Text>
+                            <Text style={styles.priceValue}>1,800</Text>
+                        </View>
+                        <View style={styles.priceRow}>
+                            <Text style={styles.priceLabel}>Discount</Text>
+                            <Text style={styles.discountValue}>-₹600</Text>
+                        </View>
+                        <View style={styles.divider} />
+                        <View style={styles.priceRow}>
+                            <Text style={styles.totalLabel}>Total Amount</Text>
+                            <Text style={styles.totalValue}>₹11,200</Text>
+                        </View>
+                    </View>
+
+
+                    {/* Customer Details */}
+                    <View style={styles.customerBox}>
+                        <Text style={styles.customerTitle}>Customer Details</Text>
+
+                        <TextInput
+                            placeholder="Enter Full Name"
+                            placeholderTextColor="#888"
+                            style={styles.customerInput}
+                            value={customerName}
+                            onChangeText={setCustomerName}
                         />
-                        <Text style={styles.couponText}>View all Coupons</Text>
-                    </View>
-                    <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" />
-                </TouchableOpacity>
 
-                {/* Saving */}
-                <TouchableOpacity style={styles.couponButton} onPress={() => { }}>
-                    <View style={styles.couponLeft}>
+                        <TextInput
+                            placeholder="Enter Email Id"
+                            placeholderTextColor="#888"
+                            style={styles.customerInput}
+                            value={email}
+                            onChangeText={setEmail}
+                        />
+                    </View>
 
-                        <Text style={styles.totalSaving}>Your Total Saving</Text>
-                    </View>
-                    <Text style={styles.savedAmount}>1200</Text>
-                </TouchableOpacity>
+                    {/* <View style={styles.bottomContainer}>
+                    <TouchableOpacity
+                        style={styles.confirmButton}
+                    onPress={() => {
+                        // if (customerName.trim() === '' || email.trim() === '') {
+                        //     alert('Please enter both Name and Email');
 
-                {/* Price Breakdown Section */}
-                <View style={styles.priceCard}>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>Base Price</Text>
-                        <Text style={styles.priceValue}>10,000</Text>
-                    </View>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>Install Uninstall</Text>
-                        <Text style={styles.priceValue}>10,000</Text>
-                    </View>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>Wrapping Charges</Text>
-                        <Text style={styles.priceValue}>FREE</Text>
-                    </View>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>labour Charges</Text>
-                        <Text style={styles.priceValue}>FREE</Text>
-                    </View>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>GST (18%)</Text>
-                        <Text style={styles.priceValue}>1,800</Text>
-                    </View>
-                    <View style={styles.priceRow}>
-                        <Text style={styles.priceLabel}>Discount</Text>
-                        <Text style={styles.discountValue}>-₹600</Text>
-                    </View>
-                    <View style={styles.divider} />
-                    <View style={styles.priceRow}>
-                        <Text style={styles.totalLabel}>Total</Text>
-                        <Text style={styles.totalValue}>₹11,200</Text>
-                    </View>
-                </View>
+                        // } else {
+                        setConfirmPopupVisible(true);
+                        // }
+                    }}
+                >
+                    <Text style={styles.confirmButtonText}>Submit & Confirm</Text>
+                    </TouchableOpacity>
+                </View> */}
 
 
-                {/* Customer Details */}
-                <View style={styles.customerBox}>
-                    <Text style={styles.customerTitle}>Customer Details</Text>
 
-                    <TextInput
-                        placeholder="Enter Full Name"
-                        placeholderTextColor="#888"
-                        style={styles.customerInput}
-                        value={customerName}
-                        onChangeText={setCustomerName}
-                    />
-
-                    <TextInput
-                        placeholder="Enter Email Id"
-                        placeholderTextColor="#888"
-                        style={styles.customerInput}
-                        value={email}
-                        onChangeText={setEmail}
-                    />
-                </View>
-
-                {/* Confirm Button */}
+                </SafeAreaView>
+            </ScrollView>
+            {/* Confirm Button */}
+            <View style={styles.footer}>
                 <TouchableOpacity
                     style={styles.confirmButton}
                     onPress={() => {
-                        if (customerName.trim() === '' || email.trim() === '') {
-                            alert('Please enter both Name and Email');
-                        } else {
-                            setConfirmPopupVisible(true);
-                        }
+                        setConfirmPopupVisible(true);
                     }}
                 >
-                    <Text style={styles.confirmButtonText}>Confirm</Text>
+                    <Text style={styles.confirmButtonText}>Submit & Confirm</Text>
                 </TouchableOpacity>
-                <Modal
-                    visible={confirmPopupVisible}
-                    animationType="fade"
-                    transparent={true}
-                >
-                    <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
-                        <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
-                                Are you sure you want to confirm the booking?
-                            </Text>
+            </View>
 
-                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: '#BA1C1C',
-                                        padding: 10,
-                                        borderRadius: 5,
-                                        flex: 1,
-                                        marginRight: 10,
-                                    }}
-                                    // onPress={() => {
-                                    //     setConfirmPopupVisible(false);
-                                    //     alert('Booking Confirmed!'); // Replace this with actual logic
-                                    // }}
-                                    onPress={() => {
-                                        setConfirmPopupVisible(false);
-                                        router.push('/bookingsuccess'); // ✅ navigate to summary page
-                                    }}
-                                >
-                                    <Text style={{ color: '#fff', textAlign: 'center' }}>Confirm</Text>
-                                </TouchableOpacity>
+            <Modal
+                visible={confirmPopupVisible}
+                animationType="fade"
+                transparent={true}
+            >
+                <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
+                        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
+                            Are you sure you want to confirm the booking?
+                        </Text>
 
-                                <TouchableOpacity
-                                    style={{
-                                        backgroundColor: '#ccc',
-                                        padding: 10,
-                                        borderRadius: 5,
-                                        flex: 1,
-                                        marginLeft: 10,
-                                    }}
-                                    onPress={() => setConfirmPopupVisible(false)}
-                                >
-                                    <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: '#BA1C1C',
+                                    padding: 10,
+                                    borderRadius: 5,
+                                    flex: 1,
+                                    marginRight: 10,
+                                }}
+
+                                onPress={handleConfirm}
+                            >
+                                <Text style={{ color: '#fff', textAlign: 'center' }}>Confirm</Text>
+                            </TouchableOpacity>
+                            {/* ✅ Fullscreen success overlay */}
+                            {showTick && (
+                                <View style={styles.overlay}>
+                                    <View style={styles.whiteBackground}>
+                                        <LottieView
+                                            source={require('@/assets/animations/success-check.json')}
+                                            autoPlay
+                                            loop={false}
+                                            onAnimationFinish={() => router.push('/bookingsuccess')}
+                                            style={{ width: 150, height: 150 }}
+                                        />
+                                    </View>
+                                </View>
+                            )}
+
+                            <TouchableOpacity
+                                style={{
+                                    backgroundColor: '#ccc',
+                                    padding: 10,
+                                    borderRadius: 5,
+                                    flex: 1,
+                                    marginLeft: 10,
+                                }}
+                                onPress={() => setConfirmPopupVisible(false)}
+                            >
+                                <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
+                            </TouchableOpacity>
                         </View>
                     </View>
-                </Modal>
-
-            </SafeAreaView>
-        </ScrollView>
+                </View>
+            </Modal>
+            <Modal visible={showTick} transparent={false} animationType="fade">
+                <View style={styles.overlay}>
+                    <LottieView
+                        source={require('@/assets/animations/success2.json')}
+                        autoPlay
+                        loop={false}
+                        // Preferred: navigate exactly when animation ends
+                        onAnimationFinish={() => {
+                            setShowTick(false);
+                            router.push('/bookingsuccess');
+                        }}
+                        style={styles.lottie}
+                    />
+                </View>
+            </Modal>
+        </View>
     );
 }
 
@@ -404,7 +485,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        
+        backgroundColor: '#F2F2F2',
     },
     // header: {
     //     flexDirection: 'row',
@@ -424,16 +505,18 @@ const styles = StyleSheet.create({
     //     marginLeft: width * 0.03,
     // },
     companyName: {
-        fontSize: width * 0.055,
+        fontSize: width * 0.045,
         fontWeight: 'bold',
         marginTop: height * 0.01,
         marginLeft: width * 0.02,
+        fontFamily: 'Roboto_500Medium',
     },
     address: {
         fontSize: width * 0.035,
         color: '#555',
         marginTop: 2,
         marginLeft: width * 0.02,
+        fontFamily: 'Roboto',
     },
     rating: {
         fontSize: width * 0.035,
@@ -441,6 +524,7 @@ const styles = StyleSheet.create({
         color: '#111',
         marginTop: 4,
         marginLeft: width * 0.02,
+        fontFamily: 'Roboto',
     },
     // imageBox: {
     //     alignItems: 'center',
@@ -453,50 +537,73 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
 
-    
+
     sectionTitle: {
-        fontSize: width * 0.05,
+        fontSize: 16,
         fontWeight: '600',
-        marginBottom: height * 0.015,
+        marginTop: height * 0.015,
 
-        marginLeft: width * 0.02,
+        marginLeft: width * 0.04,
     },
-    bookingCard: {
-        backgroundColor: '#fff',
-        margin: width * 0.00,
-        // borderRadius: 12,
-        padding: width * 0.04,
-        marginTop: 7,
 
-    },
-    bookingRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: height * 0.015,
-        marginLeft: width * 0.02,
-    },
+
     icon: {
         width: 22,
         height: 22,
         marginRight: 8,
     },
-    dateText: {
-        fontSize: width * 0.039,
-        color: '#000',
-        fontWeight: '500',
+
+    locationCard: {
+        backgroundColor: '#fff',
+        padding: 12,
+        borderRadius: 12,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        marginVertical: 10,
+        marginHorizontal: 12,
     },
     addressRow: {
         flexDirection: 'row',
         alignItems: 'flex-start',
-        marginBottom: height * 0.012,
-        marginLeft: width * 0.02,
-        marginTop: height * 0.01,
+        paddingVertical: 6,
+        color: '555',
     },
     addressText: {
-        fontSize: width * 0.035,
-        color: '#333',
+        fontSize: 14,
+        color: '#555',
         flex: 1,
+        fontWeight: '500',
+    },
+    infoRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 6,
+        marginHorizontal: 24,
+    },
+    bhkText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#000',
 
+    },
+    viewItemsRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    verticalDivider: {
+        borderLeftWidth: 1,
+        borderLeftColor: '#ccc',
+        height: 16,
+        marginHorizontal: 10,
+    },
+    viewItemsText: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#BA1C1C',
     },
     houseRow: {
         flexDirection: 'row',
@@ -524,7 +631,21 @@ const styles = StyleSheet.create({
         fontSize: width * 0.035,
 
     },
-
+    dateSection: {
+        flex: 1, // equal width for both sides
+        alignItems: 'center',
+        padding: 8,
+    },
+    dateLabel: {
+        fontSize: 12,
+        color: '#555',
+        fontWeight: '500',
+    },
+    dateValue: {
+        fontSize: 14,
+        fontWeight: '600',
+        color: '#000',
+    },
     form: {
         paddingHorizontal: width * 0.04,
         marginTop: height * 0.01,
@@ -539,7 +660,7 @@ const styles = StyleSheet.create({
         marginBottom: height * 0.012,
     },
     couponButton: {
-        backgroundColor: '#d6dff8ff',
+        backgroundColor: '#d6dff8',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -547,6 +668,10 @@ const styles = StyleSheet.create({
         height: height * 0.06,
         marginTop: 7,
         margin: width * 0.00,
+        marginHorizontal: 12,
+        borderRadius: 10,
+        elevation: 2,
+        marginBottom: 5,
     },
     couponLeft: {
         flexDirection: 'row',
@@ -558,12 +683,15 @@ const styles = StyleSheet.create({
         height: 22,
         marginRight: width * 0.05,
         marginLeft: width * 0.05,
-
+        color: '#BA1C1C'
     },
     couponText: {
         fontSize: width * 0.04,
         fontWeight: '600',
-        color: '#000',
+
+        color: '#555',           // softer color for secondary info
+
+        letterSpacing: 0.3,
 
     },
     couponArrow: {
@@ -583,8 +711,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: width * 0.04,
         marginTop: 7,
-        marginHorizontal: 0,
-
+        marginHorizontal: 12,
+        borderRadius: 10,
+        elevation: 2,
+        marginBottom: 5,
     },
     priceRow: {
         flexDirection: 'row',
@@ -596,41 +726,43 @@ const styles = StyleSheet.create({
 
     },
     priceLabel: {
-        fontSize: width * 0.038,
-        color: '#333',
-
-    },
-    priceValue: {
-        fontSize: width * 0.038,
+        fontSize: width * 0.038, // slightly smaller for labels
+        color: '#555',           // softer color for secondary info
         fontWeight: '500',
-        color: '#000',
-    },
-    discountValue: {
-        fontSize: width * 0.038,
-        fontWeight: '500',
-        color: '#BA1C1C',
+        letterSpacing: 0.3,
     },
     divider: {
         height: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: '#ecebeb',
         marginVertical: height * 0.01,
+        marginHorizontal: -12,
     },
+    priceValue: {
+        fontSize: width * 0.04,  // slightly bigger for values
+        fontWeight: '600',
+        color: '#111',           // darker for stronger visual
+    },
+    discountValue: {
+        fontSize: width * 0.04,
+        fontWeight: '600',
+        color: '#BA1C1C',        // red for discount
+    },
+
     totalLabel: {
-        fontSize: width * 0.045,
+        fontSize: width * 0.042,
         fontWeight: '700',
         color: '#000',
-
     },
+
     totalValue: {
         fontSize: width * 0.045,
-        fontWeight: '700',
+        fontWeight: '800',
         color: '#000',
-
     },
 
     header: {
         padding: width * 0.04,
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
     },
 
     backButton: {
@@ -641,6 +773,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        marginHorizontal: 12,
+        padding: 8,
+        borderRadius: 10,
+        marginBottom: 5,
+        elevation: 2,
     },
 
     headerInfo: {
@@ -655,11 +793,12 @@ const styles = StyleSheet.create({
 
     customerBox: {
         backgroundColor: '#fff',
-
-
+        marginHorizontal: 12,
+        borderRadius: 10,
         padding: width * 0.04,
-
+        elevation: 2,
         marginTop: height * 0.01,
+        marginBottom: height * 0.09,
     },
 
     customerTitle: {
@@ -684,17 +823,56 @@ const styles = StyleSheet.create({
     confirmButton: {
         backgroundColor: '#BA1C1C',
         paddingVertical: height * 0.018,
-        marginHorizontal: width * 0.04,
-        borderRadius: 4,
-        marginTop: height * 0.02,
+        marginHorizontal: 12,
+        borderRadius: 10,
+        marginTop: height * 0.00,
         marginBottom: height * 0.05,
         alignItems: 'center',
+        elevation: 4,
+
     },
 
     confirmButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: width * 0.045,
+        fontFamily: 'Roboto_500Medium',
+    },
+    lottie: {
+        width: 250,
+        height: 250,
+    },
+    overlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#FFFFFF', // White background
+        justifyContent: 'center',
+        alignItems: 'center',
+        // Ensure it’s on top
     },
 
+    whiteBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    footer: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "#fff",
+        padding: 10,
+        borderTopWidth: 1,
+        borderTopColor: "#ddd",
+        marginTop: 10,
+    },
 });

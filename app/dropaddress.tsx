@@ -66,8 +66,6 @@ export default function DropAddress() {
         })();
     }, []);
 
-
-
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <BottomSheetModalProvider>
@@ -76,11 +74,76 @@ export default function DropAddress() {
                     <MapView
                         style={StyleSheet.absoluteFillObject}
                         initialRegion={{
-                            latitude: 17.44452,
-                            longitude: 78.35292,
-                            latitudeDelta: 0.01,
-                            longitudeDelta: 0.01,
+                            latitude: 17.47306,
+                            longitude: 78.56639,
+                            latitudeDelta: 0.001,    // Zoom level – tight focus
+                            longitudeDelta: 0.001,
                         }}
+                        customMapStyle={[
+                            {
+                                elementType: "geometry",
+                                stylers: [{ color: "#F2F2F2" }]
+                            },
+                            {
+                                elementType: "labels.icon",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#999999" }]
+                            },
+                            {
+                                elementType: "labels.text.stroke",
+                                stylers: [{ color: "#FFFFFF" }]
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "geometry",
+                                stylers: [{ color: "#FFFFFF" }]
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "labels.icon",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                featureType: "road",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#999999" }]
+                            },
+                            {
+                                featureType: "poi", // Buildings
+                                elementType: "geometry",
+                                stylers: [{ color: "#504b4b" }]
+                            },
+                            {
+                                featureType: "poi",
+                                elementType: "labels.icon",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                featureType: "water",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                featureType: "transit",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                featureType: "landscape.natural",
+                                stylers: [{ visibility: "off" }]
+                            },
+                            {
+                                featureType: "poi.park",
+                                elementType: "geometry",
+                                stylers: [{ color: "#E5F4E3" }] // light green for parks
+                            },
+                            {
+                                featureType: "poi.park",
+                                elementType: "labels.text.fill",
+                                stylers: [{ color: "#6B8E23" }] // darker green for park names
+                            }
+                        ]}
                     />
 
                     {/* Header */}
@@ -104,14 +167,21 @@ export default function DropAddress() {
                                 style={styles.sheetContent}
                             >
                                 {/* Location Row */}
-                                <View style={styles.locationRow}>
-                                    <Ionicons name="location-sharp" size={22} color="green" style={{ marginRight: 8 }} />
-                                    <Text style={styles.locationText} numberOfLines={1} ellipsizeMode="tail">
-                                        {address}
-                                    </Text>
-                                    <TouchableOpacity style={styles.changeButton} onPress={() => router.push('/changedropaddress')} >
-                                        <Text style={styles.changeButtonText}>Change</Text>
-                                    </TouchableOpacity>
+                                {/* Location Row */}
+                                <View style={styles.inputContainer}>
+                                    <Ionicons
+                                        name="location-sharp"
+                                        size={22}
+                                        color="green"
+                                        style={{ marginRight: 8 }}
+                                    />
+                                    <TextInput
+                                        style={styles.addressInput}
+                                        placeholder="Enter Pickup Address"
+                                        placeholderTextColor="#999"
+                                        value={address}
+                                        onChangeText={setAddress}
+                                    />
                                 </View>
                                 <TextInput
                                     style={styles.input}
@@ -133,18 +203,14 @@ export default function DropAddress() {
                                         />
                                     </View>
                                 </View>
-                                {/* <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Mobile Number"
-                                    keyboardType="phone-pad"
-                                    placeholderTextColor="#999"
-                                /> */}
+
                                 <View style={styles.inputWrapper}>
                                     <Text style={styles.inputLabel}>Mobile Number</Text>
                                     <View style={styles.inputWithIcon}>
                                         <TextInput
                                             style={styles.inputField}
                                             placeholderTextColor="#999"
+                                            keyboardType="phone-pad"
                                         />
                                     </View>
                                 </View>
@@ -184,8 +250,6 @@ export default function DropAddress() {
         </GestureHandlerRootView>
     );
 }
-
-
 
 const styles = StyleSheet.create({
     container: {
@@ -260,23 +324,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '500',
     },
-    // inputWithIcon: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     borderWidth: 1,
-    //     borderColor: '#ccc',
-    //     borderRadius: 8,
-    //     backgroundColor: '#fff',
-    //     paddingHorizontal: 12,
-    //     marginBottom: 16,
-    // },
-    // inputField: {
-    //     flex: 1,
-    //     height: 48,
-    // },
-    // iconRight: {
-    //     marginLeft: 8,
-    // },
     saveAsLabel: {
         fontSize: 14,
         fontWeight: '500',
@@ -285,7 +332,7 @@ const styles = StyleSheet.create({
     },
     saveAsButtons: {
         flexDirection: 'row',
-        gap: 10, // works in RN 0.71+, else use marginRight
+        gap: 10,
         marginBottom: 16,
     },
     saveButton: {
@@ -309,7 +356,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -10,
         left: 12,
-        backgroundColor: '#fff', // Matches background so it looks cut out from border
+        backgroundColor: '#fff',
         paddingHorizontal: 4,
         fontSize: 12,
         color: '#999',
@@ -333,5 +380,21 @@ const styles = StyleSheet.create({
     },
     iconRight: {
         marginLeft: 8,
+    },
+    inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        height: 50,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        marginBottom: 16,
+        backgroundColor: '#FFFFFF',
+    },
+    addressInput: {
+        flex: 1,
+        fontSize: 16,
+        color: '#000',
     },
 });

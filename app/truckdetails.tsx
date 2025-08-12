@@ -1,7 +1,10 @@
 import { Ionicons } from '@expo/vector-icons';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
+    Image,
+    ScrollView,
     StyleSheet,
     Text,
     TextInput,
@@ -13,105 +16,162 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 export default function SelectTruck() {
     const router = useRouter();
+    const [expanded, setExpanded] = useState(false);
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <BottomSheetModalProvider>
                 <View style={styles.container}>
-                    {/* Gray Section from top to Drop Location */}
-                    <View style={styles.topSection}>
-                        {/* Back Arrow */}
-                        <TouchableOpacity
-                            onPress={() => router.push('/selectdropaddress')}
-                            style={styles.arrowWrapper}
-                        >
-                            <Ionicons name="arrow-back" size={24} color="black" />
-                        </TouchableOpacity>
-                        {/* Pickup & Drop Card */}
-                        <View style={styles.locationCard}>
-                            {/* Pickup Row */}
-                            <View style={styles.row}>
-                                <Ionicons name="location-sharp" size={20} color="green" style={styles.icon} />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Pickup Location"
-                                    placeholderTextColor="#ccc"
-                                    multiline={false}
-                                    numberOfLines={1}
-                                />
-                            </View>
+                    <ScrollView
+                        contentContainerStyle={{ paddingBottom: 120 }} // to avoid overlapping with button
+                        showsVerticalScrollIndicator={false}
+                    >
+                        {/* Gray Section from top to Drop Location */}
+                        <View style={styles.topSection}>
+                            {/* Back Arrow */}
+                            <TouchableOpacity
+                                onPress={() => router.push('/selectdropaddress')}
+                                style={styles.arrowWrapper}
+                            >
+                                <Ionicons name="arrow-back" size={24} color="black" />
+                            </TouchableOpacity>
+                            {/* Pickup & Drop Card */}
+                            <View style={styles.locationCard}>
+                                {/* Pickup Row */}
+                                <View style={styles.row}>
+                                    <Ionicons name="location-sharp" size={20} color="green" style={styles.icon} />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Enter Pickup Location"
+                                        placeholderTextColor="#ccc"
+                                        multiline={false}
+                                        numberOfLines={1}
+                                    />
+                                </View>
 
-                            {/* Separator */}
-                            <View style={styles.separator} />
+                                {/* Separator */}
+                                <View style={styles.separator} />
 
-                            {/* Drop Row */}
-                            <View style={styles.row}>
-                                <Ionicons name="location-sharp" size={20} color="#BA1C1C" style={styles.icon}
-                                    onPress={() => router.push('/truckdetails')} />
-                                <TextInput
-                                    style={styles.input}
-                                    placeholder="Enter Drop Location"
-                                    placeholderTextColor="#ccc"
-                                    multiline={false}
-                                    numberOfLines={1}
-                                />
-                            </View>
-                        </View>
-                    </View>
-
-                    <View style={styles.vehicleList}>
-                        {/* Scooter */}
-                        <View style={styles.vehicleItem}>
-                            <View style={styles.vehicleInfo}>
-                                <Ionicons name="bicycle" size={28} color="#ba1c1c" style={{ marginRight: 12 }} />
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={styles.vehicleName}>Scooter</Text>
-                                        <View style={styles.newBadge}>
-                                            <Text style={styles.newBadgeText}>NEW</Text>
-                                        </View>
-                                    </View>
-                                    <Text style={styles.vehicleDetails}>20 Kg · 3 mins</Text>
+                                {/* Drop Row */}
+                                <View style={styles.row}>
+                                    <Ionicons name="location-sharp" size={20} color="#BA1C1C" style={styles.icon}
+                                        onPress={() => router.push('/truckdetails')} />
+                                    <TextInput
+                                        style={styles.input}
+                                        placeholder="Enter Drop Location"
+                                        placeholderTextColor="#ccc"
+                                        multiline={false}
+                                        numberOfLines={1}
+                                    />
                                 </View>
                             </View>
-                            <Text style={styles.price}>₹93</Text>
                         </View>
 
-                        {/* 14ft Truck */}
-                        <View style={styles.vehicleItem}>
-                            <View style={styles.vehicleInfo}>
-                                <Ionicons name="bus" size={28} color="#ba1c1c" style={{ marginRight: 12 }} />
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={styles.vehicleName}>14ft</Text>
-                                        <View style={styles.newBadge}>
-                                            <Text style={styles.newBadgeText}>NEW</Text>
+                        <View style={styles.vehicleList}>
+                            {/* Scooter */}
+                            <TouchableOpacity
+                                style={[styles.vehicleItem, expanded && styles.expandedCard]}
+                                onPress={() => setExpanded(!expanded)}
+                                activeOpacity={0.8}
+                            >
+                                <View style={styles.vehicleInfo}>
+                                    <Image
+                                        source={require('../assets/images/bikeicon.png')}
+                                        style={styles.serviceImage}
+                                    />
+                                    <View style={{ padding: 16 }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text style={styles.vehicleName}>Scooter</Text>
+                                            <View style={styles.newBadge}>
+                                                <Text style={styles.newBadgeText}>NEW</Text>
+                                            </View>
                                         </View>
-                                    </View>
-                                    <Text style={styles.vehicleDetails}>3500 Kg · --</Text>
-                                </View>
-                            </View>
-                            <Text style={styles.price}>₹1593</Text>
-                        </View>
+                                        <Text style={styles.vehicleDetails}>20 Kg · 3 mins</Text>
 
-                        {/* 17ft Truck */}
-                        <View style={styles.vehicleItem}>
-                            <View style={styles.vehicleInfo}>
-                                <Ionicons name="bus" size={28} color="#ba1c1c" style={{ marginRight: 12 }} />
-                                <View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                        <Text style={styles.vehicleName}>17ft</Text>
-                                        <View style={styles.newBadge}>
-                                            <Text style={styles.newBadgeText}>NEW</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.price}>₹93</Text>
+                            </TouchableOpacity>
+                            {/* 14ft Truck */}
+                            <TouchableOpacity style={styles.vehicleItem}>
+                                <View style={styles.vehicleInfo}>
+                                    <Image
+                                        source={require('../assets/images/bikeicon.png')}
+                                        style={styles.serviceImage}
+                                    />
+                                    <View style={{ padding: 16, }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text style={styles.vehicleName}>14ft</Text>
+                                            <View style={styles.newBadge}>
+                                                <Text style={styles.newBadgeText}>NEW</Text>
+                                            </View>
                                         </View>
+                                        <Text style={styles.vehicleDetails}>3500 Kg · --</Text>
                                     </View>
-                                    <Text style={styles.vehicleDetails}>6000 Kg · 9 mins</Text>
                                 </View>
-                            </View>
-                            <Text style={styles.price}>₹2667</Text>
-                        </View>
-                    </View>
+                                <Text style={styles.price}>₹1593</Text>
+                            </TouchableOpacity>
 
+                            {/* 17ft Truck */}
+                            <TouchableOpacity style={styles.vehicleItem}>
+                                <View style={styles.vehicleInfo}>
+                                    <Image
+                                        source={require('../assets/images/bikeicon.png')}
+                                        style={styles.serviceImage}
+                                    />
+                                    <View style={{ padding: 16, }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text style={styles.vehicleName}>17ft</Text>
+                                            <View style={styles.newBadge}>
+                                                <Text style={styles.newBadgeText}>NEW</Text>
+                                            </View>
+                                        </View>
+                                        <Text style={styles.vehicleDetails}>6000 Kg · 9 mins</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.price}>₹2667</Text>
+                            </TouchableOpacity>
+                            {/* 17ft Truck */}
+                            <TouchableOpacity style={styles.vehicleItem}>
+                                <View style={styles.vehicleInfo}>
+                                    <Image
+                                        source={require('../assets/images/bikeicon.png')}
+                                        style={styles.serviceImage}
+                                    />
+                                    <View style={{ padding: 16, }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text style={styles.vehicleName}>17ft</Text>
+                                            <View style={styles.newBadge}>
+                                                <Text style={styles.newBadgeText}>NEW</Text>
+                                            </View>
+                                        </View>
+                                        <Text style={styles.vehicleDetails}>6000 Kg · 9 mins</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.price}>₹2667</Text>
+                            </TouchableOpacity>
+                            {/* 17ft Truck */}
+                            <TouchableOpacity style={styles.vehicleItem}>
+                                <View style={styles.vehicleInfo}>
+                                    <Image
+                                        source={require('../assets/images/bikeicon.png')}
+                                        style={styles.serviceImage}
+                                    />
+                                    <View style={{ padding: 16, }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                            <Text style={styles.vehicleName}>17ft</Text>
+                                            <View style={styles.newBadge}>
+                                                <Text style={styles.newBadgeText}>NEW</Text>
+                                            </View>
+                                        </View>
+                                        <Text style={styles.vehicleDetails}>6000 Kg · 9 mins</Text>
+                                    </View>
+                                </View>
+                                <Text style={styles.price}>₹2667</Text>
+                            </TouchableOpacity>
+
+                        </View>
+                    </ScrollView>
                     <View style={styles.bottomContainer}>
                         <TouchableOpacity
                             style={styles.submitButton}
@@ -244,28 +304,50 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     bottomContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    padding: 16,
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    backgroundColor: '#fff',
-    marginBottom: 30,
-},
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#ddd',
+        backgroundColor: '#fff',
+        marginBottom: 30,
+    },
 
-submitButton: {
-    backgroundColor: '#ba1c1c',
-    paddingVertical: 14,
-    borderRadius: 8,
-    alignItems: 'center',
-},
+    submitButton: {
+        backgroundColor: '#ba1c1c',
+        paddingVertical: 14,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
 
-submitButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: 'bold',
-}
-
+    submitButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    serviceImage: {
+        width: 72,
+        height: 72,
+        borderRadius: 10,
+    },
+    extraInfo: {
+        marginTop: 8,
+    },
+    extraText: {
+        fontSize: 12,
+        color: '#1a1a1a',
+        marginBottom: 4,
+    },
+    expandedCard: {
+        backgroundColor: '#F2F2F2',
+        borderRadius: 10,
+        paddingVertical: 16,
+        paddingHorizontal: 12,
+        borderWidth: 1,
+        borderColor: '#BA1C1C',
+        width: '110%', // Full width
+        alignSelf: 'center',
+    },
 });
