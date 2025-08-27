@@ -170,11 +170,7 @@ export default function PickupAddress() {
                             >
                                 {/* Location Row */}
                                 <View style={styles.inputContainer}>
-                                    <Ionicons
-                                        name="location-sharp"
-                                        size={22}
-                                        color="green"
-                                        style={{ marginRight: 8 }}
+                                    <Ionicons name="location-sharp" size={22} color="green" style={{ marginRight: 8 }}
                                     />
                                     <TextInput
                                         style={styles.addressInput}
@@ -184,6 +180,7 @@ export default function PickupAddress() {
                                         onChangeText={setAddress}
                                     />
                                 </View>
+                                
 
                                 <TextInput
                                     style={styles.input}

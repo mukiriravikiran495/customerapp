@@ -96,7 +96,7 @@ export default function SelectTruck() {
                             <TouchableOpacity style={styles.vehicleItem}>
                                 <View style={styles.vehicleInfo}>
                                     <Image
-                                        source={require('../assets/images/bikeicon.png')}
+                                        source={require('../assets/images/truckicon.png')}
                                         style={styles.serviceImage}
                                     />
                                     <View style={{ padding: 16, }}>
@@ -116,7 +116,7 @@ export default function SelectTruck() {
                             <TouchableOpacity style={styles.vehicleItem}>
                                 <View style={styles.vehicleInfo}>
                                     <Image
-                                        source={require('../assets/images/bikeicon.png')}
+                                        source={require('../assets/images/truck4.png')}
                                         style={styles.serviceImage}
                                     />
                                     <View style={{ padding: 16, }}>
@@ -135,7 +135,7 @@ export default function SelectTruck() {
                             <TouchableOpacity style={styles.vehicleItem}>
                                 <View style={styles.vehicleInfo}>
                                     <Image
-                                        source={require('../assets/images/bikeicon.png')}
+                                        source={require('../assets/images/truck4.png')}
                                         style={styles.serviceImage}
                                     />
                                     <View style={{ padding: 16, }}>
@@ -154,7 +154,7 @@ export default function SelectTruck() {
                             <TouchableOpacity style={styles.vehicleItem}>
                                 <View style={styles.vehicleInfo}>
                                     <Image
-                                        source={require('../assets/images/bikeicon.png')}
+                                        source={require('../assets/images/truck4.png')}
                                         style={styles.serviceImage}
                                     />
                                     <View style={{ padding: 16, }}>

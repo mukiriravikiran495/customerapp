@@ -129,48 +129,17 @@ export default function HomeScreen() {
                     </View>
 
                     {/* Refer banner */}
-                    <View style={{ paddingHorizontal: 16 }}>
+                    <View style={{ paddingHorizontal: 16,  }}>
                         <Text style={styles.sectionTitle}>Refer and Earn</Text>
                         <TouchableOpacity style={styles.referCard} activeOpacity={0.5}>
                             <Image source={require('../assets/images/refer.jpg')} style={styles.referImage} />
                         </TouchableOpacity>
                     </View>
-                    {/* Service Provided */}
-                    {/* <Text style={styles.serviceSectionTitle}>Service provided while Shiftyng</Text>
-
-                    <ScrollView
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        contentContainerStyle={styles.inlineImages}
-                    >
-                        <View style={styles.serviceItem}>
-                            <Image source={require('../assets/images/ac.png')} style={styles.smallServiceImage} />
-                            <Text style={styles.serviceText}>AC Service</Text>
-                        </View>
-
-                        <View style={styles.serviceItem}>
-                            <Image source={require('../assets/images/truckservice.jpg')} style={styles.smallServiceImage} />
-                            <Text style={styles.serviceText}>Truck Service</Text>
-                        </View>
-
-                        <View style={styles.serviceItem}>
-                            <Image source={require('../assets/images/wrapping.jpg')} style={styles.smallServiceImage} />
-                            <Text style={styles.serviceText}>Wrapping</Text>
-                        </View>
-
-                        <View style={styles.serviceItem}>
-                            <Image source={require('../assets/images/wrapping.jpg')} style={styles.smallServiceImage} />
-                            <Text style={styles.serviceText}>Wrapping</Text>
-                        </View>
-                    </ScrollView> */}
 
                     {/* Footer */}
                     <View style={styles.footerImageWrap}>
                         <Image source={require('../assets/images/footer.png')} style={styles.footerImage} />
                     </View>
-
-
-
                 </View>
             </ScrollView>
             <Modal
@@ -247,13 +216,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
         alignItems: 'center',
-        elevation: 2,
+        
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
         borderWidth: 1,
-        borderColor: '#eee',
+        borderColor: '#ccc',
     },
     inputContainer: {
         flexDirection: 'row',
@@ -414,7 +383,7 @@ const styles = StyleSheet.create({
     serviceCardContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#D6D6D6',
         marginTop: 10,
         padding: 10,
         shadowOpacity: 0.1,

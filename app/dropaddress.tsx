@@ -179,7 +179,7 @@ export default function DropAddress() {
                                         style={styles.addressInput}
                                         placeholder="Enter Pickup Address"
                                         placeholderTextColor="#999"
-                                        value={address}
+                                        
                                         onChangeText={setAddress}
                                     />
                                 </View>
