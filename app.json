@@ -1,6 +1,5 @@
 {
   "expo": {
-    
     "name": "shiftyngcustomerapp",
     "slug": "shiftyngcustomerapp",
     "version": "1.0.0",
@@ -17,7 +16,13 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.mravikiran112.shiftyngcustomerapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAQHOAqNwhjEdcMoOMwHRFRkoYh9WUcehk"
+        }
+      }
     },
     "web": {
       "bundler": "metro",
@@ -34,10 +39,17 @@
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "82ec9e53-00ff-4d4d-bd9c-7d088f41afd4"
+      }
     }
   }
 }

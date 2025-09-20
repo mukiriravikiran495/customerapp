@@ -1,163 +1,194 @@
-// app/login.tsx
-import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useState } from 'react';
 import {
     Image,
-    KeyboardAvoidingView,
     Platform,
-    ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
 } from 'react-native';
-export default function Login() {
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// @ts-ignore
+import TopBg from '../assets/images/hero.jpg';
+// @ts-ignore
+import GoogleLogo from '../assets/images/google.png';
+export default function OyoLoginScreen() {
+    const [phone, setPhone] = useState('');
     const router = useRouter();
+    const handleSendOtp = () => {
+        router.push('/verifyotp'); // Change this to your home or next screen
+    };
+
     return (
-        <KeyboardAvoidingView
-            style={{ flex: 1 }}
-            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        >
-            <ScrollView
-                contentContainerStyle={styles.container}
-                keyboardShouldPersistTaps="handled"
-            >
-                <Image source={require('@/assets/images/hero.jpg')} style={styles.banner} resizeMode="cover" />
+        <View style={styles.container}>
+            <Image source={TopBg} style={styles.topBgImage} resizeMode="cover" />
 
-                <Text style={styles.heading}>3-Steps away to your favourite Packers & Movers</Text>
-                <Text style={styles.subHeading}>Log in or sign up</Text>
+            {/* Offer text */}
+            <Text style={styles.offerText}>Choose Packers & Movers</Text>
 
-                <View style={styles.phoneInputContainer}>
-                    <Text style={styles.countryCode}>+91</Text>
-                    <TextInput
-                        placeholder="Enter Phone Number"
-                        keyboardType="number-pad"
-                        style={styles.phoneInput}
+            {/* Phone input */}
+            <View style={styles.inputWrapper}>
+                <View style={styles.prefix}>
+                    <Image
+                        source={{ uri: 'https://flagcdn.com/w40/in.png' }}
+                        style={styles.flagIcon}
                     />
+                    <Text style={styles.countryCode}>+91</Text>
+                    <MaterialIcons name="keyboard-arrow-down" size={16} color="#000" />
                 </View>
+                <TextInput
+                    style={styles.input}
+                    placeholder="Enter mobile number"
+                    placeholderTextColor="#999"
+                    keyboardType="phone-pad"
+                    value={phone}
+                    onChangeText={setPhone}
+                />
+            </View>
 
-                <TouchableOpacity style={styles.continueButton} onPress={() => {
-                    console.log('Navigating to /verifyotp'); // 👈 Debug log
-                    router.push('/verifyotp');
-                }}>
-                    <Text style={styles.continueText}>Continue</Text>
-                </TouchableOpacity>
+            {/* Continue button */}
+            <TouchableOpacity style={styles.continueButton} onPress={handleSendOtp}>
+                <Text style={styles.continueButtonText}>Continue</Text>
+            </TouchableOpacity>
 
-                <Text style={styles.or}>or</Text>
+            {/* OR divider */}
+            <View style={styles.divider}>
+                <View style={styles.line} />
+                <Text style={styles.orText}>OR</Text>
+                <View style={styles.line} />
+            </View>
 
-                <View style={styles.authButtons}>
-                    <TouchableOpacity style={styles.authButton}>
-                        <Ionicons name="logo-google" size={24} color="#BA1c1c" />
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.authButton}>
-                        <Ionicons name="mail" size={24} color="#000000" />
-                    </TouchableOpacity>
-                </View>
+            {/* Google login */}
+            <TouchableOpacity style={styles.outlineButton}>
+                <Image source={GoogleLogo} style={styles.googleIcon} />
+                <Text style={styles.outlineButtonText}>Continue with Google</Text>
+            </TouchableOpacity>
 
-                <Text style={styles.terms}>
-                    By continuing, you agree to our <Text style={styles.link}>Terms of Service</Text>{' '}
-                    <Text style={styles.link}>Privacy Policy</Text> <Text style={styles.link}>Content Policy</Text>
-                </Text>
-            </ScrollView>
-        </KeyboardAvoidingView>
+            {/* Truecaller login */}
+            <TouchableOpacity style={styles.outlineButton}>
+                {/* <MaterialIcons name="phone" size={20} color="#007AFF" /> */}
+                <FontAwesome name="whatsapp" size={22} color="#08b447ff" />
+                <Text style={styles.outlineButtonText}>login with Whats App</Text>
+            </TouchableOpacity>
+
+            {/* Signup later */}
+            <TouchableOpacity>
+                <Text style={styles.signupLater}>by continue you are accepting all the terms and conditions</Text>
+            </TouchableOpacity>
+        </View>
     );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        paddingBottom: 40,
-    },
-    banner: {
-        width: '100%',
-        height: 350,
-    },
-    heading: {
-        fontSize: 22,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 16,
+        paddingTop: Platform.OS === 'android' ? 60 : 60,
         paddingHorizontal: 20,
+        backgroundColor: '#fff',
     },
-    subHeading: {
-        marginTop: 8,
-        color: '#555',
-        fontSize: 14,
+    topBgImage: {
+        width: '100%',
+        height: 240, // Adjust height as needed
+        marginBottom: 16,
+        borderBottomLeftRadius: 16,
+        borderBottomRightRadius: 16,
     },
-    phoneInputContainer: {
-        marginTop: 20,
+    flagIcon: {
+        width: 20,
+        height: 14,
+        marginRight: 4,
+        borderRadius: 2,
+    },
+
+    offerText: {
+        marginTop: 10,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#000',
+        textAlign: 'center',
+    },
+    inputWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
         borderColor: '#ccc',
         borderWidth: 1,
         borderRadius: 10,
-        width: '90%',
         paddingHorizontal: 10,
-        backgroundColor: '#fafafa',
+        marginTop: 20,
         height: 50,
     },
-    flag: {
-        width: 24,
-        height: 16,
+    prefix: {
+        flexDirection: 'row',
+        alignItems: 'center',
         marginRight: 8,
     },
     countryCode: {
         fontSize: 16,
-        marginRight: 8,
+        marginRight: 4,
+        color: '#000',
     },
-    phoneInput: {
+    input: {
         flex: 1,
         fontSize: 16,
-        paddingVertical: Platform.OS === 'ios' ? 12 : 8,
+        color: '#000',
     },
     continueButton: {
-        marginTop: 20,
         backgroundColor: '#ba1c1c',
-        paddingVertical: 14,
-        paddingHorizontal: 32,
         borderRadius: 10,
-        width: '90%',
+        marginTop: 20,
+        paddingVertical: 14,
         alignItems: 'center',
-        justifyContent: 'center',
-        height: 50,
+        elevation: 2,
     },
-    continueText: {
+    continueButtonText: {
         color: '#fff',
         fontSize: 16,
         fontWeight: 'bold',
     },
-    or: {
-        marginVertical: 15,
-        fontSize: 14,
-        color: '#888',
-    },
-    authButtons: {
+    divider: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '40%',
-    },
-    authButton: {
-        width: 50,
-        height: 50,
-        borderRadius: 25, // half of width/height to make it a circle
-        backgroundColor: '#f0f0f0',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginHorizontal: 8,
-        borderWidth: 1,
-        borderColor: '#ddd',
+        marginVertical: 20,
     },
-    terms: {
-        marginTop: 20,
-        textAlign: 'center',
-        fontSize: 12,
+    line: {
+        flex: 1,
+        height: 1,
+        backgroundColor: '#ddd',
+    },
+    orText: {
+        marginHorizontal: 10,
+        fontSize: 14,
         color: '#999',
-        paddingHorizontal: 24,
     },
-    link: {
-        textDecorationLine: 'underline',
-        color: '#444',
+    outlineButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderColor: '#9a9494',
+        borderWidth: 1,
+        borderRadius: 10,
+        paddingVertical: 14,
+        paddingHorizontal: 16,
+        marginBottom: 12,
     },
-}); 
+    outlineButtonText: {
+        marginLeft: 10,
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#000',
+    },
+    googleIcon: {
+        width: 20,
+        height: 20,
+
+        resizeMode: 'contain',
+    },
+    signupLater: {
+        marginTop: 5,
+        textAlign: 'center',
+        color: '#000',
+        fontSize: 14,
+    },
+});
