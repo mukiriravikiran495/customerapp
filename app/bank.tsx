@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -36,11 +36,11 @@ export default function bankAccount() {
             <View style={styles.header}>
                 {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>Bank Account</Text>
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
+                    <Text style={styles.headerTitle}>Menu</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-                    <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                    <MaterialIcons name="support-agent" size={20} color="#222222" />
                     <Text style={styles.supportText}>Support</Text>
                 </TouchableOpacity>
             </View>
@@ -49,24 +49,27 @@ export default function bankAccount() {
                 {isEditing ? (
                     <>
                         <TextInput
-                            placeholder="Account Holder Name"
+                            placeholder="Enter Account Holder Name"
                             value={accountName}
                             onChangeText={setAccountName}
                             style={styles.input}
+                            placeholderTextColor = '#ccc'
                         />
                         <TextInput
-                            placeholder="Account Number"
+                            placeholder="Enter Account Number"
                             value={accountNumber}
                             onChangeText={setAccountNumber}
                             style={styles.input}
                             keyboardType="numeric"
+                            placeholderTextColor = '#ccc'
                         />
                         <TextInput
-                            placeholder="IFSC Code"
+                            placeholder="Enter IFSC Code"
                             value={ifscCode}
                             onChangeText={setIfscCode}
                             style={styles.input}
                             autoCapitalize="characters"
+                            placeholderTextColor = '#ccc'
                         />
                         <TouchableOpacity style={styles.button} onPress={handleSave}>
                             <Text style={styles.buttonText}>Save</Text>
@@ -91,7 +94,7 @@ export default function bankAccount() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        
+
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
     toggleContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#4bc373',
+        backgroundColor: '#15803D',
         paddingHorizontal: 12,
         paddingVertical: 2,
         borderRadius: 24,
@@ -137,23 +140,26 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
     },
     supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
+        color: "#222222",
+        marginLeft: 6,
+        fontSize: 14,
+        fontWeight: "600",
     },
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     backButton: {
@@ -170,7 +176,7 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#8E1515',
         paddingVertical: 10,
         borderRadius: 8,
         alignItems: 'center',
@@ -178,15 +184,15 @@ const styles = StyleSheet.create({
     },
 
     buttonText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '400',
     },
 
     label: {
         fontSize: 16,
         marginBottom: 6,
-        color: '#333',
+        color: '#C1C1C1',
     },
 
 });

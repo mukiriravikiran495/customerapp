@@ -112,13 +112,13 @@ export default function MoversSelectDropAddress() {
                                 </View>
 
                                 {/* Separator */}
-                                <View style={styles.separator} />
+                                <View style={styles.locationSeparator} />
                                 <TouchableOpacity onPress={() => router.push('/moversdropaddress')} activeOpacity={0.8}>
                                     <View style={styles.searchBar}>
                                         <Ionicons
                                             name="location-sharp"
                                             size={20}
-                                            color="#BA1C1C"
+                                            color="#8E1515"
                                             style={styles.icon}
                                         />
 
@@ -135,7 +135,7 @@ export default function MoversSelectDropAddress() {
                         </View>
                         {/* Select on Map Button */}
                         <TouchableOpacity style={styles.mapButton} onPress={() => router.push('/moverspickupaddress')}>
-                            <Ionicons name="location-sharp" size={20} color="#Ba1C1C" style={styles.mapIcon} />
+                            <Ionicons name="location-sharp" size={20} color="#8E1515" style={styles.mapIcon} />
                             <Text style={styles.mapButtonText}>Select on Map</Text>
                         </TouchableOpacity>
 
@@ -207,11 +207,11 @@ export default function MoversSelectDropAddress() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         paddingTop: 30,
     },
     topSection: {
-        backgroundColor: '#F2F2F2', // gray background
+        backgroundColor: '#FFFFFF', // gray background
         padding: 16,
         paddingBottom: 24, // spacing under card
     },
@@ -223,22 +223,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 6,
-        borderColor: '#282424',
+        borderColor: '#FFFFFF',
         borderWidth: 0.3,
         alignSelf: 'flex-start',
         marginBottom: 20,
     },
     locationCard: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         borderRadius: 12,
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: '#F2F2F2',
         overflow: 'hidden',
-        elevation: 2,
+        elevation: 0.5,
     },
     separator: {
         height: 1,
-        backgroundColor: '#e8e5e5',
+        backgroundColor: '#DBDBDB',
+        marginHorizontal: 16,
+    },
+    locationSeparator: {
+        height: 1,
+        backgroundColor: '#DBDBDB',
+        marginHorizontal: 16,
     },
     icon: {
         marginRight: 4,
@@ -251,7 +257,7 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
         paddingVertical: 18,
     },
     mapButton: {
@@ -268,7 +274,7 @@ const styles = StyleSheet.create({
         marginRight: 6,
     },
     mapButtonText: {
-        color: '#BA1C1C',
+        color: '#8E1515',
         fontSize: 16,
         fontWeight: '600',
     },
@@ -282,13 +288,13 @@ const styles = StyleSheet.create({
 
     addressTitle: {
         fontSize: 14,
-        fontWeight: 'bold',
-        color: '#1A1A1A',
+        fontWeight: '500',
+        color: '#222222',
     },
 
     addressSubtitle: {
         fontSize: 12,
-        color: '#1A1A1A',
+        color: '#222222',
         marginTop: 2,
     },
     bottomContainer: {
@@ -298,7 +304,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     submitButton: {
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
@@ -374,7 +380,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 12,
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
     },
     iconRight: {
         marginLeft: 8,
@@ -394,11 +400,11 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 6,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderWidth: 0.3,
     },
     changeButtonText: {
-        color: '#ba1c1c',
+        color: '#8E1515',
         fontSize: 14,
         fontWeight: '500',
     },

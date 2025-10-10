@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import {
     Image,
@@ -19,59 +19,59 @@ export default function BookingScreen() {
             {/* Header */}
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>My bookings</Text>
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
+                    <Text style={styles.headerTitle}>My Bookings</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-                    <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                    <MaterialIcons name="support-agent" size={20} color="#222222" />
                     <Text style={styles.supportText}>Support</Text>
                 </TouchableOpacity>
             </View>
 
             {/* Booking Card */}
             <TouchableOpacity onPress={() => router.push('/bookingsuccess')}>
-            <View style={styles.card}>
-                {/* Top Row */}
-                <View style={styles.leftSection}>
-                    <Image
-                        source={{ uri: "https://via.placeholder.com/50" }}
-                        style={styles.logo}
-                    />
+                <View style={styles.card}>
+                    {/* Top Row */}
+                    <View style={styles.leftSection}>
+                        <Image
+                            source={{ uri: "https://via.placeholder.com/50" }}
+                            style={styles.logo}
+                        />
 
-                    <View style={{ flex: 1 }}>
-                        {/* Company name */}
-                        <Text style={styles.companyName}>Leo Packers and Movers</Text>
+                        <View style={{ flex: 1 }}>
+                            {/* Company name */}
+                            <Text style={styles.companyName}>Leo Packers and Movers</Text>
 
-                        {/* ONE BHK & Amount in same row */}
-                        <View style={styles.subRow}>
-                            <Text style={styles.subText}>ONE BHK</Text>
-                            <Text style={styles.amount}>₹17,400</Text>
+                            {/* ONE BHK & Amount in same row */}
+                            <View style={styles.subRow}>
+                                <Text style={styles.subText}>ONE BHK</Text>
+                                <Text style={styles.amount}>₹17,400</Text>
+                            </View>
+                        </View>
+                    </View>
+
+                    {/* Middle Row */}
+                    <View style={styles.middleRow}>
+                        <Text style={styles.status}>Booking Completed</Text>
+                        <Text style={styles.paymentStatus}>Unpaid</Text>
+                    </View>
+
+                    {/* Divider */}
+                    <View style={styles.divider} />
+
+                    {/* Bottom Row */}
+                    <View style={styles.bottomRow}>
+                        <View style={styles.dateSection}>
+                            <Text style={styles.dateLabel}>Shift date</Text>
+                            <Text style={styles.dateValue}>22 JUL 2025</Text>
+                        </View>
+                        <View style={styles.verticalDivider} />
+                        <View style={styles.dateSection}>
+                            <Text style={styles.dateLabel}>Drop date</Text>
+                            <Text style={styles.dateValue}>22 JUL 2025</Text>
                         </View>
                     </View>
                 </View>
-
-                {/* Middle Row */}
-                <View style={styles.middleRow}>
-                    <Text style={styles.status}>Booking Completed</Text>
-                    <Text style={styles.paymentStatus}>Unpaid</Text>
-                </View>
-
-                {/* Divider */}
-                <View style={styles.divider} />
-
-                {/* Bottom Row */}
-                <View style={styles.bottomRow}>
-                    <View style={styles.dateSection}>
-                        <Text style={styles.dateLabel}>Shift date</Text>
-                        <Text style={styles.dateValue}>22 JUL 2025</Text>
-                    </View>
-                    <View style={styles.verticalDivider} />
-                    <View style={styles.dateSection}>
-                        <Text style={styles.dateLabel}>Drop date</Text>
-                        <Text style={styles.dateValue}>22 JUL 2025</Text>
-                    </View>
-                </View>
-            </View>
             </TouchableOpacity>
         </SafeAreaView>
     );
@@ -80,7 +80,7 @@ export default function BookingScreen() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: "#F2F2F2",
+        backgroundColor: "#FFFFFF",
         paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         marginTop: 10,
         marginBottom: 30,
+
     },
     backButton: {
         flexDirection: "row",
@@ -97,33 +98,36 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 18,
-        fontWeight: "bold",
+        fontWeight: "400",
         marginLeft: 8,
-        color: "#000",
+        color: "#222222",
         paddingHorizontal: 12,
     },
     supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
     },
     supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
+        color: "#222222",
+        marginLeft: 6,
+        fontSize: 14,
+        fontWeight: "600",
     },
     card: {
-        backgroundColor: "#fff",
+        backgroundColor: "#F1F1F1",
         borderRadius: 12,
         padding: 12,
-        shadowColor: "#000",
+        shadowColor: "#222222",
         shadowOpacity: 0.1,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 5,
-        elevation: 3,
+        // elevation: 3,
     },
     topRow: {
         flexDirection: "row",
@@ -137,16 +141,16 @@ const styles = StyleSheet.create({
     },
     status: {
         fontSize: 15,
-        color: "green",
+        color: "#058103",
         fontWeight: '400',
     },
     paymentStatus: {
         fontSize: 15,
-        color: "#BA1C1C",
+        color: "#8E1515",
     },
     divider: {
         height: 1,
-        backgroundColor: "#eee",
+        backgroundColor: "#C1C1C1",
         marginVertical: 8,
     },
     bottomRow: {
@@ -159,17 +163,17 @@ const styles = StyleSheet.create({
     },
     verticalDivider: {
         width: 1,
-        backgroundColor: "#eee",
+        backgroundColor: "#C1C1C1",
     },
     dateLabel: {
         fontSize: 13,
-        color: "#000",
+        color: "#222222",
     },
     dateValue: {
         fontSize: 14,
-        fontWeight: "bold",
+        fontWeight: "400",
         marginTop: 2,
-        color: "#000",
+        color: "#222222",
     },
     leftSection: {
         flexDirection: "row",
@@ -184,8 +188,8 @@ const styles = StyleSheet.create({
     },
     companyName: {
         fontSize: 16,
-        fontWeight: "bold",
-        color: "#000",
+        fontWeight: "400",
+        color: "#222222",
     },
     subRow: {
         flexDirection: "row",
@@ -198,7 +202,7 @@ const styles = StyleSheet.create({
     },
     amount: {
         fontSize: 14,
-        fontWeight: "bold",
-        color: "green",
+        fontWeight: "500",
+        color: "#058103",
     },
 });

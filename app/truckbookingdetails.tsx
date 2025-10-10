@@ -96,18 +96,18 @@ export default function TruckBookingDetails() {
                                     <Text style={styles.amountText}>₹93.39</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.separator} />
+                            {/* <View style={styles.separator} /> */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Text style={styles.TripValue}>Net Amount </Text>
                                 <TouchableOpacity>
                                     <Text style={styles.amountText}>₹93</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.separator} />
+                            {/* <View style={styles.separator} /> */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Text style={styles.appliedCoupon}>Coupon </Text>
                                 <TouchableOpacity>
-                                    <Text style={styles.changeText}>WELCOME</Text>
+                                    <Text style={styles.couponText}>WELCOME</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={styles.separator} />
@@ -117,7 +117,7 @@ export default function TruckBookingDetails() {
                                     <Text style={styles.totalText}>₹93</Text>
                                 </TouchableOpacity>
                             </View>
-                            <View style={styles.newseparator} />
+                            {/* <View style={styles.newseparator} /> */}
                         </View>
                     </ScrollView>
 
@@ -185,7 +185,7 @@ export default function TruckBookingDetails() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
         paddingTop: 30,
     },
     topSection: {
@@ -194,17 +194,24 @@ const styles = StyleSheet.create({
         paddingBottom: 8, // spacing under card
         flexDirection: 'row',
         alignItems: 'center',
-        elevation: 4,
+        elevation: 1,
     },
     arrowWrapper: {
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 6,
 
-        borderColor: '#282424',
+        borderColor: '#FFFFFF',
         borderWidth: 0.3,
         alignSelf: 'flex-start',
         marginBottom: 10,
+    },
+    headerText: {
+        fontSize: 18,
+        fontWeight: '500',
+        marginLeft: 12,
+        alignItems: 'center',
+        marginBottom: 12,
     },
     bottomContainer: {
         position: 'absolute',
@@ -214,62 +221,55 @@ const styles = StyleSheet.create({
         padding: 16,
         borderTopWidth: 1,
         borderTopColor: '#ddd',
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         marginBottom: 30,
         
     },
 
     submitButton: {
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
     },
 
     submitButtonText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: '400',
     },
-    shiftType: {
-        backgroundColor: '#FFFFFF',
-        elevation: 4,
-        marginHorizontal: 16,
-        marginTop: 16,
-        padding: 16,
-
-    },
+    
     goodsTypeCard: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         borderRadius: 10,
         padding: 16,
         marginHorizontal: 16,
         marginTop: 8,
-        elevation: 3,
+        
     },
     priceCard: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         borderRadius: 10,
         padding: 16,
         marginHorizontal: 16,
         marginTop: 8,
-        elevation: 3,
+        
         marginBottom: 50,
     },
     label: {
         fontSize: 14,
-        color: '#1A1A1A',
+        color: '#222222',
     },
     value: {
         fontSize: 15,
-        color: '#1A1A1A',
-        fontWeight: '500',
+        color: '#222222',
+        fontWeight: '400',
     },
     appliedCoupon: {
         fontWeight: 'regular',
 
         fontSize: 16,
-        color: '1A1A1A',
+        color: '#222222',
     },
     weightValue: {
         fontSize: 14,
@@ -280,31 +280,30 @@ const styles = StyleSheet.create({
         marginTop: 24,
         fontSize: 15,
         fontWeight: '500',
-        color: '#000',
+        color: '#222222',
 
     },
     changeText: {
         fontSize: 14,
-        color: 'green',
+        color: '#8E1515',
+        fontWeight: '500',
+    },
+    couponText: {
+        fontSize: 14,
+        color: '#15803D',
         fontWeight: '500',
     },
     totalText: {
         fontSize: 16,
-        color: '#1A1A1A',
+        color: '#222222',
         fontWeight: '500',
     },
     amountText: {
 
-        fontWeight: 500,
+        fontWeight: 400,
         fontSize: 16,
     },
-    headerText: {
-        fontSize: 18,
-        fontWeight: '600',
-        marginLeft: 12,
-        alignItems: 'center',
-        marginBottom: 12,
-    },
+    
     serviceImage: {
         width: 72,
         height: 72,
@@ -312,7 +311,7 @@ const styles = StyleSheet.create({
     },
     separator: {
         height: 1,
-        backgroundColor: '#e8e5e5',
+        backgroundColor: '#C1C1C1',
         marginTop: 14,
         marginBottom: 14,
     },
@@ -324,16 +323,17 @@ const styles = StyleSheet.create({
     },
     TripValue: {
         fontWeight: '300',
-
         fontSize: 16,
-        color: '1A1A1A',
+        color: '#222222',
     },
     totalValue: {
-        fontFamily: 'Roboto_500Medium',
+        // fontFamily: 'Roboto_500Medium',
         fontSize: 16,
+        fontWeight: '500',
+        color: '#222222',
     },
     paymentMode: {
-        fontFamily: 'Roboto_400Regular',
+        // fontFamily: 'Roboto_400Regular',
     },
     cashIcon: {
         borderColor: '#F2F2F2',
@@ -347,8 +347,8 @@ const styles = StyleSheet.create({
 
     title: {
         fontSize: 15,
-        fontWeight: '600',
-        color: '#111',
+        fontWeight: '500',
+        color: '#222222',
     },
     subtitle: {
         fontSize: 12,
@@ -357,12 +357,12 @@ const styles = StyleSheet.create({
         marginBottom: 6,
     },
     card: {
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         borderRadius: 12,
         padding: 10,
         flexDirection: 'row',
         alignItems: 'center',
-        shadowColor: '#000',
+        shadowColor: '#222222',
         shadowOpacity: 0.06,
         shadowRadius: 8,
         shadowOffset: { width: 0, height: 4 },
@@ -381,7 +381,7 @@ const styles = StyleSheet.create({
     amount: {
         fontSize: 16,
         fontWeight: '600',
-        color: 'green',
+        color: '#222222',
 
     },
 });

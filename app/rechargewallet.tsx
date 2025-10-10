@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -28,20 +28,20 @@ export default function rechargewallet() {
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.header}>
+                {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>Wallet</Text>
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
+                    <Text style={styles.headerTitle}>Profile</Text>
                 </TouchableOpacity>
-
-                <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-                    <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                    <MaterialIcons name="support-agent" size={20} color="#222222" />
                     <Text style={styles.supportText}>Support</Text>
                 </TouchableOpacity>
             </View>
 
             <ScrollView showsVerticalScrollIndicator={false}>
                 {/* Wallet Balance Card */}
-                <TouchableOpacity style={styles.walletCard} activeOpacity={0.9}  onPress={() => setShowRechargeModal(true)}>
+                <TouchableOpacity style={styles.walletCard} activeOpacity={0.9} onPress={() => setShowRechargeModal(true)}>
                     <View style={styles.cardInner}>
                         <Text style={styles.balanceText}>₹0</Text>
                         <Text style={styles.balanceSubText}>Your balance is low. Please recharge</Text>
@@ -51,7 +51,7 @@ export default function rechargewallet() {
 
                     <View style={[styles.cardBottom, styles.cardInner]}>
                         <Text style={styles.cardActionText}>Recharge</Text>
-                        <Ionicons name="arrow-forward" size={20} color="#000" />
+                        <Ionicons name="arrow-forward" size={20} color="#222222" />
                     </View>
                 </TouchableOpacity>
 
@@ -64,7 +64,7 @@ export default function rechargewallet() {
                             <Text style={styles.referSubTitle}>upto ₹1400</Text>
                         </View>
                     </View>
-                    <Ionicons name="arrow-forward" size={20} color="#000" />
+                    <Ionicons name="arrow-forward" size={20} color="#222222" />
                 </TouchableOpacity>
 
                 {/* Transaction History Section */}
@@ -123,7 +123,7 @@ export default function rechargewallet() {
                                     // You can trigger API call here
                                 }}
                             >
-                                <Text style={{ color: '#fff', fontWeight: 'bold' }}>Recharge Wallet</Text>
+                                <Text style={{ color: '#FFFFFF', fontWeight: '400' }}>Recharge Wallet</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -138,7 +138,7 @@ export default function rechargewallet() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -155,32 +155,35 @@ const styles = StyleSheet.create({
     },
     headerTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '400',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
     },
     supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
+        color: "#222222",
+        marginLeft: 6,
+        fontSize: 14,
+        fontWeight: "600",
     },
     walletCard: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         borderRadius: 12,
         borderWidth: 1,
         borderColor: '#eee',
         paddingVertical: 20, // Only vertical padding
         marginBottom: 16,
-        elevation: 2,
+        
     },
     referCard: {
         flexDirection: 'row',
@@ -192,24 +195,21 @@ const styles = StyleSheet.create({
         borderColor: '#eee',
         marginBottom: 20,
 
-        // Shadow for Android
-        elevation: 2,
-
         // Shadow for iOS
-        shadowColor: '#000',
+        shadowColor: '#222222',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        backgroundColor: '#fff', // Required for iOS shadow to show
+        backgroundColor: '#F2F2F2', // Required for iOS shadow to show
     },
     balanceText: {
-        color: '#BA1C1C',
+        color: '#8E1515',
         fontSize: 24,
         fontWeight: 'bold',
         textAlign: 'center',
     },
     balanceSubText: {
-        color: '#BA1C1C',
+        color: '#8E1515',
         fontSize: 14,
         textAlign: 'center',
         marginTop: 4,
@@ -221,9 +221,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     cardActionText: {
-        fontSize: 20,
-        fontWeight: '500',
-        color: '#000',
+        fontSize: 18,
+        fontWeight: '400',
+        color: '#222222',
     },
 
     referRow: {
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
     },
     referSubTitle: {
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
         fontWeight: '500',
     },
     historyHeader: {
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     },
     historyTitle: {
         fontSize: 18,
-        fontWeight: '600',
-        color: '#000',
+        fontWeight: '400',
+        color: '#222222',
     },
     filterButton: {
         backgroundColor: '#f1f1f1',
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     filterText: {
-        color: '#000',
+        color: '#222222',
         fontSize: 13,
     },
     tabBar: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         fontWeight: '300',
         borderBottomWidth: 2,
-        borderColor: '#000',
+        borderColor: '#222222',
         alignSelf: 'flex-start',
     },
     divider: {
@@ -291,7 +291,7 @@ const styles = StyleSheet.create({
     },
     modalOverlay: {
         flex: 1,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: '#222222',
         justifyContent: 'center',
         alignItems: 'center',
     },
@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     },
     modalTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '400',
         marginBottom: 16,
     },
     input: {
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
         borderColor: '#ccc',
     },
     rechargeBtn: {
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
         borderRadius: 10,
         alignItems: 'center',

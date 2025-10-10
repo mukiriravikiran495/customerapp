@@ -2,6 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Dimensions, FlatList, Image, Platform, ScrollView, StatusBar, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+const { width, height } = Dimensions.get('window');
 type Item = {
     id: number;
     name: string;
@@ -156,61 +157,61 @@ const items: Record<CategoryKey, Item[]> = {
     ],
     appliances: [
         {
-        id: 18,
-        name: "Appliances",
-        image:
-            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
-        category: "Appliances",
-    },
+            id: 18,
+            name: "Appliances",
+            image:
+                "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+            category: "Appliances",
+        },
     ],
     decorative: [
         {
-        id: 19,
-        name: "Decorative",
-        image:
-            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
-        category: "Decorative",
-    },
+            id: 19,
+            name: "Decorative",
+            image:
+                "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+            category: "Decorative",
+        },
     ],
     sports: [
         {
-        id: 20,
-        name: "sports",
-        image:
-            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
-        category: "Sports",
-    },
+            id: 20,
+            name: "sports",
+            image:
+                "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+            category: "Sports",
+        },
     ],
     books: [
         {
-        id: 21,
-        name: "Kitchen Cabinet",
-        image:
-            "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
-        category: "Books",
-    },
+            id: 21,
+            name: "Kitchen Cabinet",
+            image:
+                "https://images.unsplash.com/photo-1556912173-3bb406ef7e77?w=200&h=200&fit=crop",
+            category: "Books",
+        },
     ],
 };
 const allItems = Object.values(items).flat();
 const categoryNameToKey: Record<string, CategoryKey> = {
-  'Electronics': 'electronics',
-  'Kitchen Items': 'kitchen',
-  'Clothes': 'clothes',
-  'Books': 'books',
-  'Appliances': 'appliances',
-  'Decorative': 'decorative',
-  'Sports': 'sports',
-  
+    'Electronics': 'electronics',
+    'Kitchen Items': 'kitchen',
+    'Clothes': 'clothes',
+    'Books': 'books',
+    'Appliances': 'appliances',
+    'Decorative': 'decorative',
+    'Sports': 'sports',
+
 };
 
 const getFilteredItems = (categoryId: string) => {
-  const categoryName = categories.find(c => c.id === categoryId)?.name;
-  if (!categoryName) return [];
+    const categoryName = categories.find(c => c.id === categoryId)?.name;
+    if (!categoryName) return [];
 
-  if (categoryName === 'All') return allItems;
+    if (categoryName === 'All') return allItems;
 
-  const key = categoryNameToKey[categoryName];
-  return items[key as CategoryKey] || [];
+    const key = categoryNameToKey[categoryName];
+    return items[key as CategoryKey] || [];
 };
 
 
@@ -255,7 +256,7 @@ export default function App() {
                     {/* LEFT: Back Button */}
                     <View style={styles.sideContainer}>
                         <TouchableOpacity onPress={() => router.push('/moversselectdropaddress')} style={styles.iconHitBox}>
-                            <Ionicons name="chevron-back" size={24} color="#212121" />
+                            <Ionicons name="chevron-back" size={24} color="#222222" />
                         </TouchableOpacity>
                     </View>
 
@@ -363,10 +364,19 @@ export default function App() {
                     showsVerticalScrollIndicator={false}
                 />
                 {hasSelectedItems && (
-                    <TouchableOpacity style={styles.findMoversButton} onPress={handleFindMovers}>
-                        <Text style={styles.findMoversText}>Find Movers</Text>
+                    // <TouchableOpacity style={styles.findMoversButton} onPress={handleFindMovers}>
+                    //     <Text style={styles.findMoversText}>Find Movers</Text>
+                    // </TouchableOpacity>
+                    <View style={styles.footer}>
+                    <TouchableOpacity
+                        style={styles.confirmButton}
+                        onPress={() => router.push('/vendors')}
+                    >
+                        <Text style={styles.confirmButtonText}>Find Movers</Text>
                     </TouchableOpacity>
+                </View>
                 )}
+                
             </View>
         </View>
     );
@@ -378,16 +388,16 @@ const cardWidth = (screenWidth - 120) / 2;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     headerWrapper: {
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFFFFF',
         ...Platform.select({
             android: {
                 elevation: 8,
             },
             ios: {
-                shadowColor: '#000',
+                shadowColor: '#222222',
                 shadowOffset: { width: 0, height: 4 },
                 shadowOpacity: 0.1,
                 shadowRadius: 2,
@@ -408,11 +418,11 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingHorizontal: 12,
         paddingVertical: 6,
-        backgroundColor: '#ba1c1c',
-        color: '#fff',
+        backgroundColor: '#8E1515',
+        color: '#FFFFFF',
         borderRadius: 6,
         textAlign: 'center',
-        
+
     },
     countText: {
         marginHorizontal: 12,
@@ -427,13 +437,13 @@ const styles = StyleSheet.create({
         width: 150, // Fixed width for centering
         paddingVertical: 16,
 
-        backgroundColor: 'red',
+        backgroundColor: '#8E1515',
         borderRadius: 30,
         alignItems: 'center',
         justifyContent: 'center',
 
         elevation: 20,
-        shadowColor: '#000',
+        shadowColor: '#222222',
         shadowOpacity: 0.2,
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 4,
@@ -441,9 +451,9 @@ const styles = StyleSheet.create({
 
 
     findMoversText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontSize: 16,
-        fontWeight: 'bold',
+        fontWeight: '500',
     },
 
     header: {
@@ -470,7 +480,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 18,
         fontWeight: '600',
-        color: '#212121',
+        color: '#222222',
         textAlign: 'center',
     },
     searchInput: {
@@ -479,12 +489,12 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         borderBottomWidth: 1,
         borderBottomColor: '#AAA',
-        color: '#212121',
+        color: '#222222',
     },
     headerTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#212121',
+        color: '#222222',
     },
     iconHitBox: {
         padding: 8,
@@ -492,13 +502,13 @@ const styles = StyleSheet.create({
     contentWrapper: {
         flex: 1,
         flexDirection: 'row',
-        
+
     },
     leftPanel: {
         width: 80,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         elevation: 8,
-       
+
     },
     categoryItem: {
         alignItems: 'center',
@@ -530,7 +540,7 @@ const styles = StyleSheet.create({
     },
     rightPanel: {
         padding: 10,
-        
+
     },
     itemCard: {
         backgroundColor: '#fff',
@@ -543,7 +553,7 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 3,
         elevation: 2,
-        
+
     },
     itemImage: {
         width: '100%',
@@ -556,15 +566,15 @@ const styles = StyleSheet.create({
         position: 'absolute',
         right: 10,
         top: 90,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         borderWidth: 1,
-        borderColor: '#ba1c1c',
+        borderColor: '#8E1515',
         paddingHorizontal: 20,
         paddingVertical: 8,
         borderRadius: 6,
     },
     addButtonText: {
-        color: '#ba1c1c',
+        color: '#8E1515',
         fontWeight: '600',
         fontSize: 12,
     },
@@ -572,42 +582,45 @@ const styles = StyleSheet.create({
     itemDetails: {
         marginTop: 10,
     },
-    itemPriceRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    price: {
-        fontSize: 14,
-        fontWeight: '600',
-        color: '#212121',
-    },
-    strike: {
-        fontSize: 12,
-        color: '#999',
-        textDecorationLine: 'line-through',
-        marginLeft: 4,
-    },
+
+
     weight: {
         fontSize: 12,
         color: '#555',
     },
-    discount: {
-        fontSize: 12,
-        color: 'green',
-        marginVertical: 2,
-    },
+
     description: {
         fontSize: 13,
         fontWeight: '500',
-        color: '#212121',
+        color: '#222222',
     },
-    sourced: {
-        fontSize: 10,
-        color: '#00BFA5',
-        marginVertical: 2,
+    footer: {
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "#fff",
+        padding: 10,
+        borderTopWidth: 1,
+        borderTopColor: "#ddd",
+        marginTop: 10,
     },
-    rating: {
-        fontSize: 10,
-        color: '#555',
+    confirmButton: {
+        backgroundColor: '#8E1515',
+        paddingVertical: height * 0.018,
+        marginHorizontal: 12,
+        borderRadius: 10,
+        marginTop: height * 0.00,
+        marginBottom: height * 0.05,
+        alignItems: 'center',
+        elevation: 4,
+
+    },
+
+    confirmButtonText: {
+        color: '#FFFFFF',
+        fontWeight: '400',
+        fontSize: width * 0.045,
+        
     },
 });

@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         marginTop: 4,
     },
     selectButton: {
-        backgroundColor: '#ba1c1c',
+        backgroundColor: '#8E1515',
         paddingHorizontal: 16,
         paddingVertical: 8,
         borderRadius: 6,

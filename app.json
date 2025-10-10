@@ -12,6 +12,7 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -40,7 +41,8 @@
           "backgroundColor": "#ffffff"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
@@ -48,8 +50,9 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "82ec9e53-00ff-4d4d-bd9c-7d088f41afd4"
+        "projectId": "8687e049-d660-4316-a16b-e7e79c910824"
       }
-    }
+    },
+    "owner": "mravikiran101"
   }
 }

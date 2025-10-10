@@ -113,7 +113,7 @@ export default function BookingDetails() {
                     {/* Header */}
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                            <Ionicons name="arrow-back" size={26} color="#000" />
+                            <Ionicons name="arrow-back" size={26} color="#222222" />
                         </TouchableOpacity>
                     </View>
                     <View style={styles.companyRow}>
@@ -151,7 +151,7 @@ export default function BookingDetails() {
 
                         {/* To Location */}
                         <View style={styles.addressRow}>
-                            <Ionicons name="location-sharp" size={16} color="#BA1C1C" style={{ marginRight: 8 }} />
+                            <Ionicons name="location-sharp" size={16} color="#8E1515" style={{ marginRight: 8 }} />
                             <Text style={styles.addressText} numberOfLines={2}>
                                 Near Victoria Memorial Metro Station, Metro Pillar No. 1634, Green Hills Colony, Main Road, Kothapet, Hyderabad, Telangana 500035
                             </Text>
@@ -166,7 +166,7 @@ export default function BookingDetails() {
                             {/* Vertical Divider */}
                             <View style={styles.verticalDivider} />
                             <View style={styles.viewItemsRow}>
-                                <Ionicons name="eye-outline" size={16} color="#BA1C1C" style={{ marginRight: 4 }} />
+                                <Ionicons name="eye-outline" size={16} color="#8E1515" style={{ marginRight: 4 }} />
                                 <TouchableOpacity onPress={() => setShowModal(true)} >
                                     <Text style={styles.viewItemsText}>VIEW ITEMS</Text>
                                 </TouchableOpacity>
@@ -197,7 +197,7 @@ export default function BookingDetails() {
                         <>
                             {/* MODAL */}
                             <Modal visible={showModal} animationType="slide" transparent={true}>
-                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000aa' }}>
+                                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#222222' }}>
                                     <View style={{ width: '90%', height: '80%', backgroundColor: '#fff', borderRadius: 10, padding: 10 }}>
 
                                         <TouchableOpacity
@@ -207,7 +207,7 @@ export default function BookingDetails() {
                                             }}
                                             style={{ marginTop: 10, marginBottom: 10 }}
                                         >
-                                            <Text style={{ color: '#ba1c1c', textAlign: 'right', textDecorationLine: 'underline', fontWeight: '500' }}>
+                                            <Text style={{ color: '#8E1515', textAlign: 'right', textDecorationLine: 'underline', fontWeight: '500' }}>
                                                 + Add items
                                             </Text>
                                         </TouchableOpacity>
@@ -234,7 +234,7 @@ export default function BookingDetails() {
                                                             backgroundColor: '#fff',
                                                             borderRadius: 10,
                                                             alignItems: 'center',
-                                                            elevation: 2,
+                                                            // elevation: 2,
                                                             padding: 5,
                                                             margin: 5, // use margin instead of marginHorizontal
                                                         }}
@@ -246,7 +246,7 @@ export default function BookingDetails() {
                                                         <Text style={{ fontSize: 12, marginVertical: 4 }}>{item.name}</Text>
                                                         <TouchableOpacity
                                                             style={{
-                                                                backgroundColor: '#ba1c1c',
+                                                                backgroundColor: '#8E1515',
                                                                 paddingVertical: 5,
                                                                 paddingHorizontal: 10,
                                                                 borderRadius: 5,
@@ -265,7 +265,7 @@ export default function BookingDetails() {
                                             <TouchableOpacity
                                                 style={{
                                                     width: 120,
-                                                    backgroundColor: '#ba1c1c',
+                                                    backgroundColor: '#8E1515',
                                                     padding: 12,
                                                     borderRadius: 5,
                                                     marginHorizontal: 8,
@@ -278,14 +278,14 @@ export default function BookingDetails() {
                                             <TouchableOpacity
                                                 style={{
                                                     width: 120,
-                                                    backgroundColor: '#BA1C1C',
+                                                    backgroundColor: '#8E1515',
                                                     padding: 12,
                                                     borderRadius: 5,
                                                     marginHorizontal: 8,
                                                 }}
                                                 onPress={() => setShowModal(false)}
                                             >
-                                                <Text style={{ textAlign: 'center', color: '#fff' }}>Cancel</Text>
+                                                <Text style={{ textAlign: 'center', color: '#FFFFFF' }}>Cancel</Text>
                                             </TouchableOpacity>
                                         </View>
                                     </View>
@@ -304,7 +304,7 @@ export default function BookingDetails() {
                             />
                             <Text style={styles.couponText}>View all Coupons</Text>
                         </View>
-                        <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#000" />
+                        <Ionicons style={styles.couponArrow} name="chevron-forward" size={20} color="#555" />
                     </TouchableOpacity>
 
                     {/* Saving */}
@@ -372,24 +372,6 @@ export default function BookingDetails() {
                         />
                     </View>
 
-                    {/* <View style={styles.bottomContainer}>
-                    <TouchableOpacity
-                        style={styles.confirmButton}
-                    onPress={() => {
-                        // if (customerName.trim() === '' || email.trim() === '') {
-                        //     alert('Please enter both Name and Email');
-
-                        // } else {
-                        setConfirmPopupVisible(true);
-                        // }
-                    }}
-                >
-                    <Text style={styles.confirmButtonText}>Submit & Confirm</Text>
-                    </TouchableOpacity>
-                </View> */}
-
-
-
                 </SafeAreaView>
             </ScrollView>
             {/* Confirm Button */}
@@ -409,16 +391,16 @@ export default function BookingDetails() {
                 animationType="fade"
                 transparent={true}
             >
-                <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, backgroundColor: '#222222', justifyContent: 'center', alignItems: 'center' }}>
                     <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
-                        <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
+                        <Text style={{ fontSize: 16, fontWeight: '400', marginBottom: 15, textAlign: 'center' }}>
                             Are you sure you want to confirm the booking?
                         </Text>
 
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                             <TouchableOpacity
                                 style={{
-                                    backgroundColor: '#BA1C1C',
+                                    backgroundColor: '#8E1515',
                                     padding: 10,
                                     borderRadius: 5,
                                     flex: 1,
@@ -454,7 +436,7 @@ export default function BookingDetails() {
                                 }}
                                 onPress={() => setConfirmPopupVisible(false)}
                             >
-                                <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
+                                <Text style={{ textAlign: 'center', color: '#222222' }}>Cancel</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -481,35 +463,27 @@ export default function BookingDetails() {
 
 const styles = StyleSheet.create({
     scrollContent: {
-        paddingBottom: height * 0.1, // Ensure there’s space at bottom
+        // paddingBottom: height * 0.1, // Ensure there’s space at bottom
     },
     container: {
         flex: 1,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
+        marginHorizontal: 2,
     },
-    // header: {
-    //     flexDirection: 'row',
-    //     alignItems: 'flex-start',
-    //     padding: width * 0.04,
-    //     backgroundColor: '#fff',
-    //     justifyContent: 'space-between',
-    // },
+    
     leftHeader: {
         flexDirection: 'column',
         flex: 1,
 
     },
 
-    // headerInfo: {
-    //     flex: 1,
-    //     marginLeft: width * 0.03,
-    // },
     companyName: {
         fontSize: width * 0.045,
-        fontWeight: 'bold',
+        fontWeight: '500',
         marginTop: height * 0.01,
         marginLeft: width * 0.02,
-        fontFamily: 'Roboto_500Medium',
+        // fontFamily: 'Roboto_500Medium',
+        color: '#222222',
     },
     address: {
         fontSize: width * 0.035,
@@ -521,7 +495,7 @@ const styles = StyleSheet.create({
     rating: {
         fontSize: width * 0.035,
         fontWeight: '500',
-        color: '#111',
+        color: '#222222',
         marginTop: 4,
         marginLeft: width * 0.02,
         fontFamily: 'Roboto',
@@ -533,19 +507,17 @@ const styles = StyleSheet.create({
     placeholderImage: {
         width: 60,
         height: 60,
-        backgroundColor: '#e5d5eaff',
+        backgroundColor: '#e5d5ea',
         borderRadius: 8,
     },
 
 
     sectionTitle: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '500',
         marginTop: height * 0.015,
-
         marginLeft: width * 0.04,
     },
-
 
     icon: {
         width: 22,
@@ -554,11 +526,11 @@ const styles = StyleSheet.create({
     },
 
     locationCard: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         padding: 12,
         borderRadius: 12,
-        elevation: 2,
-        shadowColor: '#000',
+        // elevation: 0.5,
+        shadowColor: '#222222',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -569,13 +541,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
         paddingVertical: 6,
-        color: '555',
+        // color: '555',
     },
     addressText: {
         fontSize: 14,
-        color: '#555',
+        color: '#222222',
         flex: 1,
-        fontWeight: '500',
+        fontWeight: '400',
     },
     infoRow: {
         flexDirection: 'row',
@@ -586,8 +558,8 @@ const styles = StyleSheet.create({
     },
     bhkText: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#000',
+        fontWeight: '400',
+        color: '#222222',
 
     },
     viewItemsRow: {
@@ -596,14 +568,14 @@ const styles = StyleSheet.create({
     },
     verticalDivider: {
         borderLeftWidth: 1,
-        borderLeftColor: '#ccc',
+        borderLeftColor: '#DBDBDB',
         height: 16,
         marginHorizontal: 10,
     },
     viewItemsText: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#BA1C1C',
+        fontWeight: '400',
+        color: '#8E1515',
     },
     houseRow: {
         flexDirection: 'row',
@@ -619,18 +591,13 @@ const styles = StyleSheet.create({
     },
     viewBtn: {
         borderWidth: 1,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 12,
         marginRight: width * 0.02,
     },
-    viewBtnText: {
-        color: '#BA1C1C',
-        fontWeight: '600',
-        fontSize: width * 0.035,
-
-    },
+   
     dateSection: {
         flex: 1, // equal width for both sides
         alignItems: 'center',
@@ -643,8 +610,8 @@ const styles = StyleSheet.create({
     },
     dateValue: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#000',
+        fontWeight: '400',
+        color: '#222222',
     },
     form: {
         paddingHorizontal: width * 0.04,
@@ -656,11 +623,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.04,
         borderRadius: width * 0.02,
         fontSize: width * 0.04,
-        color: '#000',
+        color: '#222222',
         marginBottom: height * 0.012,
     },
     couponButton: {
-        backgroundColor: '#d6dff8',
+        backgroundColor: '#dae1f4',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -670,7 +637,7 @@ const styles = StyleSheet.create({
         margin: width * 0.00,
         marginHorizontal: 12,
         borderRadius: 10,
-        elevation: 2,
+        // elevation: 0.5,
         marginBottom: 5,
     },
     couponLeft: {
@@ -683,11 +650,11 @@ const styles = StyleSheet.create({
         height: 22,
         marginRight: width * 0.05,
         marginLeft: width * 0.05,
-        color: '#BA1C1C'
+        color: '#8E1515'
     },
     couponText: {
         fontSize: width * 0.04,
-        fontWeight: '600',
+        fontWeight: '500',
 
         color: '#555',           // softer color for secondary info
 
@@ -699,21 +666,21 @@ const styles = StyleSheet.create({
     },
     totalSaving: {
         marginLeft: 25,
-        fontWeight: '600',
-        color: '#058103ff',
+        fontWeight: '500',
+        color: '#058103',
     },
     savedAmount: {
-        fontWeight: '900',
-        color: '#058103ff',
+        fontWeight: '700',
+        color: '#058103',
         marginRight: width * 0.06,
     },
     priceCard: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         padding: width * 0.04,
         marginTop: 7,
         marginHorizontal: 12,
         borderRadius: 10,
-        elevation: 2,
+        // elevation: 5,
         marginBottom: 5,
     },
     priceRow: {
@@ -726,43 +693,43 @@ const styles = StyleSheet.create({
 
     },
     priceLabel: {
-        fontSize: width * 0.038, // slightly smaller for labels
-        color: '#555',           // softer color for secondary info
-        fontWeight: '500',
-        letterSpacing: 0.3,
+        fontWeight: '400',
+        fontSize: 16,
+        color: '#222222',
+    },
+    priceValue: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: '#222222',         // darker for stronger visual
     },
     divider: {
         height: 1,
-        backgroundColor: '#ecebeb',
+        backgroundColor: '#DBDBDB',
         marginVertical: height * 0.01,
-        marginHorizontal: -12,
+        // marginHorizontal: 4,
     },
-    priceValue: {
-        fontSize: width * 0.04,  // slightly bigger for values
-        fontWeight: '600',
-        color: '#111',           // darker for stronger visual
-    },
+    
     discountValue: {
         fontSize: width * 0.04,
-        fontWeight: '600',
-        color: '#BA1C1C',        // red for discount
+        fontWeight: '500',
+        color: '#8E1515',        // red for discount
     },
 
     totalLabel: {
         fontSize: width * 0.042,
-        fontWeight: '700',
-        color: '#000',
+        fontWeight: '500',
+        color: '#222222',
     },
 
     totalValue: {
         fontSize: width * 0.045,
-        fontWeight: '800',
-        color: '#000',
+        fontWeight: '500',
+        color: '#222222',
     },
 
     header: {
         padding: width * 0.04,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
     },
 
     backButton: {
@@ -773,12 +740,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         marginHorizontal: 12,
         padding: 8,
         borderRadius: 10,
         marginBottom: 5,
-        elevation: 2,
+        // elevation: 0.5,
     },
 
     headerInfo: {
@@ -792,20 +759,21 @@ const styles = StyleSheet.create({
     },
 
     customerBox: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         marginHorizontal: 12,
         borderRadius: 10,
         padding: width * 0.04,
-        elevation: 2,
+        // elevation: 0.5,
         marginTop: height * 0.01,
-        marginBottom: height * 0.09,
+        marginBottom: height * 0.2,
+
     },
 
     customerTitle: {
         fontSize: width * 0.045,
-        fontWeight: '600',
+        fontWeight: '500',
         marginBottom: height * 0.015,
-        color: '#000',
+        color: '#222222',
     },
 
     customerInput: {
@@ -816,27 +784,27 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.04,
         borderRadius: 4,
         fontSize: width * 0.04,
-        color: '#000',
+        color: '#222222',
         marginBottom: height * 0.015,
     },
 
     confirmButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: height * 0.018,
         marginHorizontal: 12,
         borderRadius: 10,
         marginTop: height * 0.00,
         marginBottom: height * 0.05,
         alignItems: 'center',
-        elevation: 4,
+        // elevation: 1,
 
     },
 
     confirmButtonText: {
-        color: '#fff',
-        fontWeight: '500',
-        fontSize: width * 0.045,
-        fontFamily: 'Roboto_500Medium',
+        color: '#FFFFFF',
+        fontWeight: '400',
+        // fontSize: width * 0.045,
+        // fontFamily: 'Roboto_500Medium',
     },
     lottie: {
         width: 250,

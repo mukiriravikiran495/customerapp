@@ -2,19 +2,20 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
     Image,
+    KeyboardAvoidingView,
     Platform,
+    ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View
 } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+// import { default as Icon } from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from "@expo/vector-icons";
 // @ts-ignore
-import TopBg from '../assets/images/hero.jpg';
+import TopBg from '../assets/images/hero1.png';
 // @ts-ignore
-import GoogleLogo from '../assets/images/google.png';
 export default function OyoLoginScreen() {
     const [phone, setPhone] = useState('');
     const router = useRouter();
@@ -23,102 +24,95 @@ export default function OyoLoginScreen() {
     };
 
     return (
-        <View style={styles.container}>
-            <Image source={TopBg} style={styles.topBgImage} resizeMode="cover" />
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? 60 : 0} // adjust if header overlaps
+        >
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+                <View style={styles.container}>
+                    <View style={styles.topSection}>
+                        <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                            <MaterialIcons name="support-agent" size={20} color="#222222" />
+                            <Text style={styles.supportText}>Support</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <Image source={TopBg} style={styles.topBgImage} resizeMode="cover" />
 
-            {/* Offer text */}
-            <Text style={styles.offerText}>Choose Packers & Movers</Text>
+                    {/* Offer text */}
+                    <Text style={styles.offerText}>Welcome, What is your Number ? </Text>
 
-            {/* Phone input */}
-            <View style={styles.inputWrapper}>
-                <View style={styles.prefix}>
-                    <Image
-                        source={{ uri: 'https://flagcdn.com/w40/in.png' }}
-                        style={styles.flagIcon}
-                    />
-                    <Text style={styles.countryCode}>+91</Text>
-                    <MaterialIcons name="keyboard-arrow-down" size={16} color="#000" />
+                    {/* Phone input */}
+                    <View style={styles.inputWrapper}>
+                        <View style={styles.prefix}>
+                            <Image
+                                source={{ uri: 'https://flagcdn.com/w40/in.png' }}
+                                style={styles.flagIcon}
+                            />
+                            <Text style={styles.countryCode}>+91</Text>
+                            <MaterialIcons name="keyboard-arrow-down" size={16} color="#000" />
+                        </View>
+                        <TextInput style={styles.input} placeholder="Enter mobile number" placeholderTextColor="#c1c1c1"
+                            keyboardType="phone-pad" value={phone} onChangeText={setPhone}
+                        />
+                    </View>
+
+                    {/* Continue button */}
+                    <TouchableOpacity style={styles.continueButton} onPress={handleSendOtp}>
+                        <Text style={styles.continueButtonText}>Send OTP</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.signupLater}>By continue I accept all the Terms and Conditions and Privacy Policy</Text>
+                    {/* Signup later */}
+                    {/* <View style={styles.bottomContainer}>
+                        <TouchableOpacity>
+                            <Text style={styles.signupLater}>By continue I accept all the Terms and Conditions and Privacy Policy</Text>
+                        </TouchableOpacity>
+                    </View> */}
+
                 </View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter mobile number"
-                    placeholderTextColor="#999"
-                    keyboardType="phone-pad"
-                    value={phone}
-                    onChangeText={setPhone}
-                />
-            </View>
-
-            {/* Continue button */}
-            <TouchableOpacity style={styles.continueButton} onPress={handleSendOtp}>
-                <Text style={styles.continueButtonText}>Continue</Text>
-            </TouchableOpacity>
-
-            {/* OR divider */}
-            <View style={styles.divider}>
-                <View style={styles.line} />
-                <Text style={styles.orText}>OR</Text>
-                <View style={styles.line} />
-            </View>
-
-            {/* Google login */}
-            <TouchableOpacity style={styles.outlineButton}>
-                <Image source={GoogleLogo} style={styles.googleIcon} />
-                <Text style={styles.outlineButtonText}>Continue with Google</Text>
-            </TouchableOpacity>
-
-            {/* Truecaller login */}
-            <TouchableOpacity style={styles.outlineButton}>
-                {/* <MaterialIcons name="phone" size={20} color="#007AFF" /> */}
-                <FontAwesome name="whatsapp" size={22} color="#08b447ff" />
-                <Text style={styles.outlineButtonText}>login with Whats App</Text>
-            </TouchableOpacity>
-
-            {/* Signup later */}
-            <TouchableOpacity>
-                <Text style={styles.signupLater}>by continue you are accepting all the terms and conditions</Text>
-            </TouchableOpacity>
-        </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: Platform.OS === 'android' ? 60 : 60,
-        paddingHorizontal: 20,
-        backgroundColor: '#fff',
+        paddingTop: Platform.OS === 'android' ? 40 : 60,
+        // paddingHorizontal: 20,
+        backgroundColor: '#FFFFFF',
     },
     topBgImage: {
         width: '100%',
-        height: 240, // Adjust height as needed
+        height: 280, // Adjust height as needed
         marginBottom: 16,
-        borderBottomLeftRadius: 16,
-        borderBottomRightRadius: 16,
     },
     flagIcon: {
         width: 20,
         height: 14,
         marginRight: 4,
         borderRadius: 2,
+        marginLeft: 12,
     },
 
     offerText: {
         marginTop: 10,
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#000',
+        fontSize: 18,
+        fontWeight: '400',
+        color: '#222222',
         textAlign: 'center',
+        marginHorizontal: 16,
     },
     inputWrapper: {
         flexDirection: 'row',
         alignItems: 'center',
         borderColor: '#ccc',
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 30,
         paddingHorizontal: 10,
         marginTop: 20,
         height: 50,
+        marginHorizontal: 20,
     },
     prefix: {
         flexDirection: 'row',
@@ -136,48 +130,18 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     continueButton: {
-        backgroundColor: '#ba1c1c',
-        borderRadius: 10,
+        backgroundColor: '#8E1515',
+        borderRadius: 30,
         marginTop: 20,
         paddingVertical: 14,
         alignItems: 'center',
         elevation: 2,
+        marginHorizontal: 20,
     },
     continueButtonText: {
         color: '#fff',
         fontSize: 16,
-        fontWeight: 'bold',
-    },
-    divider: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 20,
-    },
-    line: {
-        flex: 1,
-        height: 1,
-        backgroundColor: '#ddd',
-    },
-    orText: {
-        marginHorizontal: 10,
-        fontSize: 14,
-        color: '#999',
-    },
-    outlineButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderColor: '#9a9494',
-        borderWidth: 1,
-        borderRadius: 10,
-        paddingVertical: 14,
-        paddingHorizontal: 16,
-        marginBottom: 12,
-    },
-    outlineButtonText: {
-        marginLeft: 10,
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#000',
+        fontWeight: '400',
     },
     googleIcon: {
         width: 20,
@@ -186,9 +150,45 @@ const styles = StyleSheet.create({
         resizeMode: 'contain',
     },
     signupLater: {
-        marginTop: 5,
+        marginTop: 20,
         textAlign: 'center',
-        color: '#000',
+        color: '#7c7c7c',
+        fontSize: 12,
+        marginHorizontal: 16,
+    },
+    bottomContainer: {
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        padding: 24,
+        backgroundColor: '#FFFFFF',
+        marginBottom: 30,
+
+    },
+    topSection: {
+        backgroundColor: '#fff9f3',
+        padding: 16,
+        paddingBottom: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
+        elevation: 4,
+        justifyContent: "flex-end",
+    },
+    supportButton: {
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#fff9f3",
+        paddingHorizontal: 12,
+        paddingVertical: 8,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
+    },
+    supportText: {
+        color: "#222222",
+        marginLeft: 6,
         fontSize: 14,
+        fontWeight: "600",
     },
 });

@@ -149,7 +149,7 @@ export default function DropAddress() {
                     {/* Header */}
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => router.push('/selectdropaddress')}>
-                            <Ionicons style={styles.backArrow} name="arrow-back" size={24} color="black" />
+                            <Ionicons style={styles.backArrow} name="arrow-back" size={24} color="#222222" />
                         </TouchableOpacity>
                         <Text style={styles.headerText}>Enter Drop Address</Text>
                     </View>
@@ -224,14 +224,14 @@ export default function DropAddress() {
                                             key={label}
                                             style={[
                                                 styles.saveButton,
-                                                selected === label && { borderColor: '#BA1C1C' },
+                                                selected === label && { borderColor: '#8E1515' },
                                             ]}
                                             onPress={() => setSelected(label)}
                                         >
                                             <Text
                                                 style={[
                                                     styles.saveButtonText,
-                                                    selected === label && { color: '#BA1C1C' },
+                                                    selected === label && { color: '#8E1515' },
                                                 ]}
                                             >
                                                 {label}
@@ -267,6 +267,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
         marginLeft: 12,
+        color: '#222222',
     },
     sheetContent: {
         flex: 1,
@@ -278,7 +279,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 6,
-        borderColor: '#282424',
+        borderColor: '#222222',
         borderWidth: 0.3,
 
     },
@@ -292,13 +293,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     submitButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
     },
     submitButtonText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontWeight: '600',
     },
     locationRow: {
@@ -316,11 +317,11 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 6,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderWidth: 0.3,
     },
     changeButtonText: {
-        color: '#ba1c1c',
+        color: '#8E1515',
         fontSize: 14,
         fontWeight: '500',
     },
@@ -341,12 +342,12 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingVertical: 8,
         paddingHorizontal: 16,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     saveButtonText: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#333',
+        color: '#222222',
     },
     inputWrapper: {
         marginBottom: 16,
@@ -376,7 +377,7 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingHorizontal: 12,
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
     },
     iconRight: {
         marginLeft: 8,
@@ -395,6 +396,6 @@ const styles = StyleSheet.create({
     addressInput: {
         flex: 1,
         fontSize: 16,
-        color: '#000',
+        color: '#222222',
     },
 });

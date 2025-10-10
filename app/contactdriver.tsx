@@ -1,13 +1,13 @@
 import { useRouter } from 'expo-router';
 import { useState } from "react";
 import {
-    FlatList,
-    SafeAreaView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     maxWidth: "80%",
   },
-  userMessage: { backgroundColor: "#BA1C1C", alignSelf: "flex-end" },
+  userMessage: { backgroundColor: "#8E1515", alignSelf: "flex-end" },
   driverMessage: { backgroundColor: "#444", alignSelf: "flex-start" },
   footer: {
     flexDirection: "row",
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   sendButton: {
-    backgroundColor: "#BA1C1C",
+    backgroundColor: "#8E1515",
     borderRadius: 20,
     padding: 10,
     marginLeft: 8,

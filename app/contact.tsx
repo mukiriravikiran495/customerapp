@@ -23,12 +23,12 @@ export default function help() {
             <View style={styles.header}>
                 {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
                     <Text style={styles.headerTitle}>Help</Text>
                 </TouchableOpacity>
             </View>
             <View style={styles.searchBar}>
-                <Ionicons name="search" size={18} color="#000" style={styles.searchIcon} />
+                <Ionicons name="search" size={18} color="#222222" style={styles.searchIcon} />
                 <TextInput
                     placeholder="Search your issue"
                     placeholderTextColor="#555"
@@ -63,58 +63,24 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
     },
-    toggleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#4bc373',
-        paddingHorizontal: 12,
-        paddingVertical: 2,
-        borderRadius: 24,
-        height: 38,
-
-    },
-    statusText: {
-        marginRight: 8,
-        fontSize: width * 0.045,
-        color: '#555',
-    },
-    notificationIcon: {
-        paddingLeft: 10,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#0B4ED3',
-        marginBottom: 10,
-    },
-    subtext: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
     supportButton: {
         flexDirection: 'row',
         alignItems: 'center',
         paddingHorizontal: 10,
         paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#F1F1F1',
         borderRadius: 8,
     },
     supportText: {
         fontSize: 15,
-        color: '#000',
+        color: '#222222',
         fontWeight: '500',
     },
     headerTitle: {
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     backButton: {
@@ -124,7 +90,7 @@ const styles = StyleSheet.create({
     searchContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f1f1f1',
+        backgroundColor: '#F1F1F1',
         borderRadius: 8,
         paddingVertical: 10,
         paddingHorizontal: 12,
@@ -145,7 +111,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
 
         // Shadow for iOS
-        shadowColor: '#000',
+        shadowColor: '#222222',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -155,7 +121,7 @@ const styles = StyleSheet.create({
 
         // Elevation for Android
         elevation: 1,
-        backgroundColor: '#fff', // Needed for shadow visibility
+        backgroundColor: '#FFFFFF', // Needed for shadow visibility
     },
 
 
@@ -166,7 +132,7 @@ const styles = StyleSheet.create({
     searchInput: {
         flex: 1,
         fontSize: 15,
-        color: '#000',
+        color: '#222222',
     },
     helpCard: {
         flexDirection: 'row',
@@ -177,7 +143,7 @@ const styles = StyleSheet.create({
         borderColor: '#ddd',
         padding: 16,
         backgroundColor: '#fff',
-        shadowColor: '#000',
+        shadowColor: '#222222',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.05,
         shadowRadius: 4,
@@ -188,7 +154,7 @@ const styles = StyleSheet.create({
     helpTitle: {
         fontSize: 16,
         fontWeight: '600',
-        color: '#000',
+        color: '#222222',
         marginBottom: 4,
     },
 
@@ -198,14 +164,14 @@ const styles = StyleSheet.create({
     },
 
     chatButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: 10,
         paddingHorizontal: 14,
         borderRadius: 8,
     },
 
     chatButtonText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontSize: 14,
         fontWeight: '500',
     },

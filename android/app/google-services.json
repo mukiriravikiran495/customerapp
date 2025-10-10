@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "797433988893",
+    "project_id": "shiftyng-e820d",
+    "storage_bucket": "shiftyng-e820d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:797433988893:android:835aa28efb81cf3dfb03f4",
+        "android_client_info": {
+          "package_name": "com.mravikiran112.shiftyngcustomerapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN8ufP_Bd3QHeBHX2OauXQcVbyxe7S1F8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
