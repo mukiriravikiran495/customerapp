@@ -99,19 +99,20 @@ export default function BookingDetails() {
                     {/* Header */}
                     <View style={styles.header}>
                         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                            <Ionicons name="arrow-back" size={26} color="#000" />
+                            <Ionicons name="arrow-back" size={26} color="#222222" />
                         </TouchableOpacity>
                         <View style={{
                             backgroundColor: '#d1fae5',
                             padding: 20,
                             // borderRadius: 100,
-                            shadowColor: '#16a34a',
+                            shadowColor: '#15803D',
                             shadowOffset: { width: 0, height: 4 },
                             shadowOpacity: 0.4,
                             shadowRadius: 10,
-                            elevation: 10,
+                            // elevation: 0.5,
                             alignItems: 'center',
                             width: '100%',
+                            borderRadius: 10,
                         }}>
                             <LottieView
                                 source={require('@/assets/animations/success3.json')}
@@ -226,7 +227,7 @@ export default function BookingDetails() {
                                                             backgroundColor: '#fff',
                                                             borderRadius: 10,
                                                             alignItems: 'center',
-                                                            elevation: 2,
+                                                            // elevation: 0.5,
                                                             padding: 5,
                                                             margin: 5, // use margin instead of marginHorizontal
                                                         }}
@@ -257,7 +258,7 @@ export default function BookingDetails() {
                                             <TouchableOpacity
                                                 style={{
                                                     width: 120,
-                                                    backgroundColor: '#ba1c1c',
+                                                    backgroundColor: '#8E1515',
                                                     padding: 12,
                                                     borderRadius: 5,
                                                     marginHorizontal: 8,
@@ -270,7 +271,7 @@ export default function BookingDetails() {
                                             <TouchableOpacity
                                                 style={{
                                                     width: 120,
-                                                    backgroundColor: '#BA1C1C',
+                                                    backgroundColor: '#8E1515',
                                                     padding: 12,
                                                     borderRadius: 5,
                                                     marginHorizontal: 8,
@@ -377,16 +378,16 @@ export default function BookingDetails() {
                     animationType="fade"
                     transparent={true}
                 >
-                    <View style={{ flex: 1, backgroundColor: '#00000099', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ flex: 1, backgroundColor: '#222222', justifyContent: 'center', alignItems: 'center' }}>
                         <View style={{ backgroundColor: '#fff', padding: 20, borderRadius: 8, width: '80%' }}>
-                            <Text style={{ fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' }}>
+                            <Text style={{ fontSize: 18, fontWeight: '400', marginBottom: 15, textAlign: 'center' }}>
                                 Are you sure you want to Cancel the booking?
                             </Text>
 
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <TouchableOpacity
                                     style={{
-                                        backgroundColor: '#BA1C1C',
+                                        backgroundColor: '#8E1515',
                                         padding: 10,
                                         borderRadius: 5,
                                         flex: 1,
@@ -406,7 +407,7 @@ export default function BookingDetails() {
 
                                 <TouchableOpacity
                                     style={{
-                                        backgroundColor: '#ccc',
+                                        backgroundColor: '#DBDBDB',
                                         padding: 10,
                                         borderRadius: 5,
                                         flex: 1,
@@ -414,7 +415,7 @@ export default function BookingDetails() {
                                     }}
                                     onPress={() => { setConfirmPopupVisible(false); router.push('/bookingsuccess'); }}
                                 >
-                                    <Text style={{ textAlign: 'center', color: '#000' }}>Cancel</Text>
+                                    <Text style={{ textAlign: 'center', color: '#222222' }}>Cancel</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
@@ -429,11 +430,12 @@ export default function BookingDetails() {
 
 const styles = StyleSheet.create({
     scrollContent: {
-        paddingBottom: height * 0.1, // Ensure there’s space at bottom
+        // paddingBottom: height * 0.1, // Ensure there’s space at bottom
     },
     container: {
         flex: 1,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
+        marginHorizontal: 2,
     },
     leftHeader: {
         flexDirection: 'column',
@@ -442,7 +444,7 @@ const styles = StyleSheet.create({
     },
     header: {
         padding: width * 0.04,
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#FFFFFF',
     },
 
     backButton: {
@@ -450,7 +452,7 @@ const styles = StyleSheet.create({
     },
     companyName: {
         fontSize: width * 0.04,
-        fontWeight: 'bold',
+        fontWeight: '500',
         marginTop: height * 0.01,
         marginLeft: width * 0.02,
     },
@@ -463,14 +465,14 @@ const styles = StyleSheet.create({
     rating: {
         fontSize: width * 0.035,
         fontWeight: '500',
-        color: '#111',
+        color: '#555',
         marginTop: 4,
         marginLeft: width * 0.02,
     },
     placeholderImage: {
         width: 60,
         height: 60,
-        backgroundColor: '#e5d5eaff',
+        backgroundColor: '#e5d5ea',
         borderRadius: 8,
     },
     headerInfo: {
@@ -499,51 +501,48 @@ const styles = StyleSheet.create({
     },
 
     cancelButton: {
-        backgroundColor: '#BA1C1C', // red-500
+        backgroundColor: '#8E1515', // red-500
     },
 
     payButton: {
-        backgroundColor: '#16a34a', // green-600
+        backgroundColor: '#15803D', // green-600
     },
 
     cancelButtonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
+        color: '#FFFFFF',
+        fontWeight: '400',
+        fontSize: 14,
     },
 
     payButtonText: {
         color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontWeight: '400',
+        fontSize: 14,
     },
     lottie: {
         width: 50,
         height: 50,
     },
     locationCard: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         padding: 12,
         borderRadius: 12,
-        elevation: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        // elevation: 0.5,
         marginVertical: 10,
         marginHorizontal: 12,
+        
     },
     addressRow: {
         flexDirection: 'row',
         alignItems: 'flex-start',
         paddingVertical: 6,
-        color: '555',
+        
     },
     addressText: {
         fontSize: 14,
-        color: '#555',
+        color: '#222222',
         flex: 1,
-        fontWeight: '500',
+        fontWeight: '400',
     },
     infoRow: {
         flexDirection: 'row',
@@ -554,8 +553,8 @@ const styles = StyleSheet.create({
     },
     bhkText: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#000',
+        fontWeight: '400',
+        color: '#222222',
 
     },
     viewItemsRow: {
@@ -570,8 +569,8 @@ const styles = StyleSheet.create({
     },
     viewItemsText: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#BA1C1C',
+        fontWeight: '400',
+        color: '#8E1515',
     },
     houseRow: {
         flexDirection: 'row',
@@ -587,18 +586,13 @@ const styles = StyleSheet.create({
     },
     viewBtn: {
         borderWidth: 1,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderRadius: 5,
         paddingVertical: 6,
         paddingHorizontal: 12,
         marginRight: width * 0.02,
     },
-    viewBtnText: {
-        color: '#BA1C1C',
-        fontWeight: '600',
-        fontSize: width * 0.035,
-
-    },
+    
     dateSection: {
         flex: 1, // equal width for both sides
         alignItems: 'center',
@@ -611,8 +605,8 @@ const styles = StyleSheet.create({
     },
     dateValue: {
         fontSize: 14,
-        fontWeight: '600',
-        color: '#000',
+        fontWeight: '400',
+        color: '#222222',
     },
     form: {
         paddingHorizontal: width * 0.04,
@@ -624,25 +618,24 @@ const styles = StyleSheet.create({
         paddingHorizontal: width * 0.04,
         borderRadius: width * 0.02,
         fontSize: width * 0.04,
-        color: '#000',
+        color: '#222222',
         marginBottom: height * 0.012,
+        borderWidth: 0.5,
     },
 
     trackingButton: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         paddingVertical: height * 0.018,
         height: height * 0.06,
-        
-        margin: width * 0.00,
         marginHorizontal: 12,
         borderRadius: 30,
-        elevation: 2,
-        marginBottom: 5,
-        borderWidth: 1,
-        borderColor: '#BA1C1C'
+        // elevation: 0.5,
+        marginBottom: 10,
+        borderWidth: 0.5,
+        borderColor: '#8E1515'
     },
     couponLeft: {
         flexDirection: 'row',
@@ -654,7 +647,7 @@ const styles = StyleSheet.create({
         height: 22,
         marginRight: width * 0.05,
         marginLeft: width * 0.05,
-        color: '#BA1C1C'
+        color: '#8E1515'
     },
     couponText: {
         fontSize: width * 0.04,
@@ -671,20 +664,20 @@ const styles = StyleSheet.create({
     totalSaving: {
         marginLeft: 25,
         fontWeight: '600',
-        color: '#058103ff',
+        color: '#058103',
     },
     savedAmount: {
         fontWeight: '900',
-        color: '#058103ff',
+        color: '#058103',
         marginRight: width * 0.06,
     },
     priceCard: {
-        backgroundColor: '#fff',
+        backgroundColor: '#F2F2F2',
         padding: width * 0.04,
         marginTop: 7,
         marginHorizontal: 12,
         borderRadius: 10,
-        elevation: 2,
+        // elevation: 0.5,
         marginBottom: 10,
     },
     priceRow: {
@@ -697,112 +690,84 @@ const styles = StyleSheet.create({
 
     },
     priceLabel: {
-        fontSize: width * 0.038, // slightly smaller for labels
-        color: '#555',           // softer color for secondary info
-        fontWeight: '500',
-        letterSpacing: 0.3,
+        fontWeight: '400',
+        fontSize: 16,
+        color: '#222222',
+    },
+    priceValue: {
+        fontWeight: '400',
+        fontSize: 16,
+        color: '#222222',         // darker for stronger visual
     },
     divider: {
         height: 1,
-        backgroundColor: '#ecebeb',
+        backgroundColor: '#DBDBDB',
         marginVertical: height * 0.01,
-        marginHorizontal: -12,
-    },
-    priceValue: {
-        fontSize: width * 0.04,  // slightly bigger for values
-        fontWeight: '600',
-        color: '#111',           // darker for stronger visual
+        
     },
     discountValue: {
         fontSize: width * 0.04,
-        fontWeight: '600',
-        color: '#BA1C1C',        // red for discount
+        fontWeight: '500',
+        color: '#8E1515',        // red for discount
     },
 
     totalLabel: {
         fontSize: width * 0.042,
-        fontWeight: '700',
-        color: '#000',
+        fontWeight: '500',
+        color: '#222222',
     },
 
     totalValue: {
         fontSize: width * 0.045,
-        fontWeight: '800',
-        color: '#000',
+        fontWeight: '500',
+        color: '#222222',
     },
     sectionTitle: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: '500',
         marginTop: height * 0.015,
-
         marginLeft: width * 0.04,
+        color: '#222222',
     },
     messageTitle: {
         fontSize: width * 0.038,
-        fontWeight: '600',
+        fontWeight: '400',
         marginBottom: height * 0.017,
-
-        marginLeft: width * 0.02,
+        // marginLeft: width * 0.02,
+        color: '#222222',
     },
     companyRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         marginHorizontal: 12,
         padding: 8,
         borderRadius: 10,
         marginBottom: 10,
-        elevation: 2,
+        // elevation: 0.5,
     },
     moversRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F2F2F2',
         marginHorizontal: 12,
         padding: 8,
         borderRadius: 10,
-        marginBottom: 40,
-        elevation: 2,
-    },
-    customerBox: {
-        backgroundColor: '#fff',
-        marginHorizontal: 12,
-        borderRadius: 10,
-        padding: width * 0.04,
-        elevation: 2,
-        marginTop: height * 0.01,
-    },
-
-    customerTitle: {
-        fontSize: width * 0.045,
-        fontWeight: '600',
-        marginBottom: height * 0.015,
-        color: '#000',
-    },
-
-    customerInput: {
-        backgroundColor: '#fff',
-        borderColor: '#ddd',
-        borderWidth: 1,
-        paddingVertical: height * 0.015,
-        paddingHorizontal: width * 0.04,
-        borderRadius: 4,
-        fontSize: width * 0.04,
-        color: '#000',
-        marginBottom: height * 0.015,
+        marginBottom: 120,
+        // elevation: 0.5,
     },
 
     confirmButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: height * 0.018,
         marginHorizontal: 12,
         borderRadius: 10,
         marginTop: height * 0.02,
         marginBottom: height * 0.05,
         alignItems: 'center',
-        elevation: 4,
+        // elevation: 0.5,
 
     },
     confirmButtonText: {

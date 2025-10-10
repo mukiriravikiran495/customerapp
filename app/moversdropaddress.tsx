@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     },
     headerText: {
         fontSize: 18,
-        fontWeight: '600',
+        fontWeight: '500',
         marginLeft: 12,
     },
     sheetContent: {
@@ -279,28 +279,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 6,
-        borderColor: '#282424',
+        borderColor: '#222222',
         borderWidth: 0.3,
 
     },
     input: {
         height: 48,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#C1C1C1',
         borderRadius: 8,
         paddingHorizontal: 12,
         marginBottom: 16,
         backgroundColor: '#FFFFFF',
     },
     submitButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
     },
     submitButtonText: {
-        color: '#fff',
-        fontWeight: '600',
+        color: '#FFFFFF',
+        fontWeight: '400',
     },
     locationRow: {
         flexDirection: 'row',
@@ -310,19 +310,6 @@ const styles = StyleSheet.create({
     locationText: {
         flex: 1,
         fontSize: 16,
-        fontWeight: '500',
-    },
-    changeButton: {
-        backgroundColor: '#FFFFFF',
-        paddingVertical: 6,
-        paddingHorizontal: 12,
-        borderRadius: 6,
-        borderColor: '#BA1C1C',
-        borderWidth: 0.3,
-    },
-    changeButtonText: {
-        color: '#ba1c1c',
-        fontSize: 14,
         fontWeight: '500',
     },
     saveAsLabel: {
@@ -338,16 +325,16 @@ const styles = StyleSheet.create({
     },
     saveButton: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#C1C1C1',
         borderRadius: 6,
         paddingVertical: 8,
         paddingHorizontal: 16,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     saveButtonText: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#333',
+        color: '#222222',
     },
     inputWrapper: {
         marginBottom: 16,
@@ -357,7 +344,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -10,
         left: 12,
-        backgroundColor: '#fff', // Matches background so it looks cut out from border
+        backgroundColor: '#FFFFFF', // Matches background so it looks cut out from border
         paddingHorizontal: 4,
         fontSize: 12,
         color: '#999',
@@ -367,17 +354,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#C1C1C1',
         borderRadius: 6,
         paddingRight: 8,
         height: 48,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     inputField: {
         flex: 1,
         paddingHorizontal: 12,
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
     },
     iconRight: {
         marginLeft: 8,
@@ -387,7 +374,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 50,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#C1C1C1',
         borderRadius: 8,
         paddingHorizontal: 12,
         marginBottom: 16,
@@ -396,6 +383,6 @@ const styles = StyleSheet.create({
     addressInput: {
         flex: 1,
         fontSize: 16,
-        color: '#000',
+        color: '#222222',
     },
 });

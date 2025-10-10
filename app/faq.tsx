@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     backButton: {
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 10,
-        color: '#000',
+        color: '#222222',
     },
 
     item: {
@@ -122,7 +122,7 @@ const styles = StyleSheet.create({
 
     itemText: {
         fontSize: 15,
-        color: '#000',
+        color: '#222222',
     },
 
     answerText: {

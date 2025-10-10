@@ -160,7 +160,7 @@ export default function PickupAddress() {
                     <BottomSheetModal
                         ref={bottomSheetModalRef}
                         snapPoints={snapPoints}
-                        index={1}
+                        index={0}
                         enablePanDownToClose={false}
                     >
                         <BottomSheetView>
@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         borderRadius: 24,
         padding: 6,
-        borderColor: '#282424',
+        borderColor: '#FFFFFF',
         borderWidth: 0.3,
 
     },
@@ -298,13 +298,13 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     submitButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
     },
     submitButtonText: {
-        color: '#fff',
+        color: '#FFFFFF',
         fontWeight: '600',
     },
     locationRow: {
@@ -322,11 +322,11 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 6,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderWidth: 0.3,
     },
     changeButtonText: {
-        color: '#ba1c1c',
+        color: '#8E1515',
         fontSize: 14,
         fontWeight: '500',
     },
@@ -347,7 +347,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingVertical: 8,
         paddingHorizontal: 16,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     saveButtonText: {
         fontSize: 14,
@@ -362,7 +362,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: -10,
         left: 12,
-        backgroundColor: '#fff', // Matches background so it looks cut out from border
+        backgroundColor: '#FFFFFF', // Matches background so it looks cut out from border
         paddingHorizontal: 4,
         fontSize: 12,
         color: '#999',
@@ -376,13 +376,13 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         paddingRight: 8,
         height: 48,
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
     },
     inputField: {
         flex: 1,
         paddingHorizontal: 12,
         fontSize: 14,
-        color: '#000',
+        color: '#222222',
     },
     iconRight: {
         marginLeft: 8,
@@ -401,6 +401,6 @@ const styles = StyleSheet.create({
     addressInput: {
         flex: 1,
         fontSize: 16,
-        color: '#000',
+        color: '#222222',
     },
 });

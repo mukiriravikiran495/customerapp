@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -29,7 +29,7 @@ const orders = [
         amount: '12,400',
         status: 'Completed',
     },
-  ];
+];
 export default function transactions() {
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState('Today');
@@ -40,11 +40,11 @@ export default function transactions() {
             <View style={styles.header}>
                 {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>Transactions</Text>
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
+                    <Text style={styles.headerTitle}>Menu</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-                    <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                    <MaterialIcons name="support-agent" size={20} color="#222222" />
                     <Text style={styles.supportText}>Support</Text>
                 </TouchableOpacity>
             </View>
@@ -79,7 +79,7 @@ export default function transactions() {
                             <View>
                                 <Text style={styles.orderName}>{order.name}</Text>
 
-                                <Text style={styles.orderDate}>{order.type}</Text>
+                                <Text style={styles.orderType}>{order.type}</Text>
 
                             </View>
                         </View>
@@ -95,7 +95,7 @@ export default function transactions() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        
+
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -106,58 +106,27 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
     },
-    toggleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#4bc373',
-        paddingHorizontal: 12,
-        paddingVertical: 2,
-        borderRadius: 24,
-        height: 38,
-
-    },
-    statusText: {
-        marginRight: 8,
-        fontSize: width * 0.045,
-        color: '#555',
-    },
-    notificationIcon: {
-        paddingLeft: 10,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#0B4ED3',
-        marginBottom: 10,
-    },
-    subtext: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
     supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
     },
     supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
+        color: "#222222",
+        marginLeft: 6,
+        fontSize: 14,
+        fontWeight: "600",
     },
     headerTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '500',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     backButton: {
@@ -167,7 +136,7 @@ const styles = StyleSheet.create({
     toggleGroup: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         marginBottom: 20,
     },
 
@@ -178,7 +147,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#ddd',
-        backgroundColor: '#fff',
+        backgroundColor: '#FFFFFF',
         alignItems: 'center',
     },
 
@@ -188,7 +157,7 @@ const styles = StyleSheet.create({
     },
 
     toggleButtonText: {
-        color: '#000',
+        color: '#222222',
         fontSize: 16,
     },
 
@@ -224,27 +193,20 @@ const styles = StyleSheet.create({
     },
 
     orderName: {
-        fontWeight: 'bold',
+        fontWeight: '500',
         fontSize: 15,
     },
 
-    orderType: {
-        position: 'absolute',
-        right: 0,
-        top: 0,
-        fontSize: 12,
-        fontWeight: '600',
-        color: '#555',
-    },
+    
 
-    orderDate: {
+    orderType: {
         fontSize: 13,
         color: '#333',
     },
 
     orderAmount: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: 'green',
+        fontWeight: '500',
+        color: '#15803D',
     },
 });

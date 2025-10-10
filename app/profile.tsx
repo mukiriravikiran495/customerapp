@@ -1,4 +1,4 @@
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
@@ -26,11 +26,11 @@ export default function profileInfo() {
             <View style={styles.header}>
                 {/* Back */}
                 <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-                    <Ionicons name="arrow-back" size={26} color="#000" />
-                    <Text style={styles.headerTitle}>Profile Info</Text>
+                    <Ionicons name="arrow-back" size={26} color="#222222" />
+                    <Text style={styles.headerTitle}>Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-                    <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+                <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+                    <MaterialIcons name="support-agent" size={20} color="#222222" />
                     <Text style={styles.supportText}>Support</Text>
                 </TouchableOpacity>
             </View>
@@ -43,7 +43,7 @@ export default function profileInfo() {
                 <View style={styles.infoContainer}>
                     {/* Name */}
                     <Text style={styles.label}>Name</Text>
-                    <Text style={styles.value}>Bala Anusha</Text>
+                    <Text style={styles.value}>Mukiri Ravi Kiran</Text>
                     <View style={styles.line} />
 
                     {/* Registered Number */}
@@ -72,7 +72,7 @@ export default function profileInfo() {
                         )}
                     </View>
                     <View style={styles.line} />
-                    
+
 
                     {/* Gender */}
                     <Text style={styles.label}>Gender</Text>
@@ -109,7 +109,7 @@ export default function profileInfo() {
                         )}
                     </View>
                     <View style={styles.line} />
-                    
+
                 </View>
             </ScrollView>
 
@@ -121,7 +121,7 @@ export default function profileInfo() {
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-     
+
         paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         paddingHorizontal: 20,
     },
@@ -132,52 +132,22 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20,
     },
-    toggleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#4bc373',
-        paddingHorizontal: 12,
-        paddingVertical: 2,
-        borderRadius: 24,
-        height: 38,
-
-    },
-    statusText: {
-        marginRight: 8,
-        fontSize: width * 0.045,
-        color: '#555',
-    },
-    notificationIcon: {
-        paddingLeft: 10,
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    heading: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        color: '#0B4ED3',
-        marginBottom: 10,
-    },
-    subtext: {
-        fontSize: 16,
-        color: '#666',
-        textAlign: 'center',
-    },
+    
     supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#FFFFFF",
+        paddingHorizontal: 12,
+        paddingVertical: 4,
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#C1C1C1',
     },
     supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
+        color: "#222222",
+        marginLeft: 6,
+        fontSize: 14,
+        fontWeight: "600",
     },
     scrollContent: {
         paddingBottom: 40, // enough space for scroll
@@ -188,15 +158,15 @@ const styles = StyleSheet.create({
         height: 120,
         borderRadius: 50,
         borderWidth: 2,
-        borderColor: '#0C4087',
+        borderColor: '#8E1515',
         alignSelf: 'center',
         marginBottom: 30,
     },
     headerTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '500',
         marginLeft: 8,
-        color: '#000',
+        color: '#222222',
         paddingHorizontal: 12,
     },
     backButton: {
@@ -215,6 +185,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '500',
         marginBottom: 8,
+        color: "#222222",
     },
     line: {
         height: 1,
@@ -228,7 +199,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     editText: {
-        color: '#0C4087',
+        color: '#8E1515',
         fontWeight: '600',
     },
     input: {

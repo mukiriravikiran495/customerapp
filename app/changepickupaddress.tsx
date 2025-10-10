@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         marginRight: 6,
     },
     mapButtonText: {
-        color: '#BA1C1C',
+        color: '#8E1515',
         fontSize: 16,
         fontWeight: '600',
     },

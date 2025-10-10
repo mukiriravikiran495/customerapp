@@ -1,4 +1,4 @@
-import { Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
+import { Feather, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import {
   Dimensions,
@@ -11,7 +11,6 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
-
 const { width } = Dimensions.get('window');
 
 export default function Menu() {
@@ -24,7 +23,7 @@ export default function Menu() {
     // { label: 'My Earnings', icon: <Ionicons name="cash-outline" size={20} color="#2e3a59" />, route: '/myearnings' },
     { label: 'Transactions', icon: <Ionicons name="swap-horizontal" size={20} color="#2e3a59" />, route: '/transactions' },
     // { label: 'Profile', icon: <Feather name="user" size={20} color="#2e3a59" />, route: '/profile' },
-    { label: 'Bank Account', icon: <FontAwesome name="bank" size={20} color="#2e3a59" />, route: '/bank' },
+    
     { label: 'FAQ', icon: <Feather name="help-circle" size={20} color="#2e3a59" />, route: '/faq' },
     { label: 'Help & Support', icon: <Feather name="phone" size={20} color="#2e3a59" />, route: '/contact' },
   ];
@@ -36,11 +35,11 @@ export default function Menu() {
         <View style={styles.header}>
           {/* Back */}
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={26} color="#000" />
+            <Ionicons name="arrow-back" size={26} color="#222222" />
             <Text style={styles.headerTitle}>Menu</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => router.push('/support')} style={styles.supportButton}>
-            <Ionicons name="headset-outline" size={20} color="#000" style={{ marginRight: 6 }} />
+          <TouchableOpacity style={styles.supportButton} onPress={() => alert("Support Clicked!")}>
+            <MaterialIcons name="support-agent" size={20} color="#222222" />
             <Text style={styles.supportText}>Support</Text>
           </TouchableOpacity>
         </View>
@@ -64,7 +63,7 @@ export default function Menu() {
               <Text style={styles.email}>mukiriravikiran112@gmail.com</Text>
               <Text style={styles.phone}>7816035340</Text>
             </View>
-            <Ionicons name="chevron-forward" size={20} color="#000" />
+            <Ionicons name="chevron-forward" size={20} color="#222222" />
           </TouchableOpacity>
 
           {/* Wallet Section navigates to /rechargewallet */}
@@ -95,9 +94,9 @@ export default function Menu() {
         ))}
 
         <TouchableOpacity style={styles.logoutItem} onPress={() => router.push('/login')}>
-          <Feather name="log-out" size={20} color="#c0392b" />
+          <Feather name="log-out" size={20} color="#8E1515" />
           <Text style={styles.logoutText}>Logout</Text>
-          <Feather name="chevron-right" size={18} color="#c0392b" style={{ marginLeft: 'auto' }} />
+          <Feather name="chevron-right" size={18} color="#8E1515" style={{ marginLeft: 'auto' }} />
         </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
@@ -121,33 +120,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginTop: 10,
   },
-  logo: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#0C4087',
-    marginBottom: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 12,
-    borderRadius: 7,
-
-    backgroundColor: '#fff',
-    marginLeft: 2,
-    height: 160,
-  },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 12,
     borderRadius: 7,
     marginBottom: 15,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     marginLeft: 2,
     height: 55,
-  },
-  activeMenuItem: {
-
-    backgroundColor: '#0C4087',
   },
   iconContainer: {
     width: 28,
@@ -160,7 +141,7 @@ const styles = StyleSheet.create({
     color: '#2e3a59',
   },
   activeMenuText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   logoutItem: {
@@ -177,13 +158,13 @@ const styles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     marginLeft: 10,
-    color: '#c0392b',
+    color: '#8E1515',
     fontWeight: '500',
   },
   profileCard: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
-    borderColor: '#caced2',
+    borderColor: '#FFFFFF',
     borderRadius: 10,
     padding: 12,
     marginBottom: 10,
@@ -208,7 +189,7 @@ const styles = StyleSheet.create({
   avatarText: {
     fontWeight: 'bold',
     fontSize: 22,
-    color: '#000',
+    color: '#222222',
   },
 
   profileDetails: {
@@ -217,32 +198,33 @@ const styles = StyleSheet.create({
 
   company: {
     fontSize: 18,
-    fontWeight: '500',
-    color: '#000',
+    fontWeight: '400',
+    color: '#222222',
   },
 
   email: {
     fontSize: 14,
-    color: '#444',
+    color: '#999',
   },
 
   phone: {
     fontSize: 14,
-    color: '#444',
+    color: '#999',
   },
 
   walletSection: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#1E1E1E',
+    backgroundColor: '#3c3c3c',
     borderRadius: 10,
     padding: 16,
   },
 
   walletText: {
-    color: '#fff',
+    color: '#FFFFFF',
     fontSize: 16,
+    fontWeight: '300',
   },
   header: {
     flexDirection: 'row',
@@ -257,9 +239,9 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '400',
     marginLeft: 8, // space between icon and text
-    color: '#000',
+    color: '#222222',
     paddingHorizontal: 12,
   },
   toggleContainer: {
@@ -281,16 +263,19 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   supportButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 10,
-        paddingVertical: 6,
-        backgroundColor: '#f1f1f1',
-        borderRadius: 8,
-    },
-    supportText: {
-        fontSize: 15,
-        color: '#000',
-        fontWeight: '500',
-    },
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: '#C1C1C1',
+  },
+  supportText: {
+    color: "#222222",
+    marginLeft: 6,
+    fontSize: 14,
+    fontWeight: "600",
+  },
 });

@@ -154,7 +154,7 @@ const VendorsScreen = () => {
                     {/* LEFT: Back Button */}
                     <View style={styles.sideContainer}>
                         <TouchableOpacity onPress={() => router.back()} style={styles.iconHitBox}>
-                            <Ionicons name="chevron-back" size={24} color="#212121" />
+                            <Ionicons name="chevron-back" size={24} color="#222222" />
                         </TouchableOpacity>
                     </View>
 
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
                     elevation: 8,
                 },
                 ios: {
-                    shadowColor: '#000',
+                    shadowColor: '#222222',
                     shadowOffset: { width: 0, height: 4 },
                     shadowOpacity: 0.1,
                     shadowRadius: 2,
@@ -339,54 +339,7 @@ const styles = StyleSheet.create({
             height: 0,
 
         },
-        counterContainer: {
-            flexDirection: 'row',
-            alignItems: 'center',
-            marginTop: 10,
-            justifyContent: 'center',
-        },
-        counterButton: {
-            fontSize: 18,
-            paddingHorizontal: 12,
-            paddingVertical: 6,
-            backgroundColor: '#ba1c1c',
-            color: '#fff',
-            borderRadius: 6,
-            textAlign: 'center',
-            
-        },
-        countText: {
-            marginHorizontal: 12,
-            fontSize: 16,
-            fontWeight: 'bold',
-        },
-        findMoversButton: {
-            position: 'absolute',
-            bottom: 50,
-            left: '50%',
-            transform: [{ translateX: -75 }], // Half of the button width
-            width: 150, // Fixed width for centering
-            paddingVertical: 16,
-    
-            backgroundColor: 'red',
-            borderRadius: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-    
-            elevation: 20,
-            shadowColor: '#000',
-            shadowOpacity: 0.2,
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 4,
-        },
-    
-    
-        findMoversText: {
-            color: '#fff',
-            fontSize: 16,
-            fontWeight: 'bold',
-        },
-    
+       
         header: {
             height: 56,
             backgroundColor: '#FFFFFF',
@@ -395,10 +348,7 @@ const styles = StyleSheet.create({
             justifyContent: 'space-between',
             paddingHorizontal: 12,
         },
-        categoryEmoji: {
-            fontSize: 30,
-            marginBottom: 6,
-        },
+       
         sideContainer: {
             width: 48,
             alignItems: 'center',
@@ -411,7 +361,7 @@ const styles = StyleSheet.create({
         title: {
             fontSize: 18,
             fontWeight: '600',
-            color: '#212121',
+            color: '#222222',
             textAlign: 'center',
         },
         searchInput: {
@@ -420,22 +370,13 @@ const styles = StyleSheet.create({
             paddingHorizontal: 8,
             borderBottomWidth: 1,
             borderBottomColor: '#AAA',
-            color: '#212121',
+            color: '#222222',
         },
-        headerTitle: {
-            fontSize: 16,
-            fontWeight: '600',
-            color: '#212121',
-        },
+        
         iconHitBox: {
             padding: 8,
         },
-    contentWrapper: {
-        flex: 1,
-        flexDirection: 'row',
-
-    },
-
+   
     dropdownRow: {
         marginTop: 15,
         marginBottom: 15,
@@ -450,7 +391,7 @@ const styles = StyleSheet.create({
     },
     dropdownText: {
         fontSize: 14,
-        color: '#000000',
+        color: '#222222',
     },
 
     modalOverlay: {
@@ -495,12 +436,12 @@ const styles = StyleSheet.create({
     },
     vendorName: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#222',
+        fontWeight: '500',
+        color: '#222222',
         flex: 1,
     },
     verifiedTag: {
-        backgroundColor: '#28a745',
+        backgroundColor: '#15803D',
         paddingHorizontal: 6,
         paddingVertical: 2,
         borderRadius: 4,
@@ -517,7 +458,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     discountTag: {
-        backgroundColor: '#dc3545',
+        backgroundColor: '#d32f2f',
         color: '#fff',
         paddingHorizontal: 6,
         fontSize: 12,
@@ -531,7 +472,7 @@ const styles = StyleSheet.create({
     },
     finalPrice: {
         color: '#d32f2f',
-        fontWeight: 'bold',
+        fontWeight: '600',
         fontSize: 16,
     },
     tagsContainer: {
@@ -557,10 +498,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         flexWrap: 'wrap',
         marginTop: 6,
+        marginBottom: 2,
     },
     greenTag: {
         backgroundColor: '#d4f4dd',
-        color: '#1e7e34',
+        color: '#15803D',
         paddingHorizontal: 8,
         paddingVertical: 3,
         borderRadius: 15,

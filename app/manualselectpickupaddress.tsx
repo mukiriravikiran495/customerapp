@@ -292,7 +292,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
     },
     submitButton: {
-        backgroundColor: '#BA1C1C',
+        backgroundColor: '#8E1515',
         paddingVertical: 14,
         borderRadius: 8,
         alignItems: 'center',
@@ -316,11 +316,11 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         paddingHorizontal: 12,
         borderRadius: 6,
-        borderColor: '#BA1C1C',
+        borderColor: '#8E1515',
         borderWidth: 0.3,
     },
     changeButtonText: {
-        color: '#ba1c1c',
+        color: '#8E1515',
         fontSize: 14,
         fontWeight: '500',
     },
